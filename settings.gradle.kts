@@ -21,4 +21,7 @@ dependencyResolutionManagement {
 
 rootProject.name = "CineMate"
 include(":app")
- 
+include(":shared-ui")
+include(":core")
+include(":network")
+include(":database")
