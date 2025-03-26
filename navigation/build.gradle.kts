@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace = "com.newton.core"
+    namespace = "com.newton.navigation"
     compileSdk = 35
 
     defaultConfig {
@@ -42,4 +42,7 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 
+    //Navigation
+    implementation(Dependencies.Hilt.navigation)
+    implementation(Dependencies.Navigation.compose)
 }

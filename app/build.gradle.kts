@@ -102,8 +102,13 @@ dependencies {
     implementation(Dependencies.Coil.compose)
     implementation(Dependencies.Coil.network)
 
+    //Accompanist
+    implementation(Dependencies.Accompanist.systemUi)
+
     // modules
     implementation(project(Modules.sharedUi))
     implementation(project(Modules.core))
     implementation(project(Modules.network))
+    implementation(project(Modules.auth))
+    implementation(project(Modules.navigation))
 }

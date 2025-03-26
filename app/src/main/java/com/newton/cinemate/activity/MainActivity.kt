@@ -12,28 +12,23 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
+import com.newton.cinemate.navigation.NavigationSubGraphs
 import com.newton.shared_ui.theme.CineMateTheme
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
+
+    @Inject
+    lateinit var navigationSubGraphs: NavigationSubGraphs
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            CineMateTheme {
-               Scaffold(
-                   containerColor = MaterialTheme.colorScheme.background
-               ) { padding ->
-                   Box(modifier = Modifier.fillMaxSize().padding(padding)){
-                       Text(
-                           text = "Hello",
-                           color = MaterialTheme.colorScheme.onBackground,
-                           textAlign = TextAlign.Center
-                       )
-                   }
-               }
-            }
+           RootScreen(navigationSubGraphs)
         }
     }
 }
