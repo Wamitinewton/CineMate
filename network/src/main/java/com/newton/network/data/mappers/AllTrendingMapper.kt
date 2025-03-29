@@ -7,7 +7,7 @@ import com.newton.network.domain.models.AllTrending
 fun AllTrendingDtoResults.toAllTrendingDomain(): AllTrending {
     return AllTrending(
         adult = adult,
-        backdropPath = backdrop_path?.let { "$ImageBaseUrl.IMAGE_BASE_URL$it" },
+        backdropPath = backdrop_path?.let { "${ImageBaseUrl.IMAGE_BASE_URL}$it" },
         firstAirDate = first_air_date,
         genreIds = genre_ids,
         id = id,
@@ -19,7 +19,7 @@ fun AllTrendingDtoResults.toAllTrendingDomain(): AllTrending {
         originalTitle = original_title,
         overview = overview,
         popularity = popularity,
-        posterPath = poster_path?.let { "$ImageBaseUrl.IMAGE_BASE_URL$it" },
+        posterPath = poster_path?.let { "${ImageBaseUrl.IMAGE_BASE_URL}$it" },
         releaseDate = release_date,
         title = title,
         video = video,

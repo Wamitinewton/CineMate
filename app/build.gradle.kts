@@ -102,6 +102,7 @@ dependencies {
     implementation(Dependencies.Coil.compose)
     implementation(Dependencies.Coil.network)
 
+
     //Accompanist
     implementation(Dependencies.Accompanist.systemUi)
 

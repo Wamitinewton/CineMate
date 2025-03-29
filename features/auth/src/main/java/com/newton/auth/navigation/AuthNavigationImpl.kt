@@ -18,7 +18,9 @@ class AuthNavigationImpl: AuthNavigationApi {
             startDestination = NavigationRoutes.AuthScreen.routes
         ){
             composable(route = NavigationRoutes.AuthScreen.routes) {
-                LoginScreen()
+                LoginScreen(
+                    onLoginClick = {},
+                )
             }
         }
     }

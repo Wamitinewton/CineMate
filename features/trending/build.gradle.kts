@@ -69,4 +69,8 @@ dependencies {
 
     //timber
     implementation(Dependencies.Logging.timber)
+
+    //paging
+    implementation(Dependencies.Paging.compose)
+    implementation(Dependencies.Paging.runtime)
 }

@@ -61,6 +61,11 @@ dependencies {
     implementation(Dependencies.Hilt.android)
     ksp(Dependencies.Hilt.compiler)
 
+    //coil
+
+    implementation(Dependencies.Coil.network)
+    implementation(Dependencies.Coil.compose)
+
     //modules
     implementation(project(Modules.navigation))
     implementation(project(Modules.sharedUi))
