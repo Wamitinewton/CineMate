@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
@@ -27,7 +28,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.credentials.CredentialManager
@@ -38,29 +38,22 @@ import com.newton.auth.R
 import com.newton.auth.presentation.event.AuthEvent
 import com.newton.auth.presentation.event.AuthUiEvent
 import com.newton.auth.presentation.viewModel.AuthViewModel
+import com.newton.shared_ui.components.ButtonVariant
+import com.newton.shared_ui.components.CustomButton
 import com.newton.shared_ui.components.GradientButton
-import com.newton.shared_ui.theme.dark_background
-import com.newton.shared_ui.theme.dark_primary
+import com.newton.shared_ui.theme.backgroundGradient
 import kotlinx.coroutines.flow.collectLatest
-import timber.log.Timber
 
 @Composable
 fun OnboardingScreen(
     onAuthSuccess: () -> Unit,
+    onContinueWithoutAccountClick: () -> Unit,
     viewModel: AuthViewModel,
 ) {
 
     val state by viewModel.state.collectAsStateWithLifecycle()
     val context = LocalContext.current
     val snackbarHostState = remember { SnackbarHostState() }
-
-    val backgroundGradient = Brush.verticalGradient(
-        colors = listOf(
-            dark_background,
-            dark_primary.copy(alpha = 0.7f),
-            dark_background
-        )
-    )
 
     var visible by remember { mutableStateOf(false) }
 
@@ -69,29 +62,22 @@ fun OnboardingScreen(
     }
 
     LaunchedEffect(Unit) {
-        Timber.d("OnboardingScreen", "Setting up event collection")
         viewModel.authEvents.collectLatest { event ->
-            Timber.d("OnboardingScreen", "Received auth event: $event")
             when (event) {
                 is AuthUiEvent.LaunchCredentialManager -> {
                     try {
                         val credentialManager = CredentialManager.create(context)
-                        Timber.d("OnboardingScreen", "Created CredentialManager")
 
                         val result = credentialManager.getCredential(
                             request = event.request,
                             context = context
                         )
-
-                        Timber.d("OnboardingScreen", "Got credential result")
                         viewModel.handleCredentialResult(result)
                     } catch (e: NoCredentialException) {
-                        Timber.e("OnboardingScreen", "No credentials available", e)
                         context.startActivity(Intent(Settings.ACTION_ADD_ACCOUNT).apply {
                             putExtra(Settings.EXTRA_ACCOUNT_TYPES, arrayOf("com.google"))
                         })
                     } catch (e: GetCredentialException) {
-                        Timber.e("OnboardingScreen", "Credential error", e)
                         viewModel.handleCredentialError(e)
                     }
                 }
@@ -155,6 +141,18 @@ fun OnboardingScreen(
                         }
                     )
                 }
+                Spacer(modifier = Modifier.height(40.dp))
+               androidx.compose.animation.AnimatedVisibility(
+                   visible = visible,
+                   enter = fadeIn(tween(1500, delayMillis = 1000))
+               ) {
+                   CustomButton(
+                       text = "Continue with no account",
+                       onClick = { onContinueWithoutAccountClick() },
+                       modifier = Modifier.fillMaxWidth(),
+                       variant = ButtonVariant.FILLED
+                   )
+               }
                 Spacer(modifier = Modifier.height(40.dp))
 
             }

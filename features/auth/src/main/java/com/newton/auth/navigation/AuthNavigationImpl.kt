@@ -6,26 +6,58 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.newton.auth.presentation.view.OnboardingScreen
+import com.newton.auth.presentation.view.WelcomeScreen
 import com.newton.auth.presentation.viewModel.AuthViewModel
 import com.newton.navigation.NavigationRoutes
 import com.newton.navigation.NavigationSubgraphRoutes
+import com.newton.prefs.PrefsRepository
+import javax.inject.Inject
 
-class AuthNavigationImpl: AuthNavigationApi {
+class AuthNavigationImpl @Inject constructor(
+    private val prefsRepository: PrefsRepository
+) : AuthNavigationApi {
     override fun registerNavigationGraph(
         navGraphBuilder: NavGraphBuilder,
         navHostController: NavHostController
     ) {
         navGraphBuilder.navigation(
             route = NavigationSubgraphRoutes.Auth.route,
-            startDestination = NavigationRoutes.AuthScreen.routes
+            startDestination = getStartDestination()
         ){
-            composable(route = NavigationRoutes.AuthScreen.routes) {
+            composable(route = NavigationRoutes.AuthScreenRoute.routes) {
                 val authViewModel = hiltViewModel<AuthViewModel>()
                 OnboardingScreen(
                     onAuthSuccess = {},
-                    viewModel = authViewModel
+                    viewModel = authViewModel,
+                    onContinueWithoutAccountClick = {
+
+                        prefsRepository.setUserOnboardingStatus(true)
+
+                        prefsRepository.setGuestUser(true)
+                        navHostController.navigate(NavigationRoutes.WelcomeScreenRoute.routes) {
+                            popUpTo(NavigationRoutes.AuthScreenRoute.routes) { inclusive = true }
+                        }
+                    }
                 )
             }
+
+            composable(route = NavigationRoutes.WelcomeScreenRoute.routes) {
+                WelcomeScreen(
+                    onContinue = {}
+                )
+            }
+        }
+    }
+
+    private fun getStartDestination(): String {
+        return if (prefsRepository.getUserOnboardingStatus()) {
+            if (prefsRepository.isGuestUser() && !prefsRepository.hasCompletedPreferences()) {
+                NavigationRoutes.WelcomeScreenRoute.routes
+            } else {
+                NavigationRoutes.HomeScreenRoute.routes
+            }
+        } else {
+            NavigationRoutes.AuthScreenRoute.routes
         }
     }
 }

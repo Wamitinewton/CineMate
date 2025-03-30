@@ -2,6 +2,7 @@ package com.newton.auth.di
 
 import com.newton.auth.navigation.AuthNavigationApi
 import com.newton.auth.navigation.AuthNavigationImpl
+import com.newton.prefs.PrefsRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -14,7 +15,9 @@ object AuthNavigationModule {
 
     @Provides
     @Singleton
-    fun provideAuthNavigationApi(): AuthNavigationApi {
-        return AuthNavigationImpl()
+    fun provideAuthNavigationApi(
+        prefsRepository: PrefsRepository
+    ): AuthNavigationApi {
+        return AuthNavigationImpl(prefsRepository)
     }
 }

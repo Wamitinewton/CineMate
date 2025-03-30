@@ -1,0 +1,3 @@
+package com.newton.trending.navigation
+
+interface TrendingNavigationApi

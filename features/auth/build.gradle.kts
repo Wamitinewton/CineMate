@@ -65,8 +65,13 @@ dependencies {
     implementation(Dependencies.Coil.network)
     implementation(Dependencies.Coil.compose)
 
+
     //timber
     implementation(Dependencies.Logging.timber)
+
+
+    //extended icons
+    implementation(Dependencies.Material.extendedIcons)
 
     //firebase
     implementation(platform(libs.google.firebase.bom))
@@ -82,4 +87,5 @@ dependencies {
     implementation(project(Modules.sharedUi))
     implementation(project(Modules.network))
     implementation(project(Modules.core))
+    implementation(project(Modules.prefs))
 }

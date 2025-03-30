@@ -1,6 +1,6 @@
 package com.newton.shared_ui.components
 
-import android.view.RoundedCorner
+
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.RepeatMode
 import androidx.compose.animation.core.animateFloat
@@ -9,39 +9,256 @@ import androidx.compose.animation.core.infiniteRepeatable
 import androidx.compose.animation.core.rememberInfiniteTransition
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.interaction.collectIsPressedAsState
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.ripple.rememberRipple
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.newton.shared_ui.theme.dark_primary
 import com.newton.shared_ui.theme.dark_primaryContainer
 import com.newton.shared_ui.theme.dark_secondary
 
+/**
+ * A highly customizable button component that can be used across different features.
+ */
+@Composable
+fun CustomButton(
+    text: String,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+    enabled: Boolean = true,
+    variant: ButtonVariant = ButtonVariant.FILLED,
+    size: ButtonSize = ButtonSize.MEDIUM,
+    buttonColors: ButtonColors = com.newton.shared_ui.components.ButtonDefaults.defaultMaterialColors(),
+    cornerRadius: Dp = com.newton.shared_ui.components.ButtonDefaults.cornerRadius,
+    leadingIcon: ImageVector? = null,
+    trailingIcon: ImageVector? = null,
+    isLoading: Boolean = false,
+    enableAnimation: Boolean = true,
+    gradientColors: List<Color>? = null,
+) {
+    val interactionSource = remember { MutableInteractionSource() }
+    val isPressed by interactionSource.collectIsPressedAsState()
+
+    val buttonHeight = when (size) {
+        ButtonSize.SMALL -> 36.dp
+        ButtonSize.MEDIUM -> 48.dp
+        ButtonSize.LARGE -> 56.dp
+    }
+
+    val scale by animateFloatAsState(
+        targetValue = if (isPressed && enableAnimation) 0.96f else 1f,
+        label = "buttonScale"
+    )
+
+    val shape = RoundedCornerShape(cornerRadius)
+
+    // Determine background and content colors based on variant and enabled state
+    val backgroundColor = when (variant) {
+        ButtonVariant.FILLED -> if (enabled) buttonColors.containerColor else buttonColors.disabledContainerColor
+        else -> Color.Transparent
+    }
+
+    val contentColor = when (variant) {
+        ButtonVariant.FILLED -> if (enabled) buttonColors.contentColor else buttonColors.disabledContentColor
+        else -> if (enabled) buttonColors.containerColor else buttonColors.disabledContainerColor
+    }
+
+    // Build the button modifier
+    val buttonModifier = Modifier
+        .then(modifier)
+        .height(buttonHeight)
+        .scale(scale)
+        .clip(shape)
+        .then(
+            if (variant == ButtonVariant.OUTLINED) {
+                Modifier.border(1.dp, contentColor, shape)
+            } else {
+                Modifier
+            }
+        )
+        .then(
+            if (variant == ButtonVariant.FILLED) {
+                Modifier.shadow(
+                    elevation = if (enabled) 2.dp else 0.dp,
+                    shape = shape
+                )
+            } else {
+                Modifier
+            }
+        )
+        .then(
+            if (gradientColors != null && variant == ButtonVariant.FILLED) {
+                Modifier.background(
+                    Brush.linearGradient(colors = gradientColors),
+                    shape
+                )
+            } else {
+                Modifier.background(backgroundColor, shape)
+            }
+        )
+        .clickable(
+            interactionSource = interactionSource,
+            indication = rememberRipple(color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.2f)),
+            enabled = enabled,
+            onClick = onClick
+        )
+        .padding(horizontal = 16.dp)
+
+    // Button content
+    Box(
+        modifier = buttonModifier,
+        contentAlignment = Alignment.Center
+    ) {
+        Row(
+            horizontalArrangement = Arrangement.Center,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            if (isLoading) {
+                CircularProgressIndicator(
+                    modifier = Modifier.size(20.dp),
+                    color = contentColor,
+                    strokeWidth = 2.dp
+                )
+            } else {
+                leadingIcon?.let {
+                    Icon(
+                        imageVector = it,
+                        contentDescription = null,
+                        tint = contentColor
+                    )
+                    Spacer(modifier = Modifier.width(8.dp))
+                }
+
+                Text(
+                    text = text,
+                    color = contentColor,
+                    fontWeight = FontWeight.Medium,
+                    style = MaterialTheme.typography.labelLarge
+                )
+
+                trailingIcon?.let {
+                    Spacer(modifier = Modifier.width(8.dp))
+                    Icon(
+                        imageVector = it,
+                        contentDescription = null,
+                        tint = contentColor
+                    )
+                }
+            }
+        }
+    }
+}
+
+// Button configuration options
+enum class ButtonVariant {
+    FILLED,
+    OUTLINED,
+    MINIMAL
+}
+
+enum class ButtonSize {
+    SMALL,
+    MEDIUM,
+    LARGE
+}
+
+// Button colors data class
+data class ButtonColors(
+    val containerColor: Color,
+    val contentColor: Color,
+    val disabledContainerColor: Color,
+    val disabledContentColor: Color
+)
+
+object ButtonDefaults {
+    val cornerRadius = 8.dp
+
+    // Use Material theme colors instead of hardcoded values
+    @Composable
+    fun defaultMaterialColors(
+        containerColor: Color = MaterialTheme.colorScheme.primary,
+        contentColor: Color = MaterialTheme.colorScheme.onPrimary,
+        disabledContainerColor: Color = MaterialTheme.colorScheme.surfaceVariant,
+        disabledContentColor: Color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.6f)
+    ) = ButtonColors(
+        containerColor = containerColor,
+        contentColor = contentColor,
+        disabledContainerColor = disabledContainerColor,
+        disabledContentColor = disabledContentColor
+    )
+
+    // Material palette-based gradient options
+    @Composable
+    fun primaryGradient() = listOf(
+        MaterialTheme.colorScheme.primary,
+        MaterialTheme.colorScheme.primaryContainer
+    )
+
+    @Composable
+    fun secondaryGradient() = listOf(
+        MaterialTheme.colorScheme.secondary,
+        MaterialTheme.colorScheme.secondary.copy(alpha = 0.7f)
+    )
+
+    @Composable
+    fun accentGradient() = listOf(
+        MaterialTheme.colorScheme.secondary,
+        MaterialTheme.colorScheme.primary
+    )
+
+    // Your custom dark theme gradients mapped to material theme
+    val darkThemeGradient = listOf(
+        Color(0xFF180E36), // dark_primary
+        Color(0xFF2B2E5B), // dark_primaryContainer
+        Color(0xFF180E36)  // dark_primary again for smooth transition
+    )
+
+    val accentGradient = listOf(
+        Color(0xFFFF4D00), // dark_secondary
+        Color(0xFF2B2E5B), // dark_primaryContainer
+        Color(0xFF180E36)  // dark_primary
+    )
+}
 @Composable
 fun GradientButton(
-    modifier: Modifier = Modifier,
     buttonText: String,
     onClick: () -> Unit
 ) {
-    var isHovered by remember { mutableStateOf(false) }
+    val isHovered by remember { mutableStateOf(false) }
     val scale by animateFloatAsState(
         targetValue = if (isHovered) 1.05f else 1f,
         animationSpec = tween(200),
