@@ -1,21 +1,31 @@
 package com.newton.cinemate.navigation
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
+import com.newton.cinemate.viewModel.MainViewModel
 import com.newton.navigation.NavigationSubgraphRoutes
 
 @Composable
 fun CineMateNavigation(
     navigationSubGraphs: NavigationSubGraphs,
-    navHostController: NavHostController
+    navHostController: NavHostController,
+    viewModel: MainViewModel = hiltViewModel()
 ) {
+    val startDestination by viewModel.startDestination.collectAsState()
 
     NavHost(
         navController = navHostController,
-        startDestination = NavigationSubgraphRoutes.Auth.route
+        startDestination = startDestination
     ){
         navigationSubGraphs.authNavigationApi.registerNavigationGraph(
+            navHostController = navHostController,
+            navGraphBuilder = this
+        )
+        navigationSubGraphs.trendingNavigationApi.registerNavigationGraph(
             navHostController = navHostController,
             navGraphBuilder = this
         )

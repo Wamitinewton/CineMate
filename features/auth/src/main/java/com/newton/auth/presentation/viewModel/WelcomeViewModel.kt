@@ -38,23 +38,26 @@ class WelcomeViewModel @Inject constructor(
                 savePrefsAndNavigate()
             }
 
-            is WelcomeEvent.SkipPreferences -> {
-                _state.update { it.copy(allowAdultContent = false) }
-            }
-
             is WelcomeEvent.ToggleAdultContent -> {
                 _state.update { it.copy(allowAdultContent = event.allow) }
             }
         }
     }
 
+
     private fun savePrefsAndNavigate() {
         viewModelScope.launch {
             prefsRepository.setAllowAdultContent(_state.value.allowAdultContent)
 
             prefsRepository.setUserOnboardingStatus(true)
-
+            prefsRepository.setPreferencesCompleted(true)
             _navigationEvents.send(WelcomeNavigationEvent.NavigateToHome)
+            navigateToHome()
         }
+    }
+
+
+    private suspend fun navigateToHome() {
+        _navigationEvents.send(WelcomeNavigationEvent.NavigateToHome)
     }
 }

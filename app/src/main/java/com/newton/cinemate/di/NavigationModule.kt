@@ -2,6 +2,7 @@ package com.newton.cinemate.di
 
 import com.newton.auth.navigation.AuthNavigationApi
 import com.newton.cinemate.navigation.NavigationSubGraphs
+import com.newton.trending.navigation.TrendingNavigationApi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -13,10 +14,12 @@ object NavigationModule {
 
     @Provides
     fun provideNavigationSubGraphs(
-        authNavigationApi: AuthNavigationApi
+        authNavigationApi: AuthNavigationApi,
+        trendingNavigationApi: TrendingNavigationApi
     ): NavigationSubGraphs {
         return NavigationSubGraphs(
-            authNavigationApi
+            authNavigationApi,
+            trendingNavigationApi
         )
     }
 }

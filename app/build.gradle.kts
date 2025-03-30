@@ -124,5 +124,7 @@ dependencies {
     implementation(project(Modules.core))
     implementation(project(Modules.network))
     implementation(project(Modules.auth))
+    implementation(project(Modules.trending))
     implementation(project(Modules.navigation))
+    implementation(project(Modules.prefs))
 }

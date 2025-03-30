@@ -4,5 +4,6 @@ object Modules {
     const val network = ":network"
     const val navigation = ":navigation"
     const val auth = ":features:auth"
+    const val trending = ":features:trending"
     const val prefs = ":prefs"
 }

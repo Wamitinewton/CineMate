@@ -8,6 +8,7 @@ import androidx.navigation.navigation
 import com.newton.auth.presentation.view.OnboardingScreen
 import com.newton.auth.presentation.view.WelcomeScreen
 import com.newton.auth.presentation.viewModel.AuthViewModel
+import com.newton.auth.presentation.viewModel.WelcomeViewModel
 import com.newton.navigation.NavigationRoutes
 import com.newton.navigation.NavigationSubgraphRoutes
 import com.newton.prefs.PrefsRepository
@@ -42,20 +43,24 @@ class AuthNavigationImpl @Inject constructor(
             }
 
             composable(route = NavigationRoutes.WelcomeScreenRoute.routes) {
+                val welcomeViewModel = hiltViewModel<WelcomeViewModel>()
                 WelcomeScreen(
-                    onContinue = {}
+                    navigateToHome = {
+                        navHostController.navigate(NavigationRoutes.HomeScreenRoute.routes) {
+                            popUpTo(NavigationSubgraphRoutes.Auth.route) { inclusive = true }
+                        }
+                    },
+                    viewModel = welcomeViewModel
                 )
             }
         }
     }
 
     private fun getStartDestination(): String {
-        return if (prefsRepository.getUserOnboardingStatus()) {
-            if (prefsRepository.isGuestUser() && !prefsRepository.hasCompletedPreferences()) {
-                NavigationRoutes.WelcomeScreenRoute.routes
-            } else {
-                NavigationRoutes.HomeScreenRoute.routes
-            }
+        return if (prefsRepository.getUserOnboardingStatus() &&
+            prefsRepository.isGuestUser() &&
+            !prefsRepository.hasCompletedPreferences()) {
+            NavigationRoutes.WelcomeScreenRoute.routes
         } else {
             NavigationRoutes.AuthScreenRoute.routes
         }

@@ -29,6 +29,7 @@ import com.newton.auth.presentation.viewModel.WelcomeViewModel
 import com.newton.shared_ui.components.*
 import com.newton.shared_ui.theme.backgroundGradient
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 @Composable
 fun WelcomeScreen(
@@ -38,6 +39,7 @@ fun WelcomeScreen(
     val state by viewModel.state.collectAsStateWithLifecycle()
     val snackbarHostState = remember { SnackbarHostState() }
     var animationVisible by remember { mutableStateOf(false) }
+    val scope = rememberCoroutineScope()
 
     LaunchedEffect(key1 = Unit) {
         animationVisible = true
@@ -168,7 +170,9 @@ fun WelcomeScreen(
                                 Checkbox(
                                     checked = state.allowAdultContent,
                                     onCheckedChange = {
-                                        viewModel.onEvent(WelcomeEvent.ToggleAdultContent(it))
+                                        scope.launch {
+                                            viewModel.onEvent(WelcomeEvent.ToggleAdultContent(it))
+                                        }
                                     },
                                     colors = CheckboxDefaults.colors(
                                         checkedColor = MaterialTheme.colorScheme.primary,
@@ -202,23 +206,10 @@ fun WelcomeScreen(
                 ) {
                     GradientButton(
                         buttonText = "Continue to Discover",
-                        onClick = { viewModel.onEvent(WelcomeEvent.Continue) },
+                        onClick = { scope.launch { viewModel.onEvent(WelcomeEvent.Continue) } },
                     )
                 }
 
-                Spacer(modifier = Modifier.height(16.dp))
-
-                AnimatedVisibility(
-                    visible = animationVisible,
-                    enter = fadeIn(tween(1500, delayMillis = 1000))
-                ) {
-                    CustomButton(
-                        text = "Maybe Later",
-                        onClick = { viewModel.onEvent(WelcomeEvent.SkipPreferences) },
-                        modifier = Modifier.fillMaxWidth(),
-                        variant = ButtonVariant.FILLED
-                    )
-                }
 
                 Spacer(modifier = Modifier.height(32.dp))
             }

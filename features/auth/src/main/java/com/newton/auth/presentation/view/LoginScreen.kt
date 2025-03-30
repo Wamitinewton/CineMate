@@ -137,7 +137,11 @@ fun OnboardingScreen(
                     GradientButton(
                         buttonText = "Login",
                         onClick = {
-                            viewModel.onEvent(AuthEvent.OnLoginClick(context.getString(R.string.web_client_id)))
+//                            viewModel.onEvent(AuthEvent.OnLoginClick(context.getString(R.string.web_client_id)))
+                            /**
+                             * Some issues on google auth....fixing..
+                             */
+                            onContinueWithoutAccountClick()
                         }
                     )
                 }
