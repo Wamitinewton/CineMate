@@ -62,11 +62,24 @@ dependencies {
     ksp(Dependencies.Hilt.compiler)
 
     //coil
-
     implementation(Dependencies.Coil.network)
     implementation(Dependencies.Coil.compose)
+
+    //timber
+    implementation(Dependencies.Logging.timber)
+
+    //firebase
+    implementation(platform(libs.google.firebase.bom))
+    implementation(libs.firebase.auth)
+    implementation(libs.firebase.firestore)
+    implementation(libs.androidx.credentials)
+    implementation(libs.androidx.credentials.play.services.auth)
+    implementation(libs.googleid)
+
 
     //modules
     implementation(project(Modules.navigation))
     implementation(project(Modules.sharedUi))
+    implementation(project(Modules.network))
+    implementation(project(Modules.core))
 }

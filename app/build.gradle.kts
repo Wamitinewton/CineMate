@@ -1,5 +1,4 @@
 import java.util.Properties
-
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
@@ -8,6 +7,7 @@ plugins {
     id("kotlinx-serialization")
     id("com.google.devtools.ksp")
     id("dagger.hilt.android.plugin")
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -32,8 +32,12 @@ android {
         val tmdbApi = properties.getProperty("TMDB_API")
             ?: throw GradleException("TMDB_API not found in keys.properties")
 
+        val webClientId = properties.getProperty("WEB_CLIENT_ID")
+            ?: throw GradleException("WEB_CLIENT_ID not found in keys.properties")
+
 
         buildConfigField("String", "TMDB_API", "\"$tmdbApi\"")
+        buildConfigField("String", "WEB_CLIENT_ID", "\"$webClientId\"")
         applicationId = "com.newton.cinemate"
         minSdk = 24
         targetSdk = 35
@@ -105,6 +109,15 @@ dependencies {
 
     //Accompanist
     implementation(Dependencies.Accompanist.systemUi)
+
+    //firebase
+    implementation(platform(libs.google.firebase.bom))
+    implementation(libs.firebase.auth)
+    implementation(libs.firebase.firestore)
+    implementation(libs.androidx.credentials)
+    implementation(libs.androidx.credentials.play.services.auth)
+    implementation(libs.googleid)
+
 
     // modules
     implementation(project(Modules.sharedUi))

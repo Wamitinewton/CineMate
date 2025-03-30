@@ -1,5 +1,7 @@
 package com.newton.auth.presentation.view
 
+import android.content.Intent
+import android.provider.Settings
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
@@ -12,7 +14,11 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -22,16 +28,31 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import androidx.credentials.CredentialManager
+import androidx.credentials.exceptions.GetCredentialException
+import androidx.credentials.exceptions.NoCredentialException
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.newton.auth.R
+import com.newton.auth.presentation.event.AuthEvent
+import com.newton.auth.presentation.event.AuthUiEvent
+import com.newton.auth.presentation.viewModel.AuthViewModel
 import com.newton.shared_ui.components.GradientButton
 import com.newton.shared_ui.theme.dark_background
 import com.newton.shared_ui.theme.dark_primary
+import kotlinx.coroutines.flow.collectLatest
+import timber.log.Timber
 
 @Composable
-fun LoginScreen(
-    onLoginClick: () -> Unit,
-    modifier: Modifier = Modifier
+fun OnboardingScreen(
+    onAuthSuccess: () -> Unit,
+    viewModel: AuthViewModel,
 ) {
+
+    val state by viewModel.state.collectAsStateWithLifecycle()
+    val context = LocalContext.current
+    val snackbarHostState = remember { SnackbarHostState() }
 
     val backgroundGradient = Brush.verticalGradient(
         colors = listOf(
@@ -46,8 +67,47 @@ fun LoginScreen(
     LaunchedEffect(key1 = Unit) {
         visible = true
     }
+
+    LaunchedEffect(Unit) {
+        Timber.d("OnboardingScreen", "Setting up event collection")
+        viewModel.authEvents.collectLatest { event ->
+            Timber.d("OnboardingScreen", "Received auth event: $event")
+            when (event) {
+                is AuthUiEvent.LaunchCredentialManager -> {
+                    try {
+                        val credentialManager = CredentialManager.create(context)
+                        Timber.d("OnboardingScreen", "Created CredentialManager")
+
+                        val result = credentialManager.getCredential(
+                            request = event.request,
+                            context = context
+                        )
+
+                        Timber.d("OnboardingScreen", "Got credential result")
+                        viewModel.handleCredentialResult(result)
+                    } catch (e: NoCredentialException) {
+                        Timber.e("OnboardingScreen", "No credentials available", e)
+                        context.startActivity(Intent(Settings.ACTION_ADD_ACCOUNT).apply {
+                            putExtra(Settings.EXTRA_ACCOUNT_TYPES, arrayOf("com.google"))
+                        })
+                    } catch (e: GetCredentialException) {
+                        Timber.e("OnboardingScreen", "Credential error", e)
+                        viewModel.handleCredentialError(e)
+                    }
+                }
+            }
+        }
+    }
+
+    LaunchedEffect(state.error) {
+        state.error?.let { error ->
+            snackbarHostState.showSnackbar(error)
+            viewModel.onEvent(AuthEvent.DismissError)
+        }
+    }
     Scaffold(
-        modifier = Modifier.fillMaxSize()
+        modifier = Modifier.fillMaxSize(),
+        snackbarHost = { SnackbarHost(snackbarHostState) }
     ) { paddingValues ->
         Box(
             modifier = Modifier
@@ -59,7 +119,8 @@ fun LoginScreen(
             Column(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(24.dp),
+                    .padding(24.dp)
+                    .verticalScroll(rememberScrollState()),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.SpaceBetween
             ) {
@@ -89,9 +150,13 @@ fun LoginScreen(
                 ) {
                     GradientButton(
                         buttonText = "Login",
-                        onClick = onLoginClick
+                        onClick = {
+                            viewModel.onEvent(AuthEvent.OnLoginClick(context.getString(R.string.web_client_id)))
+                        }
                     )
                 }
+                Spacer(modifier = Modifier.height(40.dp))
+
             }
         }
     }
