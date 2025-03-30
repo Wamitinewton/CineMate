@@ -9,7 +9,6 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.firestore
 import com.newton.cinemate.BuildConfig
 import com.newton.network.data.interceptor.RequestInterceptor
-import com.newton.network.data.remote.CineMateApiService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -30,7 +29,7 @@ object AppModule {
     }
 
     private const val API_KEY = BuildConfig.TMDB_API
-    private const val BASE_URL = "https://api.themoviedb.org/3"
+    private const val BASE_URL = "https://api.themoviedb.org/3/"
 
     @Provides
     @Singleton
@@ -42,13 +41,12 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideCineMateApi(okHttpClient: OkHttpClient): CineMateApiService {
+    fun provideCineMateApi(okHttpClient: OkHttpClient): Retrofit {
         return Retrofit.Builder()
             .baseUrl(BASE_URL)
             .client(okHttpClient)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
-            .create(CineMateApiService::class.java)
     }
 
     @Provides

@@ -6,7 +6,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.newton.navigation.NavigationRoutes
 import com.newton.navigation.NavigationSubgraphRoutes
-import com.newton.trending.presentation.TrendingScreen
+import com.newton.trending.presentation.view.TrendingScreen
 
 class TrendingNavigationApiImpl: TrendingNavigationApi {
     override fun registerNavigationGraph(

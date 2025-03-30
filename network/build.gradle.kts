@@ -3,6 +3,8 @@ plugins {
     id("org.jetbrains.kotlin.android")
     id("kotlin-parcelize")
     id("kotlinx-serialization")
+    id("com.google.devtools.ksp")
+    id("dagger.hilt.android.plugin")
 }
 
 android {
@@ -43,11 +45,19 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 
+    //hilt
+    implementation(Dependencies.Hilt.android)
+    ksp(Dependencies.Hilt.compiler)
+
     //Retrofit
     implementation(Dependencies.Retrofit.retrofit)
     implementation(Dependencies.Retrofit.retrofit2KotlinxConverter)
     implementation(Dependencies.Retrofit.gsonConverter)
     implementation(Dependencies.Kotlinx.serialization)
+
+    //paging
+    implementation(Dependencies.Paging.compose)
+    implementation(Dependencies.Paging.runtime)
 
     //modules
     implementation(project(Modules.core))

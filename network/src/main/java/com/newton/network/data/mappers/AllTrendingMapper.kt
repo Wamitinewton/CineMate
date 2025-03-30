@@ -1,11 +1,11 @@
 package com.newton.network.data.mappers
 
 import com.newton.core.utils.ImageBaseUrl
-import com.newton.network.data.dto.AllTrendingDtoResults
-import com.newton.network.domain.models.AllTrending
+import com.newton.network.data.dto.TvShowResponseData
+import com.newton.network.domain.models.TvShowData
 
-fun AllTrendingDtoResults.toAllTrendingDomain(): AllTrending {
-    return AllTrending(
+fun TvShowResponseData.toAllTrendingDomain(): TvShowData {
+    return TvShowData(
         adult = adult,
         backdropPath = backdrop_path?.let { "${ImageBaseUrl.IMAGE_BASE_URL}$it" },
         firstAirDate = first_air_date,
@@ -28,5 +28,5 @@ fun AllTrendingDtoResults.toAllTrendingDomain(): AllTrending {
     )
 }
 
-fun List<AllTrendingDtoResults>.toAllTrendingDomainList(): List<AllTrending> =
+fun List<TvShowResponseData>.toAllTrendingDomainList(): List<TvShowData> =
     map { it.toAllTrendingDomain() }

@@ -34,7 +34,6 @@ import androidx.credentials.CredentialManager
 import androidx.credentials.exceptions.GetCredentialException
 import androidx.credentials.exceptions.NoCredentialException
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.newton.auth.R
 import com.newton.auth.presentation.event.AuthEvent
 import com.newton.auth.presentation.event.AuthUiEvent
 import com.newton.auth.presentation.viewModel.AuthViewModel

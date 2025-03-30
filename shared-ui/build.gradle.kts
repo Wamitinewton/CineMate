@@ -50,4 +50,11 @@ dependencies {
 
     //Accompanist
     implementation(Dependencies.Accompanist.systemUi)
+
+    //icons
+    implementation(Dependencies.Material.extendedIcons)
+
+    //coil
+    implementation(Dependencies.Coil.network)
+    implementation(Dependencies.Coil.compose)
 }
