@@ -40,12 +40,30 @@ fun TrendingScreen(
             ) {
                 Spacer(modifier = Modifier.height(16.dp))
 
-                TrendingShowsSection(
-                    trendingShowsFlow = viewModel.trendingShowsFlow,
+                AllTrendingSection(
+                    trendingShowsFlow = viewModel.allTrendingFilms,
                     modifier = Modifier.fillMaxWidth()
                 )
 
+                Spacer(modifier = Modifier.height(24.dp))
 
+                TrendingTvShowsSection(
+                    trendingTvShowsFlow = viewModel.trendingShows,
+                    modifier = Modifier.fillMaxWidth()
+                )
+
+                Spacer(modifier = Modifier.height(24.dp))
+
+                TrendingMoviesSection(
+                    trendingMoviesFlow = viewModel.trendingMovies,
+                    modifier = Modifier.fillMaxWidth()
+                )
+                Spacer(modifier = Modifier.height(16.dp))
+
+                TrendingPeopleSection(
+                    trendingPeopleFlow = viewModel.trendingPeople,
+                    modifier = Modifier.fillMaxWidth()
+                )
                 Spacer(modifier = Modifier.height(16.dp))
             }
         }}

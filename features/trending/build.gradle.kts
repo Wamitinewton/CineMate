@@ -79,4 +79,5 @@ dependencies {
     implementation(project(Modules.network))
     implementation(project(Modules.navigation))
     implementation(project(Modules.sharedUi))
+    implementation(project(Modules.prefs))
 }

@@ -3,7 +3,7 @@ package com.newton.network.domain.models
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class TvShowData(
+data class FilmData(
     val adult: Boolean?,
     val backdropPath: String?,
     val firstAirDate: String?,

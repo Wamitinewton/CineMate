@@ -3,7 +3,7 @@ package com.newton.network.data.dto
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class TvShowResponseData(
+data class FilmResponseDto(
     val adult: Boolean?,
     val backdrop_path: String?,
     val first_air_date: String?,

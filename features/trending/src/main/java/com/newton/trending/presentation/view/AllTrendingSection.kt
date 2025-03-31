@@ -33,7 +33,7 @@ import androidx.paging.LoadState
 import androidx.paging.PagingData
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
-import com.newton.network.domain.models.TvShowData
+import com.newton.network.domain.models.FilmData
 import com.newton.shared_ui.components.ErrorScreen
 import com.newton.shared_ui.components.NetworkImage
 import com.newton.shared_ui.components.shimmerEffect
@@ -43,17 +43,14 @@ import kotlinx.coroutines.launch
 import kotlin.math.absoluteValue
 
 @Composable
-fun TrendingShowsSection(
-    trendingShowsFlow: Flow<PagingData<TvShowData>>,
+fun AllTrendingSection(
+    trendingShowsFlow: Flow<PagingData<FilmData>>,
     modifier: Modifier = Modifier
 ) {
     val trendingShows = trendingShowsFlow.collectAsLazyPagingItems()
-    val loadState = trendingShows.loadState.refresh
-    val error = (loadState as? LoadState.Error)?.error
-
     Column {
         Text(
-            text = "Trending TV Shows",
+            text = "All Trending Films",
             style = MaterialTheme.typography.headlineSmall,
             fontWeight = FontWeight.Bold,
             color = MaterialTheme.colorScheme.onBackground
@@ -64,7 +61,7 @@ fun TrendingShowsSection(
             modifier = modifier.fillMaxWidth()
         ) {
             when (trendingShows.loadState.refresh) {
-                is LoadState.Loading -> TrendingShowsCarouselShimmer(modifier)
+                is LoadState.Loading -> AllTrendingCarouselShimmer(modifier)
                 is LoadState.Error ->
                     ErrorScreen(
                         message = "Failed to load trending shows. Try again",
@@ -73,11 +70,12 @@ fun TrendingShowsSection(
                         },
                         titleText = "TRENDING SHOWS",
                     )
+
                 is LoadState.NotLoading -> {
                     if (trendingShows.itemCount > 0) {
-                        TrendingShowsCarousel(trendingShows)
+                        AllTrendingCarousel(trendingShows)
                     } else {
-                        TrendingShowsCarouselEmpty(modifier)
+                        AllTrendingCarouselEmpty(modifier)
                     }
                 }
             }
@@ -88,8 +86,8 @@ fun TrendingShowsSection(
 }
 
 @Composable
-private fun TrendingShowsCarousel(
-    trendingShows: LazyPagingItems<TvShowData>
+private fun AllTrendingCarousel(
+    trendingShows: LazyPagingItems<FilmData>
 ) {
     val itemCount = trendingShows.itemCount
     if (itemCount == 0) return
@@ -118,9 +116,10 @@ private fun TrendingShowsCarousel(
         flingBehavior = PagerDefaults.flingBehavior(state = pagerState)
     ) { page ->
         trendingShows[page]?.let { tvShow ->
-            val title = tvShow.name?.ifEmpty { tvShow.title } ?: "Unknown Title"
+            val title = tvShow.name ?: tvShow.title ?: ""
 
-            val pageOffset = ((pagerState.currentPage - page) + pagerState.currentPageOffsetFraction).absoluteValue
+            val pageOffset =
+                ((pagerState.currentPage - page) + pagerState.currentPageOffsetFraction).absoluteValue
 
             Box(
                 modifier = Modifier
@@ -147,7 +146,7 @@ private fun TrendingShowsCarousel(
                         ) * if (pagerState.currentPage > page) -1 else 1
                     }
             ) {
-                TrendingShowCard(
+                AllTrendingCard(
                     backdropUrl = tvShow.posterPath ?: "",
                     title = title
                 )
@@ -157,7 +156,7 @@ private fun TrendingShowsCarousel(
 }
 
 @Composable
-private fun TrendingShowCard(
+private fun AllTrendingCard(
     backdropUrl: String,
     title: String,
     modifier: Modifier = Modifier
@@ -207,7 +206,7 @@ private fun TrendingShowCard(
 }
 
 @Composable
-private fun TrendingShowsCarouselShimmer(modifier: Modifier = Modifier) {
+private fun AllTrendingCarouselShimmer(modifier: Modifier = Modifier) {
     Card(
         modifier = modifier
             .fillMaxWidth()
@@ -224,7 +223,7 @@ private fun TrendingShowsCarouselShimmer(modifier: Modifier = Modifier) {
 }
 
 @Composable
-private fun TrendingShowsCarouselEmpty(modifier: Modifier = Modifier) {
+private fun AllTrendingCarouselEmpty(modifier: Modifier = Modifier) {
     Card(
         modifier = modifier
             .fillMaxWidth()
