@@ -19,19 +19,13 @@ class MainViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-            val onboardingStatus = prefsRepository.getUserOnboardingStatus()
-            val isGuest = prefsRepository.isGuestUser()
             val hasCompletedPrefs = prefsRepository.hasCompletedPreferences()
-
-            _startDestination.value = if (onboardingStatus) {
-                if (isGuest && !hasCompletedPrefs) {
+            _startDestination.value =
+                if (!hasCompletedPrefs) {
                     NavigationSubgraphRoutes.Auth.route
                 } else {
                     NavigationSubgraphRoutes.Trending.route
                 }
-            } else {
-                NavigationSubgraphRoutes.Auth.route
             }
         }
     }
-}

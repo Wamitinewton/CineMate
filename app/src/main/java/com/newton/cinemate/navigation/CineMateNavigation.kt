@@ -7,7 +7,6 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import com.newton.cinemate.viewModel.MainViewModel
-import com.newton.navigation.NavigationSubgraphRoutes
 
 @Composable
 fun CineMateNavigation(
@@ -26,6 +25,10 @@ fun CineMateNavigation(
             navGraphBuilder = this
         )
         navigationSubGraphs.trendingNavigationApi.registerNavigationGraph(
+            navHostController = navHostController,
+            navGraphBuilder = this
+        )
+        navigationSubGraphs.moviesNavigationApi.registerNavigationGraph(
             navHostController = navHostController,
             navGraphBuilder = this
         )

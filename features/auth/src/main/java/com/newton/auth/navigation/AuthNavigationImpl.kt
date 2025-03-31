@@ -17,6 +17,7 @@ import javax.inject.Inject
 class AuthNavigationImpl @Inject constructor(
     private val prefsRepository: PrefsRepository
 ) : AuthNavigationApi {
+
     override fun registerNavigationGraph(
         navGraphBuilder: NavGraphBuilder,
         navHostController: NavHostController
@@ -24,19 +25,24 @@ class AuthNavigationImpl @Inject constructor(
         navGraphBuilder.navigation(
             route = NavigationSubgraphRoutes.Auth.route,
             startDestination = getStartDestination()
-        ){
+        ) {
             composable(route = NavigationRoutes.AuthScreenRoute.routes) {
                 val authViewModel = hiltViewModel<AuthViewModel>()
                 OnboardingScreen(
-                    onAuthSuccess = {},
+                    onAuthSuccess = {
+                        prefsRepository.setUserOnboardingStatus(true)
+                        navHostController.navigate(NavigationRoutes.WelcomeScreenRoute.routes) {
+                            popUpTo(NavigationRoutes.AuthScreenRoute.routes) { inclusive = true }
+                            launchSingleTop = true
+                        }
+                    },
                     viewModel = authViewModel,
                     onContinueWithoutAccountClick = {
-
                         prefsRepository.setUserOnboardingStatus(true)
-
                         prefsRepository.setGuestUser(true)
                         navHostController.navigate(NavigationRoutes.WelcomeScreenRoute.routes) {
                             popUpTo(NavigationRoutes.AuthScreenRoute.routes) { inclusive = true }
+                            launchSingleTop = true
                         }
                     }
                 )
@@ -46,8 +52,10 @@ class AuthNavigationImpl @Inject constructor(
                 val welcomeViewModel = hiltViewModel<WelcomeViewModel>()
                 WelcomeScreen(
                     navigateToHome = {
+                        prefsRepository.setUserOnboardingStatus(true)
                         navHostController.navigate(NavigationRoutes.HomeScreenRoute.routes) {
                             popUpTo(NavigationSubgraphRoutes.Auth.route) { inclusive = true }
+                            launchSingleTop = true
                         }
                     },
                     viewModel = welcomeViewModel
@@ -58,8 +66,7 @@ class AuthNavigationImpl @Inject constructor(
 
     private fun getStartDestination(): String {
         return if (prefsRepository.getUserOnboardingStatus() &&
-            prefsRepository.isGuestUser() &&
-            !prefsRepository.hasCompletedPreferences()) {
+            prefsRepository.isGuestUser()) {
             NavigationRoutes.WelcomeScreenRoute.routes
         } else {
             NavigationRoutes.AuthScreenRoute.routes

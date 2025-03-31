@@ -49,4 +49,3 @@ fun CineMateTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Composab
         content = content
     )
 }
-

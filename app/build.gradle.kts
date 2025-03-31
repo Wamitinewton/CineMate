@@ -110,6 +110,9 @@ dependencies {
     //Accompanist
     implementation(Dependencies.Accompanist.systemUi)
 
+    //icons
+    implementation(Dependencies.Material.extendedIcons)
+
     //firebase
     implementation(platform(libs.google.firebase.bom))
     implementation(libs.firebase.auth)
