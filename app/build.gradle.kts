@@ -125,6 +125,10 @@ dependencies {
     implementation(project(Modules.network))
     implementation(project(Modules.auth))
     implementation(project(Modules.trending))
+    implementation(project(Modules.shows))
+    implementation(project(Modules.movies))
+    implementation(project(Modules.search))
+    implementation(project(Modules.settings))
     implementation(project(Modules.navigation))
     implementation(project(Modules.prefs))
 }
