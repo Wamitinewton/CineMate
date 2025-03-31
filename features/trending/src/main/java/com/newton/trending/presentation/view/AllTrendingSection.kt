@@ -42,6 +42,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 import kotlin.math.absoluteValue
 
+
 @Composable
 fun AllTrendingSection(
     trendingShowsFlow: Flow<PagingData<FilmData>>,
@@ -58,7 +59,9 @@ fun AllTrendingSection(
 
         Spacer(modifier = Modifier.height(8.dp))
         Box(
-            modifier = modifier.fillMaxWidth()
+            modifier = modifier
+                .fillMaxWidth()
+                .padding(top = 8.dp)
         ) {
             when (trendingShows.loadState.refresh) {
                 is LoadState.Loading -> AllTrendingCarouselShimmer(modifier)

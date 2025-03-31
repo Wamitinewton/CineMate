@@ -74,6 +74,7 @@ dependencies {
     implementation(Dependencies.Paging.compose)
     implementation(Dependencies.Paging.runtime)
 
+
     //modules
     implementation(project(Modules.core))
     implementation(project(Modules.network))

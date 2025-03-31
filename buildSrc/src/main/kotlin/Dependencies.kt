@@ -3,7 +3,8 @@ object Dependencies {
         const val android = "com.google.dagger:hilt-android:${Versions.hilt}"
         const val compiler = "com.google.dagger:hilt-android-compiler:${Versions.hilt}"
         const val agp = "com.google.dagger:hilt-android-gradle-plugin:${Versions.hilt}"
-        const val navigation = "androidx.hilt:hilt-navigation-compose:${Versions.hiltNavigationCompose}"
+        const val navigation =
+            "androidx.hilt:hilt-navigation-compose:${Versions.hiltNavigationCompose}"
     }
 
     object Navigation {
@@ -57,13 +58,16 @@ object Dependencies {
         const val retrofit = "com.squareup.retrofit2:retrofit:${Versions.retrofit}"
         const val okhttpLogger = "com.squareup.okhttp3:logging-interceptor:4.12.0"
         const val gsonConverter = "com.squareup.retrofit2:converter-gson:${Versions.converterGson}"
-        const val retrofit2KotlinxConverter = "com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:${Versions.retrofit2KotlinxSerializationConverter}"
+        const val retrofit2KotlinxConverter =
+            "com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:${Versions.retrofit2KotlinxSerializationConverter}"
     }
 
     object Kotlinx {
-        const val serialization = "org.jetbrains.kotlinx:kotlinx-serialization-json:${Versions.kotlinXSerialization}"
+        const val serialization =
+            "org.jetbrains.kotlinx:kotlinx-serialization-json:${Versions.kotlinXSerialization}"
         const val datetime = "org.jetbrains.kotlinx:kotlinx-datetime:0.6.2"
     }
+
 
     object Accompanist {
         const val systemUi = "com.google.accompanist:accompanist-systemuicontroller:0.24.10-beta"

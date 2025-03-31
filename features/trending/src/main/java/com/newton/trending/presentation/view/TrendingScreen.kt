@@ -14,14 +14,15 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.compose.ui.zIndex
+import com.newton.shared_ui.components.SearchCard
 import com.newton.shared_ui.theme.backgroundGradient
 import com.newton.trending.presentation.viewModel.TrendingViewModel
 
 @Composable
 fun TrendingScreen(
     modifier: Modifier = Modifier,
-    viewModel: TrendingViewModel = hiltViewModel()
+    viewModel: TrendingViewModel
 ) {
 
     Scaffold(
@@ -33,6 +34,15 @@ fun TrendingScreen(
                 .padding(paddingValues)
                 .background(backgroundGradient)
         ) {
+
+            SearchCard(
+                onSearchClick = { /* Your search click handler */ },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 80.dp, start = 30.dp, end = 30.dp)
+                    .zIndex(1f)
+            )
+
             Column(
                 modifier = Modifier
                     .fillMaxSize()
@@ -42,7 +52,7 @@ fun TrendingScreen(
 
                 AllTrendingSection(
                     trendingShowsFlow = viewModel.allTrendingFilms,
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier.fillMaxWidth(),
                 )
 
                 Spacer(modifier = Modifier.height(24.dp))

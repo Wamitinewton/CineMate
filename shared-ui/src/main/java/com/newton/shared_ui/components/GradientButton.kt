@@ -51,9 +51,6 @@ import com.newton.shared_ui.theme.dark_primary
 import com.newton.shared_ui.theme.dark_primaryContainer
 import com.newton.shared_ui.theme.dark_secondary
 
-/**
- * A highly customizable button component that can be used across different features.
- */
 @Composable
 fun CustomButton(
     text: String,
@@ -86,7 +83,6 @@ fun CustomButton(
 
     val shape = RoundedCornerShape(cornerRadius)
 
-    // Determine background and content colors based on variant and enabled state
     val backgroundColor = when (variant) {
         ButtonVariant.FILLED -> if (enabled) buttonColors.containerColor else buttonColors.disabledContainerColor
         else -> Color.Transparent
@@ -97,7 +93,6 @@ fun CustomButton(
         else -> if (enabled) buttonColors.containerColor else buttonColors.disabledContainerColor
     }
 
-    // Build the button modifier
     val buttonModifier = Modifier
         .then(modifier)
         .height(buttonHeight)
@@ -138,7 +133,6 @@ fun CustomButton(
         )
         .padding(horizontal = 16.dp)
 
-    // Button content
     Box(
         modifier = buttonModifier,
         contentAlignment = Alignment.Center
@@ -183,7 +177,6 @@ fun CustomButton(
     }
 }
 
-// Button configuration options
 enum class ButtonVariant {
     FILLED,
     OUTLINED,
@@ -196,7 +189,6 @@ enum class ButtonSize {
     LARGE
 }
 
-// Button colors data class
 data class ButtonColors(
     val containerColor: Color,
     val contentColor: Color,
@@ -207,7 +199,6 @@ data class ButtonColors(
 object ButtonDefaults {
     val cornerRadius = 8.dp
 
-    // Use Material theme colors instead of hardcoded values
     @Composable
     fun defaultMaterialColors(
         containerColor: Color = MaterialTheme.colorScheme.primary,
@@ -221,7 +212,6 @@ object ButtonDefaults {
         disabledContentColor = disabledContentColor
     )
 
-    // Material palette-based gradient options
     @Composable
     fun primaryGradient() = listOf(
         MaterialTheme.colorScheme.primary,
@@ -240,17 +230,16 @@ object ButtonDefaults {
         MaterialTheme.colorScheme.primary
     )
 
-    // Your custom dark theme gradients mapped to material theme
     val darkThemeGradient = listOf(
-        Color(0xFF180E36), // dark_primary
-        Color(0xFF2B2E5B), // dark_primaryContainer
-        Color(0xFF180E36)  // dark_primary again for smooth transition
+        Color(0xFF180E36),
+        Color(0xFF2B2E5B),
+        Color(0xFF180E36)
     )
 
     val accentGradient = listOf(
-        Color(0xFFFF4D00), // dark_secondary
-        Color(0xFF2B2E5B), // dark_primaryContainer
-        Color(0xFF180E36)  // dark_primary
+        Color(0xFFFF4D00),
+        Color(0xFF2B2E5B),
+        Color(0xFF180E36)
     )
 }
 @Composable
