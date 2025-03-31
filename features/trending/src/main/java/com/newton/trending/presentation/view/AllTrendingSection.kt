@@ -46,6 +46,7 @@ import kotlin.math.absoluteValue
 @Composable
 fun AllTrendingSection(
     trendingShowsFlow: Flow<PagingData<FilmData>>,
+    onRetry: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     val trendingShows = trendingShowsFlow.collectAsLazyPagingItems()
@@ -69,7 +70,7 @@ fun AllTrendingSection(
                     ErrorScreen(
                         message = "Failed to load trending shows. Try again",
                         onRetry = {
-                            trendingShows.refresh()
+                           onRetry()
                         },
                         titleText = "TRENDING SHOWS",
                     )

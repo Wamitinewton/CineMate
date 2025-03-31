@@ -23,7 +23,8 @@ import kotlinx.coroutines.flow.Flow
 @Composable
 fun TrendingPeopleSection(
     modifier: Modifier = Modifier,
-    trendingPeopleFlow: Flow<PagingData<PeopleData>>
+    trendingPeopleFlow: Flow<PagingData<PeopleData>>,
+    onRetry: () -> Unit
 ) {
     val peopleItems = trendingPeopleFlow.collectAsLazyPagingItems()
 
@@ -39,7 +40,8 @@ fun TrendingPeopleSection(
 
         TrendingPeopleList(
             modifier = modifier.fillMaxWidth(),
-            peopleItems = peopleItems
+            peopleItems = peopleItems,
+            onRetry = onRetry
         )
     }
 }
@@ -48,7 +50,8 @@ fun TrendingPeopleSection(
 @Composable
 fun TrendingPeopleList(
     modifier: Modifier = Modifier,
-    peopleItems: LazyPagingItems<PeopleData>
+    peopleItems: LazyPagingItems<PeopleData>,
+    onRetry: () -> Unit
 ) {
     LazyRow(
         modifier = modifier,

@@ -31,5 +31,7 @@ sealed class Screens(
 
 var bottomNavigationDestinations = listOf(
     Screens.Home,
+    Screens.Home,
+    Screens.Home,
     Screens.Movies
 )

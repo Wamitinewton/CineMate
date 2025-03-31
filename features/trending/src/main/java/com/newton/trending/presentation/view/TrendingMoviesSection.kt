@@ -17,7 +17,8 @@ import kotlinx.coroutines.flow.Flow
 @Composable
 fun TrendingMoviesSection(
     modifier: Modifier = Modifier,
-    trendingMoviesFlow: Flow<PagingData<FilmData>>
+    trendingMoviesFlow: Flow<PagingData<FilmData>>,
+    onRetry: () -> Unit
 ) {
     val moviesItems = trendingMoviesFlow.collectAsLazyPagingItems()
 
@@ -33,7 +34,8 @@ fun TrendingMoviesSection(
 
         TrendingFilmList(
             modifier = modifier.fillMaxWidth(),
-            filmItems = moviesItems
+            filmItems = moviesItems,
+            onRetry = onRetry
         )
     }
 }

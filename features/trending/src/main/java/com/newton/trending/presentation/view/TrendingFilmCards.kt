@@ -29,7 +29,8 @@ import com.newton.shared_ui.components.shimmerEffect
 @Composable
 fun TrendingFilmList(
     modifier: Modifier = Modifier,
-    filmItems: LazyPagingItems<FilmData>
+    filmItems: LazyPagingItems<FilmData>,
+    onRetry: () -> Unit
 ) {
     LazyRow(
         modifier = modifier,
@@ -40,7 +41,7 @@ fun TrendingFilmList(
                 item {
                     ErrorScreen(
                         message = "Could not load trending shows",
-                        onRetry = { filmItems.retry() },
+                        onRetry = { onRetry() },
                         titleText = "TV SHOWS",
                     )
                 }

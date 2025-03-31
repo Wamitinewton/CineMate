@@ -18,6 +18,7 @@ import kotlinx.coroutines.flow.Flow
 fun TrendingTvShowsSection(
     modifier: Modifier = Modifier,
     trendingTvShowsFlow: Flow<PagingData<FilmData>>,
+    onRetry: () -> Unit
 ) {
     val tvShowsItems = trendingTvShowsFlow.collectAsLazyPagingItems()
 
@@ -33,7 +34,8 @@ fun TrendingTvShowsSection(
 
         TrendingFilmList(
             filmItems = tvShowsItems,
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxWidth(),
+            onRetry = onRetry
         )
     }
 }
