@@ -62,7 +62,7 @@ fun TrendingPeopleList(
                 item {
                     ErrorScreen(
                         message = "Could not load trending people",
-                        onRetry = { peopleItems.retry() },
+                        onRetry = { onRetry() },
                         titleText = "FILM PEOPLE",
                     )
                 }

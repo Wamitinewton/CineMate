@@ -21,7 +21,6 @@ import com.newton.trending.presentation.viewModel.TrendingViewModel
 
 @Composable
 fun TrendingScreen(
-    modifier: Modifier = Modifier,
     viewModel: TrendingViewModel
 ) {
 
