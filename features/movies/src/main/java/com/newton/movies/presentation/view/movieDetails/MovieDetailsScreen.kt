@@ -3,26 +3,22 @@ package com.newton.movies.presentation.view.movieDetails
 import androidx.compose.animation.*
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.*
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.*
 import androidx.compose.material.icons.automirrored.filled.*
-import androidx.compose.material.icons.filled.PlayArrow
+import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.*
+import androidx.compose.ui.graphics.*
 import androidx.compose.ui.text.style.*
 import androidx.compose.ui.unit.*
 import androidx.lifecycle.compose.*
 import com.newton.movies.presentation.events.*
 import com.newton.movies.presentation.state.*
 import com.newton.movies.presentation.viewModel.*
-import com.newton.shared_ui.sharedComponents.ErrorScreen
-import com.newton.shared_ui.sharedComponents.FavoriteButton
-import com.newton.shared_ui.theme.backgroundGradient
+import com.newton.shared_ui.sharedComponents.*
+import com.newton.shared_ui.theme.*
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -45,31 +41,45 @@ fun MovieDetailsScreen(
         topBar = {
             TopAppBar(
                 title = {
-                    AnimatedVisibility(
-                        visible = topBarAlpha.floatValue > 0.3f,
-                        enter = fadeIn(tween(300)),
-                        exit = fadeOut(tween(300))
+                    Box(
+                        modifier = Modifier
+                            .fillMaxSize(),
+                        contentAlignment = Alignment.CenterStart
                     ) {
-                        when (movieDetailsState) {
-                            is MoviesDetailsUiState.Success -> {
-                                Text(
-                                    text = movieDetailsState.moviesDetails?.title ?: "",
-                                    maxLines = 1,
-                                    overflow = TextOverflow.Ellipsis,
-                                    color = MaterialTheme.colorScheme.onSurface
-                                )
+                        AnimatedVisibility(
+                            visible = topBarAlpha.floatValue > 0.3f,
+                            enter = fadeIn(tween(300)),
+                            exit = fadeOut(tween(300))
+                        ) {
+                            when (movieDetailsState) {
+                                is MoviesDetailsUiState.Success -> {
+                                    Text(
+                                        text = movieDetailsState.moviesDetails.title ?: "",
+                                        maxLines = 1,
+                                        overflow = TextOverflow.Ellipsis,
+                                        color = MaterialTheme.colorScheme.onSurface
+                                    )
+                                }
+
+                                else -> Text("")
                             }
-                            else -> Text("")
                         }
                     }
                 },
+
                 navigationIcon = {
-                    IconButton(onClick = onBackClick) {
-                        Icon(
-                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                            contentDescription = "Back",
-                            tint = MaterialTheme.colorScheme.onSurface
-                        )
+                    Box(
+                        modifier = Modifier
+                            .fillMaxSize(),
+                        contentAlignment = Alignment.CenterStart
+                    ) {
+                        IconButton(onClick = onBackClick) {
+                            Icon(
+                                imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                                contentDescription = "Back",
+                                tint = MaterialTheme.colorScheme.onSurface
+                            )
+                        }
                     }
                 },
                 actions = {
@@ -77,9 +87,10 @@ fun MovieDetailsScreen(
                         is MoviesDetailsUiState.Success -> {
                             FavoriteButton(
                                 isFavorite = false,
-                                onToggle = {  }
+                                onToggle = { }
                             )
                         }
+
                         else -> {}
                     }
                 },
@@ -97,7 +108,7 @@ fun MovieDetailsScreen(
             when (movieDetailsState) {
                 is MoviesDetailsUiState.Success -> {
                     FloatingActionButton(
-                        onClick = {  },
+                        onClick = { },
                         containerColor = MaterialTheme.colorScheme.primary,
                         contentColor = MaterialTheme.colorScheme.onPrimary
                     ) {
@@ -107,6 +118,7 @@ fun MovieDetailsScreen(
                         )
                     }
                 }
+
                 else -> {}
             }
         }
@@ -119,21 +131,25 @@ fun MovieDetailsScreen(
         ) {
             when (movieDetailsState) {
                 is MoviesDetailsUiState.Loading -> {
-                    CircularProgressIndicator()
+                    CustomLoadingIndicator(text = "Loading Movie Details..")
                 }
+
                 is MoviesDetailsUiState.Error -> {
                     ErrorScreen(
                         message = movieDetailsState.message,
                         onRetry = { viewModel.onEvent(MovieDetailsEvents.LoadDetails(movieId)) }
                     )
                 }
+
                 is MoviesDetailsUiState.Success -> {
                     MovieDetailsContent(
                         movieDetails = movieDetailsState.moviesDetails,
                         scrollState = scrollState
                     )
                 }
-                else -> { /* Initial state */ }
+
+                else -> { /* Initial state */
+                }
             }
         }
     }

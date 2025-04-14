@@ -1,5 +1,6 @@
 package com.newton.movies.presentation.view.movieDetails
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.*
 import androidx.compose.material.icons.*
@@ -8,14 +9,25 @@ import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.*
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.vector.*
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.*
 import com.newton.core.utils.*
 import com.newton.network.domain.models.*
 import com.newton.shared_ui.sharedComponents.*
+import com.newton.shared_ui.theme.backgroundGradient
 
 @Composable
 fun KeyDetailsSection(movie: MovieDetails) {
+
+    val cardGradient = Brush.linearGradient(
+        colors = listOf(
+            MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.9f),
+            MaterialTheme.colorScheme.secondaryContainer.copy(alpha = 0.85f),
+            MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.9f)
+        )
+    )
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -26,44 +38,44 @@ fun KeyDetailsSection(movie: MovieDetails) {
         Spacer(modifier = Modifier.height(8.dp))
 
         Card(
-            colors = CardDefaults.cardColors(
-                containerColor = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.5f)
-            ),
             shape = RoundedCornerShape(16.dp),
             modifier = Modifier.fillMaxWidth()
         ) {
-            Column(
+            Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(16.dp),
-                verticalArrangement = Arrangement.spacedBy(12.dp)
+                    .background(brush = cardGradient)
             ) {
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp),
+                    verticalArrangement = Arrangement.spacedBy(12.dp)
+                ) {
+                    DetailRow("Budget", formatCurrency(movie.budget), Icons.Default.AttachMoney)
 
-                DetailRow("Budget", formatCurrency(movie.budget), Icons.Default.AttachMoney)
+                    DetailRow("Revenue", formatCurrency(movie.revenue), Icons.Default.MonetizationOn)
 
+                    if (movie.status != null) {
+                        DetailRow("Status", movie.status, Icons.Default.Info)
+                    }
 
-                DetailRow("Revenue", formatCurrency(movie.revenue), Icons.Default.MonetizationOn)
-            }
+                    if (!movie.originalTitle.isNullOrBlank() && movie.originalTitle != movie.title) {
+                        DetailRow("Original Title", movie.originalTitle, Icons.Default.Title)
+                    }
 
-            if (movie.status != null) {
-                DetailRow("Status", movie.status, Icons.Default.Info)
-            }
+                    if (!movie.imdbId.isNullOrBlank()) {
+                        DetailRow("IMDB", "View on IMDB", Icons.AutoMirrored.Filled.OpenInNew, true)
+                    }
 
-            if (!movie.originalTitle.isNullOrBlank() && movie.originalTitle != movie.title) {
-                DetailRow("Original Title", movie.originalTitle, Icons.Default.Title)
-            }
-
-            if (!movie.imdbId.isNullOrBlank()) {
-                DetailRow("IMDB", "View on IMDB", Icons.AutoMirrored.Filled.OpenInNew, true)
-            }
-
-            if (!movie.homepage.isNullOrBlank()) {
-                DetailRow("Website", "Visit Official Site", Icons.Default.Language, true)
+                    if (!movie.homepage.isNullOrBlank()) {
+                        DetailRow("Website", "Visit Official Site", Icons.Default.Language, true)
+                    }
+                }
             }
         }
     }
 }
-
 
 @Composable
 fun DetailRow(
@@ -80,7 +92,7 @@ fun DetailRow(
             imageVector = icon,
             contentDescription = null,
             tint = MaterialTheme.colorScheme.primary,
-            modifier = Modifier.size(20.dp)
+            modifier = Modifier.size(24.dp)
         )
 
         Spacer(modifier = Modifier.width(16.dp))
@@ -89,13 +101,17 @@ fun DetailRow(
             Text(
                 text = label,
                 style = MaterialTheme.typography.labelMedium,
-                color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.7f)
+                color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.8f)
             )
+
+            Spacer(modifier = Modifier.height(2.dp))
 
             Text(
                 text = value ?: "",
                 style = MaterialTheme.typography.bodyMedium,
-                color = if (isLink) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant
+                color = if (isLink) MaterialTheme.colorScheme.primary
+                else MaterialTheme.colorScheme.onSurfaceVariant,
+                fontWeight = if (isLink) FontWeight.SemiBold else FontWeight.Normal
             )
         }
     }

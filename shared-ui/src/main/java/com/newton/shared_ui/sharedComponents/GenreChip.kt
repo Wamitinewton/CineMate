@@ -14,7 +14,6 @@ fun GenreChip(name: String) {
     Surface(
         shape = RoundedCornerShape(16.dp),
         color = MaterialTheme.colorScheme.primary.copy(alpha = 0.15f),
-        contentColor = MaterialTheme.colorScheme.primary
     ) {
         Text(
             text = name,

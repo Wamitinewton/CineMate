@@ -108,7 +108,6 @@ fun SectionHeading(title: String) {
         style = MaterialTheme.typography.titleMedium.copy(
             fontWeight = FontWeight.Bold
         ),
-        color = MaterialTheme.colorScheme.primary
     )
 }
 

@@ -45,7 +45,7 @@ fun GenreDto.toDomainGenre(): Genre {
 fun ProductionCompanyDto.toDomainProductionCompany(): ProductionCompany {
     return ProductionCompany(
         id = id,
-        logoPath = logo_path,
+        logoPath = logo_path.let { "${ImageBaseUrl.IMAGE_BASE_URL}$it" },
         name = name,
         originCountry = origin_country
     )

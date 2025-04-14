@@ -17,7 +17,7 @@ fun GenreSection(genres: List<Genre>) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = 16.dp, vertical = 8.dp)
+            .padding(horizontal = 10.dp, vertical = 8.dp)
     ) {
         SectionHeading("Genres")
 

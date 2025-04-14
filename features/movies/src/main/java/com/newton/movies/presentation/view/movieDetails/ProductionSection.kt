@@ -21,7 +21,7 @@ fun ProductionSection(companies: List<ProductionCompany>) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = 16.dp, vertical = 16.dp)
+            .padding(horizontal = 10.dp, vertical = 10.dp)
     ) {
         SectionHeading("Production")
 

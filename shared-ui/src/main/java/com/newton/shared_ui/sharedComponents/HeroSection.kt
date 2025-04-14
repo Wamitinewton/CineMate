@@ -8,6 +8,7 @@ import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.*
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.*
 import androidx.compose.ui.graphics.*
 import androidx.compose.ui.text.font.*
@@ -31,7 +32,8 @@ fun MediaHeroSection(
             .height(380.dp)
     ) {
         NetworkImage(
-            imageUrl = backdropPath
+            imageUrl = backdropPath,
+            modifier = Modifier.fillMaxSize()
         )
 
         Box(
@@ -146,7 +148,8 @@ fun MediaHeroSection(
                     modifier = Modifier.size(width = 100.dp, height = 150.dp)
                 ){
                     NetworkImage(
-                        imageUrl = posterPath
+                        imageUrl = posterPath,
+                        modifier = Modifier.fillMaxSize()
                     )
                 }
             }
