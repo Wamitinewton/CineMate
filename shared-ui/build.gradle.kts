@@ -52,9 +52,11 @@ dependencies {
     implementation(Dependencies.Accompanist.systemUi)
 
     //icons
-    implementation(Dependencies.Material.extendedIcons)
+    implementation(Dependencies.Material.EXTENDED_ICONS)
 
     //coil
     implementation(Dependencies.Coil.network)
     implementation(Dependencies.Coil.compose)
+
+    implementation(project(Modules.CORE))
 }

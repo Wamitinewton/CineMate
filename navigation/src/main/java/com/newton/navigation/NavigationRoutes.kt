@@ -8,4 +8,7 @@ sealed class NavigationRoutes(val routes: String) {
     data object Search: NavigationRoutes("search")
     data object Settings: NavigationRoutes("settings")
     data object Shows: NavigationRoutes("shows")
+    data object MovieDetails : NavigationRoutes("movieDetails/{id}") {
+        fun createRoute(id: Int) = "movieDetails/$id"
+    }
 }

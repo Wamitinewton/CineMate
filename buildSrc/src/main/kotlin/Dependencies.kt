@@ -1,43 +1,39 @@
 object Dependencies {
     object Hilt {
-        const val android = "com.google.dagger:hilt-android:${Versions.hilt}"
-        const val compiler = "com.google.dagger:hilt-android-compiler:${Versions.hilt}"
-        const val agp = "com.google.dagger:hilt-android-gradle-plugin:${Versions.hilt}"
-        const val navigation =
+        const val ANDROID = "com.google.dagger:hilt-android:${Versions.hilt}"
+        const val COMPILER = "com.google.dagger:hilt-android-compiler:${Versions.hilt}"
+        const val AGP = "com.google.dagger:hilt-android-gradle-plugin:${Versions.hilt}"
+        const val NAVIGATION =
             "androidx.hilt:hilt-navigation-compose:${Versions.hiltNavigationCompose}"
     }
 
     object Navigation {
-        const val compose = "androidx.navigation:navigation-compose:${Versions.composeNav}"
+        const val COMPOSE = "androidx.navigation:navigation-compose:${Versions.composeNav}"
     }
 
     object ConstraintLayout {
-        const val layout = "androidx.constraintlayout:constraintlayout:2.2.0"
-        const val compose = "androidx.constraintlayout:constraintlayout-compose:1.0.1"
+        const val LAYOUT = "androidx.constraintlayout:constraintlayout:2.2.0"
+        const val COMPOSE = "androidx.constraintlayout:constraintlayout-compose:1.0.1"
     }
 
-    object DataStore {
-        const val preferences = "androidx.datastore:datastore-preferences"
-        const val securityCrypto = "androidx.security:security-crypto:1.1.0-alpha06"
-    }
 
     object Room {
-        const val runtime = "androidx.room:room-runtime:${Versions.room}"
-        const val compiler = "androidx.room:room-compiler:${Versions.room}"
-        const val ktx = "androidx.room:room-ktx:${Versions.room}"
+        const val RUNTIME = "androidx.room:room-runtime:${Versions.room}"
+        const val COMPILER = "androidx.room:room-compiler:${Versions.room}"
+        const val KTX = "androidx.room:room-ktx:${Versions.room}"
     }
 
     object Material {
-        const val extendedIcons = "androidx.compose.material:material-icons-extended:1.7.7"
+        const val EXTENDED_ICONS = "androidx.compose.material:material-icons-extended:1.7.7"
     }
 
     object Work {
-        const val runtime = "androidx.work:work-runtime-ktx:${Versions.workRuntimeKtx}"
-        const val hiltWorker = "androidx.hilt:hilt-work:${Versions.hiltNavigationCompose}"
+        const val RUNTIME = "androidx.work:work-runtime-ktx:${Versions.workRuntimeKtx}"
+        const val HILT_WORKER = "androidx.hilt:hilt-work:${Versions.hiltNavigationCompose}"
     }
 
     object Logging {
-        const val timber = "com.jakewharton.timber:timber:${Versions.timber}"
+        const val TIMBER = "com.jakewharton.timber:timber:${Versions.timber}"
     }
 
     object Coil {

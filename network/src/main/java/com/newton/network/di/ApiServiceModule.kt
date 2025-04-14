@@ -1,6 +1,6 @@
-package com.newton.network.data.di
+package com.newton.network.di
 
-import com.newton.network.data.remote.TrendingApiService
+import com.newton.network.data.remote.*
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -16,5 +16,11 @@ object ApiServiceModule {
     @Singleton
     fun provideTrendingApiService(retrofit: Retrofit): TrendingApiService {
         return retrofit.create(TrendingApiService::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideMovieApiService(retrofit: Retrofit): MoviesApiService {
+        return retrofit.create(MoviesApiService::class.java)
     }
 }

@@ -46,8 +46,8 @@ dependencies {
     androidTestImplementation(libs.androidx.espresso.core)
 
     //hilt
-    implementation(Dependencies.Hilt.android)
-    ksp(Dependencies.Hilt.compiler)
+    implementation(Dependencies.Hilt.ANDROID)
+    ksp(Dependencies.Hilt.COMPILER)
 
     //Retrofit
     implementation(Dependencies.Retrofit.retrofit)
@@ -60,6 +60,6 @@ dependencies {
     implementation(Dependencies.Paging.runtime)
 
     //modules
-    implementation(project(Modules.core))
+    implementation(project(Modules.CORE))
 
 }

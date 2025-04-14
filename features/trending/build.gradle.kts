@@ -53,22 +53,22 @@ dependencies {
     androidTestImplementation(libs.androidx.espresso.core)
 
     //hilt
-    implementation(Dependencies.Hilt.android)
-    ksp(Dependencies.Hilt.compiler)
+    implementation(Dependencies.Hilt.ANDROID)
+    ksp(Dependencies.Hilt.COMPILER)
 
     //navigation
-    implementation(Dependencies.Hilt.navigation)
-    implementation(Dependencies.Navigation.compose)
+    implementation(Dependencies.Hilt.NAVIGATION)
+    implementation(Dependencies.Navigation.COMPOSE)
 
     //coil
     implementation(Dependencies.Coil.compose)
     implementation(Dependencies.Coil.network)
 
     //extendedIcons
-    implementation(Dependencies.Material.extendedIcons)
+    implementation(Dependencies.Material.EXTENDED_ICONS)
 
     //timber
-    implementation(Dependencies.Logging.timber)
+    implementation(Dependencies.Logging.TIMBER)
 
     //paging
     implementation(Dependencies.Paging.compose)
@@ -76,9 +76,10 @@ dependencies {
 
 
     //modules
-    implementation(project(Modules.core))
-    implementation(project(Modules.network))
-    implementation(project(Modules.navigation))
-    implementation(project(Modules.sharedUi))
-    implementation(project(Modules.prefs))
+    implementation(project(Modules.CORE))
+    implementation(project(Modules.NETWORK))
+    implementation(project(Modules.NAVIGATION))
+    implementation(project(Modules.SHARED_UI))
+    implementation(project(Modules.PREFS))
+    implementation(project(Modules.SHARED))
 }

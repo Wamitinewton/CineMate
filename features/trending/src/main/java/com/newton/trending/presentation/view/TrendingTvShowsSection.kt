@@ -11,7 +11,7 @@ import androidx.compose.ui.unit.dp
 import androidx.paging.PagingData
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.newton.network.domain.models.FilmData
-import com.newton.shared_ui.components.SectionHeader
+import com.newton.shared_ui.sharedComponents.CategorySectionHeader
 import kotlinx.coroutines.flow.Flow
 
 @Composable
@@ -25,7 +25,7 @@ fun TrendingTvShowsSection(
     Column(
         modifier = modifier
     ) {
-        SectionHeader(
+        CategorySectionHeader(
             title = "Trending TV Shows",
             modifier = Modifier.padding(horizontal = 15.dp)
         )

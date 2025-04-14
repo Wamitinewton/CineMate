@@ -43,6 +43,6 @@ dependencies {
     androidTestImplementation(libs.androidx.espresso.core)
 
     //Navigation
-    implementation(Dependencies.Hilt.navigation)
-    implementation(Dependencies.Navigation.compose)
+    implementation(Dependencies.Hilt.NAVIGATION)
+    implementation(Dependencies.Navigation.COMPOSE)
 }

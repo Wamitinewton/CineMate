@@ -37,9 +37,9 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.newton.auth.presentation.event.AuthEvent
 import com.newton.auth.presentation.event.AuthUiEvent
 import com.newton.auth.presentation.viewModel.AuthViewModel
-import com.newton.shared_ui.components.ButtonVariant
-import com.newton.shared_ui.components.CustomButton
-import com.newton.shared_ui.components.GradientButton
+import com.newton.shared_ui.sharedComponents.ButtonVariant
+import com.newton.shared_ui.sharedComponents.CustomButton
+import com.newton.shared_ui.sharedComponents.GradientButton
 import com.newton.shared_ui.theme.backgroundGradient
 import kotlinx.coroutines.flow.collectLatest
 

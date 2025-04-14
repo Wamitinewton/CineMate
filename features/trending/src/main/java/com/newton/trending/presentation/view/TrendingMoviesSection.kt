@@ -11,21 +11,22 @@ import androidx.compose.ui.unit.dp
 import androidx.paging.PagingData
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.newton.network.domain.models.FilmData
-import com.newton.shared_ui.components.SectionHeader
+import com.newton.shared_ui.sharedComponents.CategorySectionHeader
 import kotlinx.coroutines.flow.Flow
 
 @Composable
 fun TrendingMoviesSection(
     modifier: Modifier = Modifier,
     trendingMoviesFlow: Flow<PagingData<FilmData>>,
-    onRetry: () -> Unit
+    onRetry: () -> Unit,
+    onMovieClick: (Int?) -> Unit
 ) {
     val moviesItems = trendingMoviesFlow.collectAsLazyPagingItems()
 
     Column(
         modifier = modifier
     ) {
-        SectionHeader(
+        CategorySectionHeader(
             title = "Trending Movies",
             modifier = Modifier.padding(horizontal = 15.dp)
         )
@@ -35,7 +36,10 @@ fun TrendingMoviesSection(
         TrendingFilmList(
             modifier = modifier.fillMaxWidth(),
             filmItems = moviesItems,
-            onRetry = onRetry
+            onRetry = onRetry,
+            onMovieClick = { id ->
+                onMovieClick(id)
+            }
         )
     }
 }

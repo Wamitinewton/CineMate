@@ -1,4 +1,4 @@
-package com.newton.shared_ui.components
+package com.newton.shared_ui.sharedComponents
 
 import androidx.compose.animation.core.animateFloat
 import androidx.compose.animation.core.infiniteRepeatable

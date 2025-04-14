@@ -15,13 +15,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
-import com.newton.shared_ui.components.SearchCard
+import com.newton.shared_ui.sharedComponents.SearchCard
 import com.newton.shared_ui.theme.backgroundGradient
 import com.newton.trending.presentation.viewModel.TrendingViewModel
 
 @Composable
 fun TrendingScreen(
-    viewModel: TrendingViewModel
+    viewModel: TrendingViewModel,
+    onMovieDetailsClick: (Int) -> Unit
 ) {
 
     Scaffold(
@@ -74,6 +75,9 @@ fun TrendingScreen(
                     modifier = Modifier.fillMaxWidth(),
                     onRetry = {
                         viewModel.refresh()
+                    },
+                    onMovieClick = { id ->
+                        onMovieDetailsClick(id!!)
                     }
                 )
                 Spacer(modifier = Modifier.height(16.dp))

@@ -22,7 +22,10 @@ class TrendingNavigationApiImpl: TrendingNavigationApi {
             composable(route = NavigationRoutes.HomeScreenRoute.routes) {
                 val trendingViewModel = hiltViewModel<TrendingViewModel>()
                 TrendingScreen(
-                    viewModel = trendingViewModel
+                    viewModel = trendingViewModel,
+                    onMovieDetailsClick = { id ->
+                        navHostController.navigate(NavigationRoutes.MovieDetails.createRoute(id))
+                    }
                 )
             }
         }

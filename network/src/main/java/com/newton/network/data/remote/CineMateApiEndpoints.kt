@@ -7,4 +7,8 @@ object CineMateApiEndpoints {
         const val PEOPLE_TRENDING = "trending/person/day"
         const val TV_TRENDING = "trending/tv/day"
     }
+
+    object Movies {
+        const val MOVIE_DETAILS = "movie/{movie_id}"
+    }
 }

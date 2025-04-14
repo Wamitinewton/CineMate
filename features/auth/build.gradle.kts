@@ -54,12 +54,12 @@ dependencies {
     debugImplementation(libs.androidx.ui.test.manifest)
 
     //navigation
-    implementation(Dependencies.Hilt.navigation)
-    implementation(Dependencies.Navigation.compose)
+    implementation(Dependencies.Hilt.NAVIGATION)
+    implementation(Dependencies.Navigation.COMPOSE)
 
     //hilt
-    implementation(Dependencies.Hilt.android)
-    ksp(Dependencies.Hilt.compiler)
+    implementation(Dependencies.Hilt.ANDROID)
+    ksp(Dependencies.Hilt.COMPILER)
 
     //coil
     implementation(Dependencies.Coil.network)
@@ -67,11 +67,11 @@ dependencies {
 
 
     //timber
-    implementation(Dependencies.Logging.timber)
+    implementation(Dependencies.Logging.TIMBER)
 
 
     //extended icons
-    implementation(Dependencies.Material.extendedIcons)
+    implementation(Dependencies.Material.EXTENDED_ICONS)
 
     //firebase
     implementation(platform(libs.google.firebase.bom))
@@ -83,9 +83,9 @@ dependencies {
 
 
     //modules
-    implementation(project(Modules.navigation))
-    implementation(project(Modules.sharedUi))
-    implementation(project(Modules.network))
-    implementation(project(Modules.core))
-    implementation(project(Modules.prefs))
+    implementation(project(Modules.NAVIGATION))
+    implementation(project(Modules.SHARED_UI))
+    implementation(project(Modules.NETWORK))
+    implementation(project(Modules.CORE))
+    implementation(project(Modules.PREFS))
 }

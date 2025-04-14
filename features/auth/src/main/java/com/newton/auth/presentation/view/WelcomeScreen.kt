@@ -26,7 +26,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.newton.auth.presentation.event.WelcomeEvent
 import com.newton.auth.presentation.event.WelcomeNavigationEvent
 import com.newton.auth.presentation.viewModel.WelcomeViewModel
-import com.newton.shared_ui.components.*
+import com.newton.shared_ui.sharedComponents.*
 import com.newton.shared_ui.theme.backgroundGradient
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch

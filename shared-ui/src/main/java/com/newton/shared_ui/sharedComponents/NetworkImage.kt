@@ -1,4 +1,4 @@
-package com.newton.shared_ui.components
+package com.newton.shared_ui.sharedComponents
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box

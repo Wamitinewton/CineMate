@@ -1,4 +1,4 @@
-package com.newton.shared_ui.components
+package com.newton.shared_ui.sharedComponents
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.expandVertically
@@ -27,10 +27,11 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun SectionHeader(
+fun CategorySectionHeader(
     title: String,
     modifier: Modifier = Modifier,
     showSeeAllButton: Boolean = true,
@@ -98,6 +99,17 @@ fun SectionHeader(
             }
         }
     }
+}
+
+@Composable
+fun SectionHeading(title: String) {
+    Text(
+        text = title,
+        style = MaterialTheme.typography.titleMedium.copy(
+            fontWeight = FontWeight.Bold
+        ),
+        color = MaterialTheme.colorScheme.primary
+    )
 }
 
 @Composable

@@ -95,12 +95,12 @@ dependencies {
     implementation(Dependencies.Kotlinx.serialization)
 
     //hilt
-    implementation(Dependencies.Hilt.android)
-    ksp(Dependencies.Hilt.compiler)
+    implementation(Dependencies.Hilt.ANDROID)
+    ksp(Dependencies.Hilt.COMPILER)
 
     //navigation
-    implementation(Dependencies.Hilt.navigation)
-    implementation(Dependencies.Navigation.compose)
+    implementation(Dependencies.Hilt.NAVIGATION)
+    implementation(Dependencies.Navigation.COMPOSE)
 
     //coil
     implementation(Dependencies.Coil.compose)
@@ -111,7 +111,7 @@ dependencies {
     implementation(Dependencies.Accompanist.systemUi)
 
     //icons
-    implementation(Dependencies.Material.extendedIcons)
+    implementation(Dependencies.Material.EXTENDED_ICONS)
 
     //firebase
     implementation(platform(libs.google.firebase.bom))
@@ -123,15 +123,15 @@ dependencies {
 
 
     // modules
-    implementation(project(Modules.sharedUi))
-    implementation(project(Modules.core))
-    implementation(project(Modules.network))
-    implementation(project(Modules.auth))
-    implementation(project(Modules.trending))
-    implementation(project(Modules.shows))
-    implementation(project(Modules.movies))
-    implementation(project(Modules.search))
-    implementation(project(Modules.settings))
-    implementation(project(Modules.navigation))
-    implementation(project(Modules.prefs))
+    implementation(project(Modules.SHARED_UI))
+    implementation(project(Modules.CORE))
+    implementation(project(Modules.NETWORK))
+    implementation(project(Modules.AUTH))
+    implementation(project(Modules.TRENDING))
+    implementation(project(Modules.SHOWS))
+    implementation(project(Modules.MOVIES))
+    implementation(project(Modules.SEARCH))
+    implementation(project(Modules.SETTINGS))
+    implementation(project(Modules.NAVIGATION))
+    implementation(project(Modules.PREFS))
 }

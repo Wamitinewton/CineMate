@@ -34,9 +34,9 @@ import androidx.paging.PagingData
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.newton.network.domain.models.FilmData
-import com.newton.shared_ui.components.ErrorScreen
-import com.newton.shared_ui.components.NetworkImage
-import com.newton.shared_ui.components.shimmerEffect
+import com.newton.shared_ui.sharedComponents.ErrorScreen
+import com.newton.shared_ui.sharedComponents.NetworkImage
+import com.newton.shared_ui.sharedComponents.shimmerEffect
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch

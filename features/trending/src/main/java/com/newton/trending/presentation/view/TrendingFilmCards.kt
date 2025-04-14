@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -22,15 +21,16 @@ import androidx.compose.ui.unit.dp
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import com.newton.network.domain.models.FilmData
-import com.newton.shared_ui.components.ErrorScreen
-import com.newton.shared_ui.components.FilmCard
-import com.newton.shared_ui.components.shimmerEffect
+import com.newton.shared_ui.sharedComponents.ErrorScreen
+import com.newton.shared_ui.sharedComponents.FilmCard
+import com.newton.shared_ui.sharedComponents.shimmerEffect
 
 @Composable
 fun TrendingFilmList(
     modifier: Modifier = Modifier,
     filmItems: LazyPagingItems<FilmData>,
-    onRetry: () -> Unit
+    onRetry: () -> Unit,
+    onMovieClick: (Int?) -> Unit = {}
 ) {
     LazyRow(
         modifier = modifier,
@@ -50,7 +50,6 @@ fun TrendingFilmList(
             is LoadState.Loading -> {
                 items(5) {
                     FilmShimmerCard(
-                        modifier = Modifier.padding(end = 12.dp)
                     )
                 }
             }
@@ -60,9 +59,10 @@ fun TrendingFilmList(
                     val tvShow = filmItems[index]
                     if (tvShow != null) {
                         FilmCard(
-                            modifier = Modifier.padding(end = 12.dp),
+                            id = tvShow.id,
                             posterPath = tvShow.posterPath ?: "",
                             title = tvShow.name ?: tvShow.title ?: "Unknown title",
+                            onClick = onMovieClick,
                         )
                     }
                 }
@@ -70,7 +70,6 @@ fun TrendingFilmList(
                 if (filmItems.loadState.append is LoadState.Loading) {
                     item {
                         FilmShimmerCard(
-                            modifier = Modifier.padding(end = 12.dp)
                         )
                     }
                 }
@@ -80,7 +79,7 @@ fun TrendingFilmList(
 }
 
 @Composable
-fun FilmShimmerCard(modifier: Modifier = Modifier) {
+fun FilmShimmerCard() {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier.width(150.dp)

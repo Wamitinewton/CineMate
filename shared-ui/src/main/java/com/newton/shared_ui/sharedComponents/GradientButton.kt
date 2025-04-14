@@ -1,4 +1,4 @@
-package com.newton.shared_ui.components
+package com.newton.shared_ui.sharedComponents
 
 
 import androidx.compose.animation.core.LinearEasing
@@ -59,8 +59,8 @@ fun CustomButton(
     enabled: Boolean = true,
     variant: ButtonVariant = ButtonVariant.FILLED,
     size: ButtonSize = ButtonSize.MEDIUM,
-    buttonColors: ButtonColors = com.newton.shared_ui.components.ButtonDefaults.defaultMaterialColors(),
-    cornerRadius: Dp = com.newton.shared_ui.components.ButtonDefaults.cornerRadius,
+    buttonColors: ButtonColors = com.newton.shared_ui.sharedComponents.ButtonDefaults.defaultMaterialColors(),
+    cornerRadius: Dp = com.newton.shared_ui.sharedComponents.ButtonDefaults.cornerRadius,
     leadingIcon: ImageVector? = null,
     trailingIcon: ImageVector? = null,
     isLoading: Boolean = false,

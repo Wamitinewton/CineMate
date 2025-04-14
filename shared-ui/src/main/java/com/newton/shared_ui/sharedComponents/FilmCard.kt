@@ -1,4 +1,4 @@
-package com.newton.shared_ui.components
+package com.newton.shared_ui.sharedComponents
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -20,15 +20,17 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 fun FilmCard(
-    modifier: Modifier = Modifier,
     posterPath: String,
     title: String,
+    onClick: (Int?) -> Unit,
+    id: Int? = null
 ) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier.width(150.dp)
     ) {
         Card(
+            onClick = { onClick(id) },
             modifier = Modifier
                 .height(225.dp)
                 .fillMaxWidth()

@@ -15,9 +15,9 @@ import androidx.paging.PagingData
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.newton.network.domain.models.PeopleData
-import com.newton.shared_ui.components.ErrorScreen
-import com.newton.shared_ui.components.FilmCard
-import com.newton.shared_ui.components.SectionHeader
+import com.newton.shared_ui.sharedComponents.ErrorScreen
+import com.newton.shared_ui.sharedComponents.FilmCard
+import com.newton.shared_ui.sharedComponents.CategorySectionHeader
 import kotlinx.coroutines.flow.Flow
 
 @Composable
@@ -31,7 +31,7 @@ fun TrendingPeopleSection(
     Column(
         modifier = modifier
     ) {
-        SectionHeader(
+        CategorySectionHeader(
             title = "Trending People",
             modifier = Modifier.padding(horizontal = 15.dp)
         )
@@ -71,7 +71,6 @@ fun TrendingPeopleList(
             is LoadState.Loading -> {
                 items(5) {
                     FilmShimmerCard(
-                        modifier = Modifier.padding(end = 12.dp)
                     )
                 }
             }
@@ -81,9 +80,9 @@ fun TrendingPeopleList(
                     val tvShow = peopleItems[index]
                     if (tvShow != null) {
                         FilmCard(
-                            modifier = Modifier.padding(end = 12.dp),
                             posterPath = tvShow.profilePath ?: "",
                             title = tvShow.name ?: "Unknown",
+                            onClick = {},
                         )
                     }
                 }
@@ -91,7 +90,6 @@ fun TrendingPeopleList(
                 if (peopleItems.loadState.append is LoadState.Loading) {
                     item {
                         FilmShimmerCard(
-                            modifier = Modifier.padding(end = 12.dp)
                         )
                     }
                 }
