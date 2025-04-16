@@ -1,12 +1,11 @@
 package com.newton.trending.di
 
-import com.newton.network.data.remote.TrendingApiService
-import com.newton.network.domain.repositories.TrendingRepository
-import com.newton.trending.data.TrendingRepositoryImpl
-import dagger.Module
-import dagger.Provides
-import dagger.hilt.InstallIn
-import dagger.hilt.components.SingletonComponent
+import com.newton.domain.repository.TrendingRepository
+import com.newton.network.data.remote.*
+import com.newton.trending.data.*
+import dagger.*
+import dagger.hilt.*
+import dagger.hilt.components.*
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -14,8 +13,8 @@ object TrendingRepositoryModule {
 
     @Provides
     fun provideTrendingRepository(
-        trendingApiService: TrendingApiService
+        filmApiService: FilmApiService
     ): TrendingRepository {
-        return TrendingRepositoryImpl(trendingApiService)
+        return TrendingRepositoryImpl(filmApiService)
     }
 }

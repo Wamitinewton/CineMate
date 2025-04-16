@@ -1,11 +1,13 @@
 package com.newton.cinemate.navigation
 
-import com.newton.auth.navigation.AuthNavigationApi
-import com.newton.movies.navigation.MoviesNavigationApi
-import com.newton.trending.navigation.TrendingNavigationApi
+import com.newton.auth.navigation.*
+import com.newton.movies.navigation.*
+import com.newton.shows.navigation.ShowsNavigationApi
+import com.newton.trending.navigation.*
 
 data class NavigationSubGraphs(
     val authNavigationApi: AuthNavigationApi,
     val trendingNavigationApi: TrendingNavigationApi,
-    val moviesNavigationApi: MoviesNavigationApi
+    val moviesNavigationApi: MoviesNavigationApi,
+    val showsNavigationApi: ShowsNavigationApi
 )

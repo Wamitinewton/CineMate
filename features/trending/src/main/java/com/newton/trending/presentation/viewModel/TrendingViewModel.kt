@@ -1,26 +1,21 @@
 package com.newton.trending.presentation.viewModel
 
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import androidx.paging.PagingData
-import androidx.paging.cachedIn
-import com.newton.network.domain.models.FilmData
-import com.newton.network.domain.models.PeopleData
-import com.newton.network.domain.repositories.TrendingRepository
-import com.newton.prefs.PrefsRepository
-import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.flatMapLatest
-import kotlinx.coroutines.launch
-import javax.inject.Inject
+import androidx.lifecycle.*
+import androidx.paging.*
+import com.newton.domain.models.FilmData
+import com.newton.domain.models.PeopleData
+import com.newton.domain.repository.TrendingRepository
+import com.newton.prefs.*
+import dagger.hilt.android.lifecycle.*
+import kotlinx.coroutines.*
+import kotlinx.coroutines.flow.*
+import javax.inject.*
 
 @HiltViewModel
 class TrendingViewModel @Inject constructor(
     private val trendingRepository: TrendingRepository,
     private val prefsRepository: PrefsRepository
-): ViewModel() {
+) : ViewModel() {
 
     private val allowAdultContent: Boolean = prefsRepository.getAllowAdultContent()
 

@@ -1,8 +1,6 @@
 package com.newton.network.data.interceptor
 
-import okhttp3.HttpUrl
-import okhttp3.Interceptor
-import okhttp3.Response
+import okhttp3.*
 
 class RequestInterceptor(private val apiKey: String) : Interceptor {
 

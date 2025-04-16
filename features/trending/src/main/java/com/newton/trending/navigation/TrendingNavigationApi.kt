@@ -1,5 +1,5 @@
 package com.newton.trending.navigation
 
-import com.newton.navigation.NavigationApi
+import com.newton.navigation.*
 
-interface TrendingNavigationApi: NavigationApi
+interface TrendingNavigationApi : NavigationApi

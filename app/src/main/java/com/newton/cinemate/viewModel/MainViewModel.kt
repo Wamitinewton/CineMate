@@ -1,19 +1,17 @@
 package com.newton.cinemate.viewModel
 
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import com.newton.navigation.NavigationSubgraphRoutes
-import com.newton.prefs.PrefsRepository
-import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.launch
-import javax.inject.Inject
+import androidx.lifecycle.*
+import com.newton.navigation.*
+import com.newton.prefs.*
+import dagger.hilt.android.lifecycle.*
+import kotlinx.coroutines.*
+import kotlinx.coroutines.flow.*
+import javax.inject.*
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
     private val prefsRepository: PrefsRepository
-): ViewModel() {
+) : ViewModel() {
     private val _startDestination = MutableStateFlow(NavigationSubgraphRoutes.Auth.route)
     val startDestination: StateFlow<String> = _startDestination
 
@@ -26,6 +24,6 @@ class MainViewModel @Inject constructor(
                 } else {
                     NavigationSubgraphRoutes.Trending.route
                 }
-            }
         }
     }
+}

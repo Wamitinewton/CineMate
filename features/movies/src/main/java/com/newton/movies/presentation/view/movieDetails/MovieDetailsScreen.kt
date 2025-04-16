@@ -143,7 +143,7 @@ fun MovieDetailsScreen(
 
                 is MoviesDetailsUiState.Success -> {
                     MovieDetailsContent(
-                        movieDetails = movieDetailsState.moviesDetails,
+                        filmDetails = movieDetailsState.moviesDetails,
                         scrollState = scrollState
                     )
                 }

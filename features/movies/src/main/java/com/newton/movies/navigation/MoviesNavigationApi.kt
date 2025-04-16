@@ -1,5 +1,5 @@
 package com.newton.movies.navigation
 
-import com.newton.navigation.NavigationApi
+import com.newton.navigation.*
 
-interface MoviesNavigationApi: NavigationApi
+interface MoviesNavigationApi : NavigationApi

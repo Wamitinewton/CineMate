@@ -1,10 +1,8 @@
 package com.newton.prefs
 
-import android.content.Context
-import android.content.SharedPreferences
-import androidx.core.content.edit
-import javax.inject.Inject
-import javax.inject.Singleton
+import android.content.*
+import androidx.core.content.*
+import javax.inject.*
 
 @Singleton
 class PreferenceManager @Inject constructor(context: Context) {

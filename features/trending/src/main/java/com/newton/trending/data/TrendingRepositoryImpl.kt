@@ -1,20 +1,17 @@
 package com.newton.trending.data
 
-import androidx.paging.Pager
-import androidx.paging.PagingConfig
-import androidx.paging.PagingData
-import com.newton.network.data.mappers.toAllTrendingDomainList
-import com.newton.network.data.mappers.toDomainPeopleList
-import com.newton.network.data.remote.TrendingApiService
-import com.newton.network.domain.models.FilmData
-import com.newton.network.domain.models.PeopleData
-import com.newton.network.domain.repositories.TrendingRepository
-import com.newton.network.paging.GenericPagingSource
-import kotlinx.coroutines.flow.Flow
-import javax.inject.Inject
+import androidx.paging.*
+import com.newton.domain.models.FilmData
+import com.newton.domain.models.PeopleData
+import com.newton.domain.repository.TrendingRepository
+import com.newton.network.data.mappers.*
+import com.newton.network.data.remote.*
+import com.newton.network.paging.*
+import kotlinx.coroutines.flow.*
+import javax.inject.*
 
 class TrendingRepositoryImpl @Inject constructor(
-    private val trendingApiService: TrendingApiService
+    private val filmApiService: FilmApiService
 ) : TrendingRepository {
     override fun getTrendingShows(allowAdult: Boolean): Flow<PagingData<FilmData>> {
         return Pager(
@@ -25,7 +22,7 @@ class TrendingRepositoryImpl @Inject constructor(
             pagingSourceFactory = {
                 GenericPagingSource(
                     apiCall = { page ->
-                        trendingApiService.getTrendingShows(page = page, includeAdult = allowAdult)
+                        filmApiService.getTrendingShows(page = page, includeAdult = allowAdult)
                     },
                     dataMapper = { response ->
                         response.results.toAllTrendingDomainList()
@@ -47,7 +44,7 @@ class TrendingRepositoryImpl @Inject constructor(
             pagingSourceFactory = {
                 GenericPagingSource(
                     apiCall = { page ->
-                        trendingApiService.getTrendingPeople(page = page)
+                        filmApiService.getTrendingPeople(page = page)
                     },
                     dataMapper = { response ->
                         response.results.toDomainPeopleList()
@@ -69,7 +66,7 @@ class TrendingRepositoryImpl @Inject constructor(
             pagingSourceFactory = {
                 GenericPagingSource(
                     apiCall = { page ->
-                        trendingApiService.getAllTrending(page = page)
+                        filmApiService.getAllTrending(page = page)
                     },
                     dataMapper = { response ->
                         response.results.toAllTrendingDomainList()
@@ -91,7 +88,7 @@ class TrendingRepositoryImpl @Inject constructor(
             pagingSourceFactory = {
                 GenericPagingSource(
                     apiCall = { page ->
-                        trendingApiService.getTrendingMovies(page = page)
+                        filmApiService.getTrendingMovies(page = page)
                     },
                     dataMapper = { response ->
                         response.results.toAllTrendingDomainList()

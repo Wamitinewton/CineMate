@@ -1,6 +1,6 @@
 package com.newton.movies.presentation.view.movieDetails
 
-import androidx.compose.foundation.background
+import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.*
 import androidx.compose.material.icons.*
@@ -9,17 +9,16 @@ import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.*
-import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.*
 import androidx.compose.ui.graphics.vector.*
-import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.font.*
 import androidx.compose.ui.unit.*
 import com.newton.core.utils.*
-import com.newton.network.domain.models.*
+import com.newton.domain.models.FilmDetails
 import com.newton.shared_ui.sharedComponents.*
-import com.newton.shared_ui.theme.backgroundGradient
 
 @Composable
-fun KeyDetailsSection(movie: MovieDetails) {
+fun KeyDetailsSection(movie: FilmDetails) {
 
     val cardGradient = Brush.linearGradient(
         colors = listOf(
@@ -54,7 +53,11 @@ fun KeyDetailsSection(movie: MovieDetails) {
                 ) {
                     DetailRow("Budget", formatCurrency(movie.budget), Icons.Default.AttachMoney)
 
-                    DetailRow("Revenue", formatCurrency(movie.revenue), Icons.Default.MonetizationOn)
+                    DetailRow(
+                        "Revenue",
+                        formatCurrency(movie.revenue),
+                        Icons.Default.MonetizationOn
+                    )
 
                     if (movie.status != null) {
                         DetailRow("Status", movie.status, Icons.Default.Info)

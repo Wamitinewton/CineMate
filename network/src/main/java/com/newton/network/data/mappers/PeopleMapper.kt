@@ -1,8 +1,8 @@
 package com.newton.network.data.mappers
 
-import com.newton.core.utils.ImageBaseUrl
-import com.newton.network.data.dto.PeopleResponseDto
-import com.newton.network.domain.models.PeopleData
+import com.newton.core.utils.*
+import com.newton.domain.models.PeopleData
+import com.newton.network.data.dto.*
 
 fun PeopleResponseDto.toDomainPeople(): PeopleData {
     return PeopleData(

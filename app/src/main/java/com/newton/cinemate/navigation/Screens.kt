@@ -1,12 +1,10 @@
 package com.newton.cinemate.navigation
 
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.filled.Movie
-import androidx.compose.material.icons.outlined.Home
-import androidx.compose.material.icons.outlined.Movie
-import androidx.compose.ui.graphics.vector.ImageVector
-import com.newton.navigation.NavigationSubgraphRoutes
+import androidx.compose.material.icons.*
+import androidx.compose.material.icons.filled.*
+import androidx.compose.material.icons.outlined.*
+import androidx.compose.ui.graphics.vector.*
+import com.newton.navigation.*
 
 sealed class Screens(
     var route: String,
@@ -14,14 +12,14 @@ sealed class Screens(
     var unSelectedIcon: ImageVector,
     var title: String
 ) {
-    data object Home: Screens(
+    data object Home : Screens(
         NavigationSubgraphRoutes.Trending.route,
         Icons.Filled.Home,
         Icons.Outlined.Home,
         "Trending"
     )
 
-    data object Movies: Screens(
+    data object Movies : Screens(
         NavigationSubgraphRoutes.Movies.route,
         Icons.Filled.Movie,
         Icons.Outlined.Movie,

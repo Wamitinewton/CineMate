@@ -1,24 +1,21 @@
 package com.newton.cinemate.di
 
-import android.content.Context
-import androidx.credentials.CredentialManager
-import com.google.firebase.Firebase
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.auth
-import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.firestore
+import android.content.*
+import androidx.credentials.*
+import com.google.firebase.*
+import com.google.firebase.auth.*
+import com.google.firebase.firestore.*
 import com.newton.cinemate.BuildConfig
-import com.newton.network.data.interceptor.RequestInterceptor
-import dagger.Module
-import dagger.Provides
-import dagger.hilt.InstallIn
-import dagger.hilt.android.qualifiers.ApplicationContext
-import dagger.hilt.components.SingletonComponent
-import okhttp3.OkHttpClient
-import okhttp3.logging.HttpLoggingInterceptor
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
-import javax.inject.Singleton
+import com.newton.network.data.interceptor.*
+import dagger.*
+import dagger.hilt.*
+import dagger.hilt.android.qualifiers.*
+import dagger.hilt.components.*
+import okhttp3.*
+import okhttp3.logging.*
+import retrofit2.*
+import retrofit2.converter.gson.*
+import javax.inject.*
 
 @Module
 @InstallIn(SingletonComponent::class)

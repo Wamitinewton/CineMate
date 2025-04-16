@@ -1,36 +1,27 @@
 package com.newton.trending.presentation.view
 
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.unit.dp
-import androidx.paging.LoadState
-import androidx.paging.compose.LazyPagingItems
-import com.newton.network.domain.models.FilmData
-import com.newton.shared_ui.sharedComponents.ErrorScreen
-import com.newton.shared_ui.sharedComponents.FilmCard
-import com.newton.shared_ui.sharedComponents.shimmerEffect
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.*
+import androidx.compose.foundation.shape.*
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
+import androidx.compose.ui.*
+import androidx.compose.ui.draw.*
+import androidx.compose.ui.unit.*
+import androidx.paging.*
+import androidx.paging.compose.*
+import com.newton.domain.models.FilmData
+import com.newton.shared_ui.sharedComponents.*
 
 @Composable
 fun TrendingFilmList(
     modifier: Modifier = Modifier,
     filmItems: LazyPagingItems<FilmData>,
     onRetry: () -> Unit,
-    onMovieClick: (Int?) -> Unit = {}
+    onMovieClick: (Int?) -> Unit = {},
+    onShowsClick: (Int?) -> Unit = {},
+    isMovie: Boolean,
+    enabled: Boolean
 ) {
     LazyRow(
         modifier = modifier,
@@ -62,7 +53,10 @@ fun TrendingFilmList(
                             id = tvShow.id,
                             posterPath = tvShow.posterPath ?: "",
                             title = tvShow.name ?: tvShow.title ?: "Unknown title",
-                            onClick = onMovieClick,
+                            onMovieClick = onMovieClick,
+                            onShowsClick = onShowsClick,
+                            isMovie = isMovie,
+                            enabled = enabled,
                         )
                     }
                 }

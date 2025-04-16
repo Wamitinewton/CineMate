@@ -1,6 +1,6 @@
 package com.newton.core.utils
 
-import com.newton.core.enums.ErrorType
+import com.newton.core.enums.*
 
 /**
  * A sealed class representing different states of a network request.

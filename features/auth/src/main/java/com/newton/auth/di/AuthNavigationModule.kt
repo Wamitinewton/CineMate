@@ -1,13 +1,11 @@
 package com.newton.auth.di
 
-import com.newton.auth.navigation.AuthNavigationApi
-import com.newton.auth.navigation.AuthNavigationImpl
-import com.newton.prefs.PrefsRepository
-import dagger.Module
-import dagger.Provides
-import dagger.hilt.InstallIn
-import dagger.hilt.components.SingletonComponent
-import javax.inject.Singleton
+import com.newton.auth.navigation.*
+import com.newton.prefs.*
+import dagger.*
+import dagger.hilt.*
+import dagger.hilt.components.*
+import javax.inject.*
 
 @Module
 @InstallIn(SingletonComponent::class)

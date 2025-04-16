@@ -1,6 +1,6 @@
 package com.newton.shared_ui.theme
 
-import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.*
 
 val backgroundGradient = Brush.verticalGradient(
     colors = listOf(

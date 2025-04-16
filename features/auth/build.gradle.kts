@@ -88,4 +88,5 @@ dependencies {
     implementation(project(Modules.NETWORK))
     implementation(project(Modules.CORE))
     implementation(project(Modules.PREFS))
+    implementation(project(Modules.DOMAIN))
 }

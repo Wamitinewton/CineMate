@@ -1,7 +1,6 @@
 package com.newton.prefs
 
-import javax.inject.Inject
-import javax.inject.Singleton
+import javax.inject.*
 
 @Singleton
 class PrefsRepositoryImpl @Inject constructor(

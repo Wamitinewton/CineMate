@@ -1,8 +1,8 @@
 package com.newton.network.data.mappers
 
-import com.newton.core.utils.ImageBaseUrl
-import com.newton.network.data.dto.FilmResponseDto
-import com.newton.network.domain.models.FilmData
+import com.newton.core.utils.*
+import com.newton.domain.models.FilmData
+import com.newton.network.data.dto.*
 
 fun FilmResponseDto.toAllTrendingDomain(): FilmData {
     return FilmData(

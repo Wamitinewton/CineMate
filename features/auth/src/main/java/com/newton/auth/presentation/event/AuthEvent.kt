@@ -1,6 +1,6 @@
 package com.newton.auth.presentation.event
 
-import androidx.credentials.GetCredentialRequest
+import androidx.credentials.*
 
 
 /**

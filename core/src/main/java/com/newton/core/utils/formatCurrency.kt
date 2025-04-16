@@ -1,6 +1,6 @@
 package com.newton.core.utils
 
-import java.util.Locale
+import java.util.*
 
 fun formatCurrency(amount: Int?): String {
     if (amount == null) return "$0"

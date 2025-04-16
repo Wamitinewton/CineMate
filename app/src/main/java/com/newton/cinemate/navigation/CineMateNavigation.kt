@@ -1,12 +1,10 @@
 package com.newton.cinemate.navigation
 
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavHostController
-import androidx.navigation.compose.NavHost
-import com.newton.cinemate.viewModel.MainViewModel
+import androidx.compose.runtime.*
+import androidx.hilt.navigation.compose.*
+import androidx.navigation.*
+import androidx.navigation.compose.*
+import com.newton.cinemate.viewModel.*
 
 @Composable
 fun CineMateNavigation(
@@ -19,7 +17,7 @@ fun CineMateNavigation(
     NavHost(
         navController = navHostController,
         startDestination = startDestination
-    ){
+    ) {
         navigationSubGraphs.authNavigationApi.registerNavigationGraph(
             navHostController = navHostController,
             navGraphBuilder = this
@@ -29,6 +27,10 @@ fun CineMateNavigation(
             navGraphBuilder = this
         )
         navigationSubGraphs.moviesNavigationApi.registerNavigationGraph(
+            navHostController = navHostController,
+            navGraphBuilder = this
+        )
+        navigationSubGraphs.showsNavigationApi.registerNavigationGraph(
             navHostController = navHostController,
             navGraphBuilder = this
         )

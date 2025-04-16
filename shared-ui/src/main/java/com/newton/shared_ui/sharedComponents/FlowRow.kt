@@ -1,9 +1,9 @@
 package com.newton.shared_ui.sharedComponents
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.layout.Layout
-import kotlin.math.max
+import androidx.compose.foundation.layout.*
+import androidx.compose.runtime.*
+import androidx.compose.ui.layout.*
+import kotlin.math.*
 
 @Composable
 fun FlowRow(
@@ -15,7 +15,7 @@ fun FlowRow(
     Layout(
         content = content
     ) { measurables, constraints ->
-        val rowWidths = IntArray(measurables.size / maxItemsInEachRow + 1){ 0 }
+        val rowWidths = IntArray(measurables.size / maxItemsInEachRow + 1) { 0 }
         val rowHeights = IntArray(rowWidths.size) { 0 }
         val placeables = measurables.mapIndexed { index, measurable ->
             val rowIndex = index / maxItemsInEachRow
@@ -44,7 +44,7 @@ fun FlowRow(
                 }
 
                 placeable.placeRelative(x = x, y = y)
-                x+= placeable.width + horizontalArrangement.spacing.roundToPx()
+                x += placeable.width + horizontalArrangement.spacing.roundToPx()
             }
         }
     }

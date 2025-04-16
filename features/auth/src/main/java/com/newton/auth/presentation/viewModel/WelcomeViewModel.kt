@@ -1,20 +1,14 @@
 package com.newton.auth.presentation.viewModel
 
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import com.newton.auth.presentation.event.WelcomeEvent
-import com.newton.auth.presentation.event.WelcomeNavigationEvent
-import com.newton.auth.presentation.state.WelcomeState
-import com.newton.prefs.PrefsRepository
-import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.receiveAsFlow
-import kotlinx.coroutines.flow.update
-import kotlinx.coroutines.launch
-import javax.inject.Inject
+import androidx.lifecycle.*
+import com.newton.auth.presentation.event.*
+import com.newton.auth.presentation.state.*
+import com.newton.prefs.*
+import dagger.hilt.android.lifecycle.*
+import kotlinx.coroutines.*
+import kotlinx.coroutines.channels.*
+import kotlinx.coroutines.flow.*
+import javax.inject.*
 
 @HiltViewModel
 class WelcomeViewModel @Inject constructor(

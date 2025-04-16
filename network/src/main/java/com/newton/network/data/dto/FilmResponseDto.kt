@@ -1,6 +1,6 @@
 package com.newton.network.data.dto
 
-import kotlinx.serialization.Serializable
+import kotlinx.serialization.*
 
 @Serializable
 data class FilmResponseDto(

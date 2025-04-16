@@ -74,7 +74,6 @@ dependencies {
     implementation(Dependencies.Paging.compose)
     implementation(Dependencies.Paging.runtime)
 
-
     //modules
     implementation(project(Modules.CORE))
     implementation(project(Modules.NETWORK))
@@ -82,4 +81,5 @@ dependencies {
     implementation(project(Modules.SHARED_UI))
     implementation(project(Modules.PREFS))
     implementation(project(Modules.SHARED))
+    implementation(project(Modules.DOMAIN))
 }

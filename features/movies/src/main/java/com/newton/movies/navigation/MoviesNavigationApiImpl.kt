@@ -1,19 +1,14 @@
 package com.newton.movies.navigation
 
-import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavGraphBuilder
-import androidx.navigation.NavHostController
-import androidx.navigation.NavType
-import androidx.navigation.compose.composable
-import androidx.navigation.navArgument
-import androidx.navigation.navigation
-import com.newton.movies.presentation.view.MoviesScreen
-import com.newton.movies.presentation.view.movieDetails.MovieDetailsScreen
-import com.newton.movies.presentation.viewModel.MovieDetailsViewModel
-import com.newton.navigation.NavigationRoutes
-import com.newton.navigation.NavigationSubgraphRoutes
+import androidx.hilt.navigation.compose.*
+import androidx.navigation.*
+import androidx.navigation.compose.*
+import com.newton.movies.presentation.view.*
+import com.newton.movies.presentation.view.movieDetails.*
+import com.newton.movies.presentation.viewModel.*
+import com.newton.navigation.*
 
-class MoviesNavigationApiImpl: MoviesNavigationApi {
+class MoviesNavigationApiImpl : MoviesNavigationApi {
     override fun registerNavigationGraph(
         navGraphBuilder: NavGraphBuilder,
         navHostController: NavHostController
@@ -21,7 +16,7 @@ class MoviesNavigationApiImpl: MoviesNavigationApi {
         navGraphBuilder.navigation(
             route = NavigationSubgraphRoutes.Movies.route,
             startDestination = NavigationRoutes.MoviesRoute.routes
-        ){
+        ) {
             composable(route = NavigationRoutes.MoviesRoute.routes) {
                 MoviesScreen()
             }

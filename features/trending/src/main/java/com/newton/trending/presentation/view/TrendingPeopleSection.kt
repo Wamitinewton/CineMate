@@ -1,24 +1,15 @@
 package com.newton.trending.presentation.view
 
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
-import androidx.paging.LoadState
-import androidx.paging.PagingData
-import androidx.paging.compose.LazyPagingItems
-import androidx.paging.compose.collectAsLazyPagingItems
-import com.newton.network.domain.models.PeopleData
-import com.newton.shared_ui.sharedComponents.ErrorScreen
-import com.newton.shared_ui.sharedComponents.FilmCard
-import com.newton.shared_ui.sharedComponents.CategorySectionHeader
-import kotlinx.coroutines.flow.Flow
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.*
+import androidx.compose.runtime.*
+import androidx.compose.ui.*
+import androidx.compose.ui.unit.*
+import androidx.paging.*
+import androidx.paging.compose.*
+import com.newton.domain.models.PeopleData
+import com.newton.shared_ui.sharedComponents.*
+import kotlinx.coroutines.flow.*
 
 @Composable
 fun TrendingPeopleSection(
@@ -82,7 +73,10 @@ fun TrendingPeopleList(
                         FilmCard(
                             posterPath = tvShow.profilePath ?: "",
                             title = tvShow.name ?: "Unknown",
-                            onClick = {},
+                            onMovieClick = {},
+                            isMovie = false,
+                            id = null,
+                            enabled = true,
                         )
                     }
                 }

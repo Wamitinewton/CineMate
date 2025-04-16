@@ -1,12 +1,10 @@
 package com.newton.movies.di
 
-import com.newton.movies.navigation.MoviesNavigationApi
-import com.newton.movies.navigation.MoviesNavigationApiImpl
-import dagger.Module
-import dagger.Provides
-import dagger.hilt.InstallIn
-import dagger.hilt.components.SingletonComponent
-import javax.inject.Singleton
+import com.newton.movies.navigation.*
+import dagger.*
+import dagger.hilt.*
+import dagger.hilt.components.*
+import javax.inject.*
 
 @Module
 @InstallIn(SingletonComponent::class)

@@ -1,17 +1,11 @@
 package com.newton.movies.presentation.view.movieDetails
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
-import com.newton.network.domain.models.ProductionCompany
-import com.newton.shared_ui.sharedComponents.SectionHeading
+import androidx.compose.foundation.layout.*
+import androidx.compose.runtime.*
+import androidx.compose.ui.*
+import androidx.compose.ui.unit.*
+import com.newton.domain.models.ProductionCompany
+import com.newton.shared_ui.sharedComponents.*
 
 @Composable
 fun ProductionSection(companies: List<ProductionCompany>) {

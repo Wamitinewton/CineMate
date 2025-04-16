@@ -11,4 +11,8 @@ object CineMateApiEndpoints {
     object Movies {
         const val MOVIE_DETAILS = "movie/{movie_id}"
     }
+
+    object Shows {
+        const val SERIES_DETAILS = "tv/{series_id}"
+    }
 }

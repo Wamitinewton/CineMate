@@ -1,23 +1,18 @@
 package com.newton.movies.presentation.viewModel
 
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import com.newton.core.enums.ErrorType
-import com.newton.movies.presentation.events.MovieDetailsEvents
-import com.newton.movies.presentation.state.MoviesDetailsUiState
-import com.newton.network.domain.repositories.FilmDetailsRepository
-import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
-import kotlinx.coroutines.launch
-import javax.inject.Inject
+import androidx.lifecycle.*
+import com.newton.core.enums.*
+import com.newton.domain.repository.MoviesRepository
+import com.newton.movies.presentation.events.*
+import com.newton.movies.presentation.state.*
+import dagger.hilt.android.lifecycle.*
+import kotlinx.coroutines.*
+import kotlinx.coroutines.flow.*
+import javax.inject.*
 
 @HiltViewModel
 class MovieDetailsViewModel @Inject constructor(
-    private val filmDetailsRepository: FilmDetailsRepository
+    private val moviesRepository: MoviesRepository
 ) : ViewModel() {
 
     private val _movieDetailsUiState =
@@ -34,7 +29,7 @@ class MovieDetailsViewModel @Inject constructor(
 
     private fun loadMovieDetails(id: Int) {
         viewModelScope.launch {
-            filmDetailsRepository.getMovieDetails(id).onEach { result ->
+            moviesRepository.getMovieDetails(id).onEach { result ->
                 result.handle(
                     onLoading = { isLoading ->
                         if (isLoading) {
@@ -65,7 +60,7 @@ class MovieDetailsViewModel @Inject constructor(
                         }
                     }
 
-                        )
+                )
             }.launchIn(this)
         }
     }

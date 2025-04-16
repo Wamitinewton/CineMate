@@ -1,18 +1,15 @@
 package com.newton.auth.data
 
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.GoogleAuthProvider
-import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.SetOptions
-import com.newton.auth.data.mapper.toUser
-import com.newton.core.utils.FirebaseCollections
-import com.newton.core.utils.Resource
-import com.newton.network.domain.models.User
-import com.newton.network.domain.repositories.AuthRepository
-import com.newton.network.safeApiCall
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.tasks.await
-import javax.inject.Inject
+import com.google.firebase.auth.*
+import com.google.firebase.firestore.*
+import com.newton.auth.data.mapper.*
+import com.newton.core.utils.*
+import com.newton.domain.models.User
+import com.newton.domain.repository.AuthRepository
+import com.newton.network.*
+import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.tasks.*
+import javax.inject.*
 
 class AuthRepositoryImpl @Inject constructor(
     private val firebaseAuth: FirebaseAuth,
@@ -43,7 +40,8 @@ class AuthRepositoryImpl @Inject constructor(
     override suspend fun saveUserData(user: User) {
         try {
             user.uid.let { userId ->
-                val userDocument = firestore.collection(FirebaseCollections.USERS_COLLECTION).document(userId)
+                val userDocument =
+                    firestore.collection(FirebaseCollections.USERS_COLLECTION).document(userId)
 
                 val userData = mapOf(
                     "uid" to user.uid,

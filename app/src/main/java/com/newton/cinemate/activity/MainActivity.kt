@@ -1,11 +1,11 @@
 package com.newton.cinemate.activity
 
-import android.os.Bundle
-import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
-import com.newton.cinemate.navigation.NavigationSubGraphs
-import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
+import android.os.*
+import androidx.activity.*
+import androidx.activity.compose.*
+import com.newton.cinemate.navigation.*
+import dagger.hilt.android.*
+import javax.inject.*
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -17,7 +17,7 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-           RootScreen(navigationSubGraphs)
+            RootScreen(navigationSubGraphs)
         }
     }
 }

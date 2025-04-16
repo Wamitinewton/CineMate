@@ -1,16 +1,13 @@
 package com.newton.network
 
-import com.newton.core.utils.Resource
-import com.newton.core.enums.ErrorType
+import com.newton.core.enums.*
+import com.newton.core.utils.*
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.flow
-import retrofit2.HttpException
-import java.io.IOException
-import java.net.ConnectException
-import java.net.SocketTimeoutException
-import java.net.UnknownHostException
-import java.util.concurrent.TimeoutException
+import retrofit2.*
+import java.io.*
+import java.net.*
+import java.util.concurrent.*
 import kotlin.coroutines.cancellation.CancellationException
 
 /**

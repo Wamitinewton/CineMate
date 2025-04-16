@@ -1,7 +1,7 @@
 package com.newton.auth.presentation.state
 
-import com.newton.core.enums.ErrorType
-import com.newton.network.domain.models.User
+import com.newton.core.enums.*
+import com.newton.domain.models.User
 
 data class AuthUiState(
     val isLoading: Boolean = false,

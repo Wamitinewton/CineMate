@@ -6,7 +6,8 @@ class GenericPagingSource<T : Any, R>(
     private val getNextPageNumber: (R) -> Int? = { null }
 ) : androidx.paging.PagingSource<Int, T>() {
 
-    override fun getRefreshKey(state: androidx.paging.PagingState<Int, T>): Int? = state.anchorPosition
+    override fun getRefreshKey(state: androidx.paging.PagingState<Int, T>): Int? =
+        state.anchorPosition
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, T> {
         return try {

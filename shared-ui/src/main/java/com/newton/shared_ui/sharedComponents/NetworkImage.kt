@@ -1,24 +1,16 @@
 package com.newton.shared_ui.sharedComponents
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.size
-import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.unit.dp
-import coil3.compose.AsyncImagePainter
-import coil3.compose.SubcomposeAsyncImage
-import coil3.compose.SubcomposeAsyncImageContent
-import coil3.request.ImageRequest
-import coil3.request.crossfade
+import androidx.compose.foundation.*
+import androidx.compose.foundation.layout.*
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
+import androidx.compose.ui.*
+import androidx.compose.ui.layout.*
+import androidx.compose.ui.platform.*
+import androidx.compose.ui.res.*
+import androidx.compose.ui.unit.*
+import coil3.compose.*
+import coil3.request.*
 import com.newton.shared_ui.R
 
 @Composable
@@ -62,6 +54,7 @@ fun NetworkImage(
                     )
                 }
             }
+
             else -> SubcomposeAsyncImageContent()
         }
     }

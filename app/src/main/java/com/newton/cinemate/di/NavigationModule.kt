@@ -1,13 +1,13 @@
 package com.newton.cinemate.di
 
-import com.newton.auth.navigation.AuthNavigationApi
-import com.newton.cinemate.navigation.NavigationSubGraphs
-import com.newton.movies.navigation.MoviesNavigationApi
-import com.newton.trending.navigation.TrendingNavigationApi
-import dagger.Module
-import dagger.Provides
-import dagger.hilt.InstallIn
-import dagger.hilt.components.SingletonComponent
+import com.newton.auth.navigation.*
+import com.newton.cinemate.navigation.*
+import com.newton.movies.navigation.*
+import com.newton.shows.navigation.ShowsNavigationApi
+import com.newton.trending.navigation.*
+import dagger.*
+import dagger.hilt.*
+import dagger.hilt.components.*
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -17,12 +17,14 @@ object NavigationModule {
     fun provideNavigationSubGraphs(
         authNavigationApi: AuthNavigationApi,
         trendingNavigationApi: TrendingNavigationApi,
-        moviesNavigationApi: MoviesNavigationApi
+        moviesNavigationApi: MoviesNavigationApi,
+        showsNavigationApi: ShowsNavigationApi
     ): NavigationSubGraphs {
         return NavigationSubGraphs(
             authNavigationApi,
             trendingNavigationApi,
-            moviesNavigationApi
+            moviesNavigationApi,
+            showsNavigationApi = showsNavigationApi
         )
     }
 }

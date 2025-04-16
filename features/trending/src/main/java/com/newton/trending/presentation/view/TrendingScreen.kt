@@ -1,28 +1,20 @@
 package com.newton.trending.presentation.view
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.Scaffold
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.zIndex
-import com.newton.shared_ui.sharedComponents.SearchCard
-import com.newton.shared_ui.theme.backgroundGradient
-import com.newton.trending.presentation.viewModel.TrendingViewModel
+import androidx.compose.foundation.*
+import androidx.compose.foundation.layout.*
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
+import androidx.compose.ui.*
+import androidx.compose.ui.unit.*
+import com.newton.shared_ui.sharedComponents.*
+import com.newton.shared_ui.theme.*
+import com.newton.trending.presentation.viewModel.*
 
 @Composable
 fun TrendingScreen(
     viewModel: TrendingViewModel,
-    onMovieDetailsClick: (Int) -> Unit
+    onMovieDetailsClick: (Int) -> Unit,
+    onShowsDetailsClick: (Int) -> Unit
 ) {
 
     Scaffold(
@@ -65,6 +57,9 @@ fun TrendingScreen(
                     modifier = Modifier.fillMaxWidth(),
                     onRetry = {
                         viewModel.refresh()
+                    },
+                    onShowsClick = { id ->
+                        onShowsDetailsClick(id!!)
                     }
                 )
 
@@ -78,7 +73,7 @@ fun TrendingScreen(
                     },
                     onMovieClick = { id ->
                         onMovieDetailsClick(id!!)
-                    }
+                    },
                 )
                 Spacer(modifier = Modifier.height(16.dp))
 
@@ -91,6 +86,7 @@ fun TrendingScreen(
                 )
                 Spacer(modifier = Modifier.height(16.dp))
             }
-        }}
-
+        }
     }
+
+}

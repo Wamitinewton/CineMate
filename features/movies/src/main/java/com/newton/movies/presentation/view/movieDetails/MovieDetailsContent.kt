@@ -5,12 +5,12 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.*
 import androidx.compose.ui.unit.*
-import com.newton.network.domain.models.*
+import com.newton.domain.models.FilmDetails
 import com.newton.shared_ui.sharedComponents.*
 
 @Composable
 fun MovieDetailsContent(
-    movieDetails: MovieDetails,
+    filmDetails: FilmDetails,
     scrollState: ScrollState
 ) {
     Column(
@@ -19,30 +19,30 @@ fun MovieDetailsContent(
             .verticalScroll(scrollState)
     ) {
         MediaHeroSection(
-            backdropPath = movieDetails.backdropPath,
-            posterPath = movieDetails.posterPath,
-            title = movieDetails.title,
-            rating = movieDetails.voteAverage?.toFloat(),
-            releaseYear = movieDetails.releaseDate,
-            duration = movieDetails.runtime,
-            tagline = movieDetails.tagline,
+            backdropPath = filmDetails.backdropPath,
+            posterPath = filmDetails.posterPath,
+            title = filmDetails.title,
+            rating = filmDetails.voteAverage?.toFloat(),
+            releaseYear = filmDetails.releaseDate,
+            duration = filmDetails.runtime,
+            tagline = filmDetails.tagline,
         )
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        QuickInfoRow(movieDetails)
+        QuickInfoRow(filmDetails)
 
 
-        OverviewSection(overview = movieDetails.overview ?: "")
+        OverviewSection(overview = filmDetails.overview ?: "")
 
 
-        GenreSection(genres = movieDetails.genres ?: emptyList())
+        GenreSection(genres = filmDetails.genres ?: emptyList())
 
 
-        KeyDetailsSection(movieDetails)
+        KeyDetailsSection(filmDetails)
 
 
-        ProductionSection(companies = movieDetails.productionCompanies ?: emptyList())
+        ProductionSection(companies = filmDetails.productionCompanies ?: emptyList())
 
 
         Spacer(modifier = Modifier.height(24.dp))

@@ -81,4 +81,5 @@ dependencies {
     implementation(project(Modules.NETWORK))
     implementation(project(Modules.NAVIGATION))
     implementation(project(Modules.SHARED_UI))
+    implementation(project(Modules.DOMAIN))
 }

@@ -1,18 +1,13 @@
 package com.newton.auth.navigation
 
-import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavGraphBuilder
-import androidx.navigation.NavHostController
-import androidx.navigation.compose.composable
-import androidx.navigation.navigation
-import com.newton.auth.presentation.view.OnboardingScreen
-import com.newton.auth.presentation.view.WelcomeScreen
-import com.newton.auth.presentation.viewModel.AuthViewModel
-import com.newton.auth.presentation.viewModel.WelcomeViewModel
-import com.newton.navigation.NavigationRoutes
-import com.newton.navigation.NavigationSubgraphRoutes
-import com.newton.prefs.PrefsRepository
-import javax.inject.Inject
+import androidx.hilt.navigation.compose.*
+import androidx.navigation.*
+import androidx.navigation.compose.*
+import com.newton.auth.presentation.view.*
+import com.newton.auth.presentation.viewModel.*
+import com.newton.navigation.*
+import com.newton.prefs.*
+import javax.inject.*
 
 class AuthNavigationImpl @Inject constructor(
     private val prefsRepository: PrefsRepository
@@ -66,7 +61,8 @@ class AuthNavigationImpl @Inject constructor(
 
     private fun getStartDestination(): String {
         return if (prefsRepository.getUserOnboardingStatus() &&
-            prefsRepository.isGuestUser()) {
+            prefsRepository.isGuestUser()
+        ) {
             NavigationRoutes.WelcomeScreenRoute.routes
         } else {
             NavigationRoutes.AuthScreenRoute.routes

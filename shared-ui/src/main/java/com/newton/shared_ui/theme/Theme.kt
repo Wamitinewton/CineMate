@@ -1,14 +1,9 @@
 package com.newton.shared_ui.theme
 
-import android.os.Build
-import androidx.compose.foundation.isSystemInDarkTheme
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.darkColorScheme
-import androidx.compose.material3.dynamicDarkColorScheme
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.SideEffect
-import androidx.compose.ui.platform.LocalContext
-import com.google.accompanist.systemuicontroller.rememberSystemUiController
+import androidx.compose.foundation.*
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
+import com.google.accompanist.systemuicontroller.*
 
 
 private val darkColorScheme = darkColorScheme(
@@ -26,7 +21,6 @@ private val darkColorScheme = darkColorScheme(
     onSurfaceVariant = dark_onSurfaceVariant,
     outline = dark_outline,
 )
-
 
 
 @Composable

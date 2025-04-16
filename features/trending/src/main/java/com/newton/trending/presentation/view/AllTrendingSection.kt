@@ -1,46 +1,23 @@
 package com.newton.trending.presentation.view
 
-import androidx.compose.animation.core.EaseInOutQuart
-import androidx.compose.animation.core.tween
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.pager.HorizontalPager
-import androidx.compose.foundation.pager.PagerDefaults
-import androidx.compose.foundation.pager.rememberPagerState
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.derivedStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.RectangleShape
-import androidx.compose.ui.graphics.graphicsLayer
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.util.lerp
-import androidx.paging.LoadState
-import androidx.paging.PagingData
-import androidx.paging.compose.LazyPagingItems
-import androidx.paging.compose.collectAsLazyPagingItems
-import com.newton.network.domain.models.FilmData
-import com.newton.shared_ui.sharedComponents.ErrorScreen
-import com.newton.shared_ui.sharedComponents.NetworkImage
-import com.newton.shared_ui.sharedComponents.shimmerEffect
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.launch
-import kotlin.math.absoluteValue
+import androidx.compose.animation.core.*
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.pager.*
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
+import androidx.compose.ui.*
+import androidx.compose.ui.graphics.*
+import androidx.compose.ui.text.font.*
+import androidx.compose.ui.text.style.*
+import androidx.compose.ui.unit.*
+import androidx.compose.ui.util.*
+import androidx.paging.*
+import androidx.paging.compose.*
+import com.newton.domain.models.FilmData
+import com.newton.shared_ui.sharedComponents.*
+import kotlinx.coroutines.*
+import kotlinx.coroutines.flow.*
+import kotlin.math.*
 
 
 @Composable
@@ -70,7 +47,7 @@ fun AllTrendingSection(
                     ErrorScreen(
                         message = "Failed to load trending shows. Try again",
                         onRetry = {
-                           onRetry()
+                            onRetry()
                         },
                         titleText = "TRENDING SHOWS",
                     )

@@ -8,12 +8,11 @@ import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.*
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.*
 import androidx.compose.ui.graphics.*
 import androidx.compose.ui.text.font.*
 import androidx.compose.ui.unit.*
-import com.newton.core.utils.formatRuntime
+import com.newton.core.utils.*
 
 @Composable
 fun MediaHeroSection(
@@ -67,7 +66,7 @@ fun MediaHeroSection(
                     ) {
                         Box(contentAlignment = Alignment.Center) {
                             Text(
-                                text = String.format(java.util.Locale.US ,"%.1f", it),
+                                text = String.format(java.util.Locale.US, "%.1f", it),
                                 style = MaterialTheme.typography.bodyMedium.copy(fontWeight = FontWeight.Bold),
                                 color = MaterialTheme.colorScheme.onPrimaryContainer
                             )
@@ -137,21 +136,21 @@ fun MediaHeroSection(
             }
         }
 
-            Box(
-                modifier = Modifier
-                    .align(Alignment.TopEnd)
-                    .padding(16.dp)
+        Box(
+            modifier = Modifier
+                .align(Alignment.TopEnd)
+                .padding(16.dp)
+        ) {
+            Card(
+                shape = RoundedCornerShape(8.dp),
+                elevation = CardDefaults.cardElevation(defaultElevation = 8.dp),
+                modifier = Modifier.size(width = 100.dp, height = 150.dp)
             ) {
-                Card(
-                    shape = RoundedCornerShape(8.dp),
-                    elevation = CardDefaults.cardElevation(defaultElevation = 8.dp),
-                    modifier = Modifier.size(width = 100.dp, height = 150.dp)
-                ){
-                    NetworkImage(
-                        imageUrl = posterPath,
-                        modifier = Modifier.fillMaxSize()
-                    )
-                }
+                NetworkImage(
+                    imageUrl = posterPath,
+                    modifier = Modifier.fillMaxSize()
+                )
             }
         }
     }
+}

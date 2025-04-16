@@ -1,12 +1,11 @@
 package com.newton.prefs
 
-import android.content.Context
-import dagger.Module
-import dagger.Provides
-import dagger.hilt.InstallIn
-import dagger.hilt.android.qualifiers.ApplicationContext
-import dagger.hilt.components.SingletonComponent
-import javax.inject.Singleton
+import android.content.*
+import dagger.*
+import dagger.hilt.*
+import dagger.hilt.android.qualifiers.*
+import dagger.hilt.components.*
+import javax.inject.*
 
 @Module
 @InstallIn(SingletonComponent::class)

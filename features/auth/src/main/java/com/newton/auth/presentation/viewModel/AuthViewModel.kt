@@ -1,27 +1,18 @@
 package com.newton.auth.presentation.viewModel
 
-import androidx.credentials.GetCredentialResponse
-import androidx.credentials.exceptions.GetCredentialException
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import com.newton.auth.presentation.event.AuthEvent
-import com.newton.auth.presentation.event.AuthUiEvent
-import com.newton.auth.presentation.manager.GoogleClientManager
-import com.newton.auth.presentation.manager.GoogleSignInResult
-import com.newton.auth.presentation.state.AuthUiState
-import com.newton.core.enums.ErrorType
-import com.newton.network.domain.repositories.AuthRepository
-import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharedFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asSharedFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.update
-import kotlinx.coroutines.launch
-import timber.log.Timber
-import javax.inject.Inject
+import androidx.credentials.*
+import androidx.credentials.exceptions.*
+import androidx.lifecycle.*
+import com.newton.auth.presentation.event.*
+import com.newton.auth.presentation.manager.*
+import com.newton.auth.presentation.state.*
+import com.newton.core.enums.*
+import com.newton.domain.repository.AuthRepository
+import dagger.hilt.android.lifecycle.*
+import kotlinx.coroutines.*
+import kotlinx.coroutines.flow.*
+import timber.log.*
+import javax.inject.*
 
 /**
  * ViewModel responsible for managing authentication state and operations
@@ -104,10 +95,12 @@ class AuthViewModel @Inject constructor(
                     is GoogleSignInResult.Loading -> {
                         _state.update { it.copy(isLoading = true) }
                     }
+
                     is GoogleSignInResult.Success -> {
                         Timber.d("Successfully got Google credential, signing in with token")
                         signInWithGoogle(result.idToken)
                     }
+
                     is GoogleSignInResult.Error -> {
                         handleError(result.message, result.exception)
                     }

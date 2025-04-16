@@ -1,7 +1,7 @@
 package com.newton.auth.data.mapper
 
-import com.google.firebase.auth.FirebaseUser
-import com.newton.network.domain.models.User
+import com.google.firebase.auth.*
+import com.newton.domain.models.User
 
 fun FirebaseUser.toUser(): User {
     return User(

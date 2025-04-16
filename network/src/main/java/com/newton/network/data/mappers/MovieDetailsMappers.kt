@@ -1,12 +1,19 @@
 package com.newton.network.data.mappers
 
 import com.newton.core.utils.*
+import com.newton.domain.models.CreatedBy
+import com.newton.domain.models.FilmDetails
+import com.newton.domain.models.Genre
+import com.newton.domain.models.LastOrNextToAir
+import com.newton.domain.models.Network
+import com.newton.domain.models.ProductionCompany
+import com.newton.domain.models.ProductionCountry
+import com.newton.domain.models.Season
+import com.newton.domain.models.SpokenLanguage
 import com.newton.network.data.dto.*
-import com.newton.network.data.dto.GenreDto
-import com.newton.network.domain.models.*
 
-fun MovieResponseDto.toDomainMovieDetails():MovieDetails {
-    return MovieDetails(
+fun FilmDetailsDto.toFilmDomainDetails(): FilmDetails {
+    return FilmDetails(
         adult = adult,
         backdropPath = backdrop_path?.let { "${ImageBaseUrl.IMAGE_BASE_URL}$it" },
         belongsToCollection = belongs_to_collection,
@@ -31,7 +38,23 @@ fun MovieResponseDto.toDomainMovieDetails():MovieDetails {
         title = title,
         video = video,
         voteAverage = vote_average,
-        voteCount = vote_count
+        voteCount = vote_count,
+        createdBy = created_by?.toCreatedByList(),
+        episodeTime = episode_run_time,
+        firstAirDate = first_air_date,
+        inProduction = in_production,
+        languages = languages,
+        lastAirDate = last_air_date,
+        lastEpisodeToAir = last_episode_to_air?.toLastOrNextToAirDomain(),
+        name = name,
+        networks = networks?.toNetworkList(),
+        nextEpisodeToAir = next_episode_to_air?.toLastOrNextToAirDomain(),
+        numberOfEpisodes = number_of_episodes,
+        numberOfSeasons = number_of_seasons,
+        originCountry = origin_country,
+        originalName = original_name,
+        seasons = seasons?.toSeasonsList(),
+        type = type
     )
 }
 
@@ -39,6 +62,42 @@ fun GenreDto.toDomainGenre(): Genre {
     return Genre(
         id = id,
         name = name
+    )
+}
+
+fun CreatedByDto.toCreatedByDomain(): CreatedBy {
+    return CreatedBy(
+        creditId = credit_id,
+        gender = gender,
+        id = id,
+        name = name,
+        profilePath = profile_path.let { "${ImageBaseUrl.IMAGE_BASE_URL}$it" }
+    )
+}
+
+fun LastOrNextToAirDto.toLastOrNextToAirDomain(): LastOrNextToAir {
+    return LastOrNextToAir(
+        airDate = air_date,
+        episodeNumber = episode_number,
+        id = id,
+        name = name,
+        overview = overview,
+        productionCode = production_code,
+        runtime = runtime,
+        seasonNumber = season_number,
+        showId = show_id,
+        stillPath = still_path.let { "${ImageBaseUrl.IMAGE_BASE_URL}$it" },
+        voteAverage = vote_average,
+        voteCount = vote_count
+    )
+}
+
+fun NetworkDto.toDomainNetwork(): Network {
+    return Network(
+        id = id,
+        logoPath = logo_path.let { "${ImageBaseUrl.IMAGE_BASE_URL}$it" },
+        name = name,
+        originCountry = origin_country
     )
 }
 
@@ -65,6 +124,28 @@ fun SpokenLanguageDto.toSpokenLanguageDomain(): SpokenLanguage {
         name = name
     )
 }
+
+fun SeasonDto.toDomainSeasons(): Season {
+    return Season(
+        airDate = air_date,
+        episodeCount = episode_count,
+        id = id,
+        name = name,
+        overview = overview,
+        posterPath = poster_path.let { "${ImageBaseUrl.IMAGE_BASE_URL}$it" },
+        seasonNumber = season_number,
+        voteAverage = vote_average
+    )
+}
+
+fun List<SeasonDto>.toSeasonsList(): List<Season> =
+    map { it.toDomainSeasons() }
+
+fun List<NetworkDto>.toNetworkList(): List<Network> =
+    map { it.toDomainNetwork() }
+
+fun List<CreatedByDto>.toCreatedByList(): List<CreatedBy> =
+    map { it.toCreatedByDomain() }
 
 fun List<SpokenLanguageDto>.toDomainSpokenLanguageList(): List<SpokenLanguage> =
     map { it.toSpokenLanguageDomain() }
