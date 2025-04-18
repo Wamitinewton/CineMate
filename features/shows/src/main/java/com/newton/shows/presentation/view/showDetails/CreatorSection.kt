@@ -7,6 +7,7 @@ import androidx.compose.foundation.shape.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.*
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.*
 import androidx.compose.ui.text.font.*
 import androidx.compose.ui.text.style.*
@@ -55,7 +56,10 @@ fun CreatorItem(creator: CreatedBy) {
                 .background(MaterialTheme.colorScheme.surfaceVariant)
         ) {
             NetworkImage(
-                imageUrl = creator.profilePath
+                imageUrl = creator.profilePath,
+                modifier = Modifier
+                    .fillMaxSize()
+                    .clip(CircleShape)
             )
         }
 

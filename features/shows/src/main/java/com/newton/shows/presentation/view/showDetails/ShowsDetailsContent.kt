@@ -7,16 +7,22 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.*
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.*
+import androidx.paging.PagingData
 import com.newton.domain.models.*
+import com.newton.shared_ui.sharedComponents.FilmListView
 import com.newton.shared_ui.sharedComponents.MediaHeroSection
+import kotlinx.coroutines.flow.Flow
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ShowsDetailsContent(
     filmDetails: FilmDetails,
-    scrollState: ScrollState
-) {
+    filmItems: Flow<PagingData<FilmData>>,
+    scrollState: ScrollState,
+    onSimilarShowClick: (Int?) -> Unit,
+    ) {
     scrollState.value > 0
 
             Column(
@@ -50,8 +56,14 @@ fun ShowsDetailsContent(
 
                 AdditionalInfoSection(filmDetails = filmDetails)
 
-                NetworksSection(network = filmDetails.networks ?: emptyList())
-
+                SimilarShowsSection(
+                    modifier = Modifier.fillMaxWidth(),
+                    similarShows = filmItems,
+                    onRetry = {},
+                    onMovieClick = { id ->
+                        onSimilarShowClick(id)
+                    }
+                )
                 Spacer(modifier = Modifier.height(24.dp))
             }
         }

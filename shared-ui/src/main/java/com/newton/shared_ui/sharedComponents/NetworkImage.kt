@@ -8,6 +8,7 @@ import androidx.compose.ui.*
 import androidx.compose.ui.layout.*
 import androidx.compose.ui.platform.*
 import androidx.compose.ui.res.*
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.*
 import coil3.compose.*
 import coil3.request.*
@@ -18,7 +19,8 @@ fun NetworkImage(
     modifier: Modifier = Modifier,
     imageUrl: String?,
     contentScale: ContentScale = ContentScale.Crop,
-    contentDescription: String? = null
+    contentDescription: String? = null,
+    errorMessage: String = "Failed to load image"
 ) {
     SubcomposeAsyncImage(
         model = ImageRequest.Builder(LocalContext.current)
@@ -40,17 +42,25 @@ fun NetworkImage(
             }
 
             is AsyncImagePainter.State.Error -> {
-                Box(
+                Column(
                     modifier = Modifier
-                        .fillMaxSize()
-                        .background(MaterialTheme.colorScheme.surfaceVariant),
-                    contentAlignment = Alignment.Center
+                        .background(MaterialTheme.colorScheme.errorContainer),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.Center
                 ) {
                     Icon(
                         painter = painterResource(id = R.drawable.ic_broken_image),
                         contentDescription = "Error loading image",
-                        tint = MaterialTheme.colorScheme.onSurfaceVariant,
-                        modifier = Modifier.size(48.dp)
+                        tint = MaterialTheme.colorScheme.onErrorContainer,
+                        modifier = Modifier.size(32.dp)
+                    )
+                    Spacer(modifier = Modifier.height(4.dp))
+                    Text(
+                        text = errorMessage,
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onErrorContainer,
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier.padding(horizontal = 8.dp)
                     )
                 }
             }

@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.*
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.*
 import androidx.paging.*
 import androidx.paging.compose.*
@@ -83,6 +84,7 @@ fun TrendingPeopleList(
                             },
                             id = trendingPeople.id,
                             enabled = true,
+                            modifier = Modifier.padding(end = 8.dp),
                         )
                     }
                 }

@@ -1,4 +1,4 @@
-package com.newton.people.data.repository
+package com.newton.people.di
 
 import com.newton.people.navigation.PeopleNavigationApi
 import com.newton.people.navigation.PeopleNavigationApiImpl

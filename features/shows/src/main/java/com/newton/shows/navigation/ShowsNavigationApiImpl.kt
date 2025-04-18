@@ -1,17 +1,12 @@
 package com.newton.shows.navigation
 
-import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavGraphBuilder
-import androidx.navigation.NavHostController
-import androidx.navigation.NavType
-import androidx.navigation.compose.composable
-import androidx.navigation.navArgument
-import androidx.navigation.navigation
-import com.newton.navigation.NavigationRoutes
-import com.newton.navigation.NavigationSubgraphRoutes
-import com.newton.shows.presentation.view.showDetails.ShowDetailsScreen
-import com.newton.shows.presentation.view.showsList.ShowScreen
-import com.newton.shows.presentation.viewModel.ShowsDetailsViewModel
+import androidx.hilt.navigation.compose.*
+import androidx.navigation.*
+import androidx.navigation.compose.*
+import com.newton.navigation.*
+import com.newton.shows.presentation.view.showDetails.*
+import com.newton.shows.presentation.view.showsList.*
+import com.newton.shows.presentation.viewModel.*
 
 class ShowsNavigationApiImpl: ShowsNavigationApi {
     override fun registerNavigationGraph(
@@ -25,7 +20,13 @@ class ShowsNavigationApiImpl: ShowsNavigationApi {
             composable(
                 route = NavigationRoutes.Shows.routes
             ) {
-                ShowScreen()
+                val showsListViewModel = hiltViewModel<ShowsListViewModel>()
+                ShowsScreen(
+                    viewModel = showsListViewModel,
+                    onMovieDetailsClick = { id ->
+                        navHostController.navigate(NavigationRoutes.ShowsDetails.createRoute(id))
+                    }
+                )
             }
 
             composable(
@@ -38,11 +39,16 @@ class ShowsNavigationApiImpl: ShowsNavigationApi {
             ) { backStackEntry ->
                 val seriesId = backStackEntry.arguments?.getInt("id") ?: 0
                 val viewModel = hiltViewModel<ShowsDetailsViewModel>()
+                val showsListViewModel = hiltViewModel<ShowsListViewModel>()
                 ShowDetailsScreen(
                     viewModel = viewModel,
                     seriesId = seriesId,
                     onBackClick = {
                         navHostController.popBackStack()
+                    },
+                    showsListViewModel = showsListViewModel,
+                    onSimilarShowClick = { id ->
+                        navHostController.navigate(NavigationRoutes.ShowsDetails.createRoute(id))
                     }
                 )
             }

@@ -14,11 +14,12 @@ fun FilmCard(
     title: String,
     onClick: (Int?) -> Unit = {},
     id: Int? = null,
-    enabled: Boolean
+    enabled: Boolean,
+    modifier: Modifier
 ) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = Modifier.width(150.dp)
+        modifier = modifier.width(150.dp)
     ) {
         Card(
             enabled = enabled,

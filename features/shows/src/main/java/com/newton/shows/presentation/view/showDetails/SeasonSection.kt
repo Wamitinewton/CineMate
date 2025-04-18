@@ -6,6 +6,7 @@ import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.*
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.font.*
 import androidx.compose.ui.unit.*
 import com.newton.domain.models.*
@@ -15,6 +16,12 @@ import java.util.*
 
 @Composable
 fun SeasonsSection(seasons: List<Season>) {
+
+    val regularSeasons = seasons.filter { it.seasonNumber != 0 }
+        .sortedBy { it.seasonNumber }
+    val specialSeasons = seasons.filter { it.seasonNumber == 0 }
+
+    val sortedSeasons = (regularSeasons + specialSeasons).take(5)
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -44,18 +51,9 @@ fun SeasonsSection(seasons: List<Season>) {
 
         Spacer(modifier = Modifier.height(8.dp))
 
-        seasons
-            .filter { it.seasonNumber != 0 }
-            .sortedBy { it.seasonNumber }
-            .forEach { season ->
-                SeasonItem(season = season)
-            }
-
-        seasons
-            .filter { it.seasonNumber == 0 }
-            .forEach { season ->
-                SeasonItem(season = season)
-            }
+      sortedSeasons.forEach { season ->
+          SeasonItem(season = season)
+      }
     }
 }
 
@@ -80,7 +78,11 @@ fun SeasonItem(season: Season) {
         ) {
 
             NetworkImage(
-                imageUrl = season.posterPath
+                imageUrl = season.posterPath,
+                modifier = Modifier
+                    .width(120.dp)
+                    .height(200.dp)
+                    .clip(MaterialTheme.shapes.small)
             )
 
             Spacer(modifier = Modifier.width(12.dp))

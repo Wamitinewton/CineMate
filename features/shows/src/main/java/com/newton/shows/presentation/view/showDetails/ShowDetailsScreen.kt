@@ -40,16 +40,23 @@ import com.newton.shared_ui.theme.backgroundGradient
 import com.newton.shows.presentation.events.ShowsDetailsEvents
 import com.newton.shows.presentation.state.ShowsDetailsUiState
 import com.newton.shows.presentation.viewModel.ShowsDetailsViewModel
+import com.newton.shows.presentation.viewModel.ShowsListViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ShowDetailsScreen(
     viewModel: ShowsDetailsViewModel,
+    showsListViewModel: ShowsListViewModel,
     seriesId: Int,
-    onBackClick: () -> Unit
+    onBackClick: () -> Unit,
+    onSimilarShowClick: (Int) -> Unit
 ) {
     LaunchedEffect(seriesId) {
         viewModel.onEvent(ShowsDetailsEvents.LoadDetails(seriesId))
+    }
+
+    val similarShowsFlow = remember(seriesId) {
+        showsListViewModel.getSimilarShows(seriesId)
     }
 
     val seriesDetailsState = viewModel.seriesDetailsUiState.collectAsStateWithLifecycle().value
@@ -165,7 +172,11 @@ fun ShowDetailsScreen(
                 is ShowsDetailsUiState.Success -> {
                     ShowsDetailsContent(
                         filmDetails = seriesDetailsState.moviesDetails,
-                        scrollState = scrollState
+                        scrollState = scrollState,
+                        filmItems = similarShowsFlow,
+                        onSimilarShowClick = { id ->
+                            onSimilarShowClick(id!!)
+                        }
                     )
                 }
 
