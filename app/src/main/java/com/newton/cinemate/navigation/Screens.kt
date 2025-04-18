@@ -32,10 +32,18 @@ sealed class Screens(
         Icons.Outlined.Tv,
         "Shows"
     )
+
+    data object Search: Screens(
+        NavigationSubgraphRoutes.Search.route,
+        Icons.Filled.Person,
+        Icons.Outlined.Person,
+        "Profile"
+    )
 }
 
 var bottomNavigationDestinations = listOf(
     Screens.Home,
     Screens.Movies,
-    Screens.Shows
+    Screens.Shows,
+    Screens.Search,
 )

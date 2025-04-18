@@ -28,7 +28,7 @@ fun PopularMoviesSection(
         modifier = modifier
     ) {
         CategorySectionHeader(
-            title = "Trending Movies",
+            title = "Popular Movies",
             modifier = Modifier.padding(horizontal = 15.dp)
         )
 
