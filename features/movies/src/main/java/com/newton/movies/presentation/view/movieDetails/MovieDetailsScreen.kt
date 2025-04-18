@@ -23,15 +23,22 @@ import com.newton.shared_ui.theme.*
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MovieDetailsScreen(
-    viewModel: MovieDetailsViewModel,
+    movieDetailsViewModel: MovieDetailsViewModel,
+    movieListViewModel: MovieListViewModel,
     movieId: Int,
-    onBackClick: () -> Unit
+    onBackClick: () -> Unit,
+    onSimilarMovieClick: (Int) -> Unit,
 ) {
     LaunchedEffect(movieId) {
-        viewModel.onEvent(MovieDetailsEvents.LoadDetails(movieId))
+        movieDetailsViewModel.onEvent(MovieDetailsEvents.LoadDetails(movieId))
     }
 
-    val movieDetailsState = viewModel.movieDetailsUiState.collectAsStateWithLifecycle().value
+    val similarMoviesFlow = remember(movieId) {
+        movieListViewModel.getSimilarMovies(movieId)
+    }
+
+    val movieDetailsState =
+        movieDetailsViewModel.movieDetailsUiState.collectAsStateWithLifecycle().value
     val scrollState = rememberScrollState()
     val topBarHeight = 64.dp
     val topBarAlpha = remember { mutableFloatStateOf(0f) }
@@ -43,8 +50,9 @@ fun MovieDetailsScreen(
                 title = {
                     Box(
                         modifier = Modifier
-                            .fillMaxSize(),
-                        contentAlignment = Alignment.CenterStart
+                            .fillMaxSize()
+                            .padding(start = 8.dp),
+                        contentAlignment = Alignment.Center
                     ) {
                         AnimatedVisibility(
                             visible = topBarAlpha.floatValue > 0.3f,
@@ -57,7 +65,8 @@ fun MovieDetailsScreen(
                                         text = movieDetailsState.moviesDetails.title ?: "",
                                         maxLines = 1,
                                         overflow = TextOverflow.Ellipsis,
-                                        color = MaterialTheme.colorScheme.onSurface
+                                        color = MaterialTheme.colorScheme.onSurface,
+                                        style = MaterialTheme.typography.titleMedium
                                     )
                                 }
 
@@ -69,9 +78,8 @@ fun MovieDetailsScreen(
 
                 navigationIcon = {
                     Box(
-                        modifier = Modifier
-                            .fillMaxSize(),
-                        contentAlignment = Alignment.CenterStart
+                        modifier = Modifier.fillMaxHeight(),
+                        contentAlignment = Alignment.Center
                     ) {
                         IconButton(onClick = onBackClick) {
                             Icon(
@@ -137,14 +145,24 @@ fun MovieDetailsScreen(
                 is MoviesDetailsUiState.Error -> {
                     ErrorScreen(
                         message = movieDetailsState.message,
-                        onRetry = { viewModel.onEvent(MovieDetailsEvents.LoadDetails(movieId)) }
+                        onRetry = {
+                            movieDetailsViewModel.onEvent(
+                                MovieDetailsEvents.LoadDetails(
+                                    movieId
+                                )
+                            )
+                        }
                     )
                 }
 
                 is MoviesDetailsUiState.Success -> {
                     MovieDetailsContent(
                         filmDetails = movieDetailsState.moviesDetails,
-                        scrollState = scrollState
+                        scrollState = scrollState,
+                        similarMovies = similarMoviesFlow,
+                        onSimilarMovieClick = { id ->
+                            onSimilarMovieClick(id!!)
+                        }
                     )
                 }
 

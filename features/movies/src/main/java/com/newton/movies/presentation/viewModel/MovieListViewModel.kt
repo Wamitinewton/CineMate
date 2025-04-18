@@ -32,4 +32,10 @@ class MovieListViewModel @Inject constructor(
         .getListOfMovies(MovieCategory.UPCOMING)
         .cachedIn(viewModelScope)
 
+    fun getSimilarMovies(movieId: Int): Flow<PagingData<FilmData>> {
+        return moviesRepository
+            .getListOfMovies(MovieCategory.SIMILAR, movieId = movieId)
+            .cachedIn(viewModelScope)
+    }
+
 }

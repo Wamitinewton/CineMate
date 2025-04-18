@@ -16,7 +16,6 @@ fun FilmDetailsDto.toFilmDomainDetails(): FilmDetails {
     return FilmDetails(
         adult = adult,
         backdropPath = backdrop_path?.let { "${ImageBaseUrl.IMAGE_BASE_URL}$it" },
-        belongsToCollection = belongs_to_collection,
         budget = budget,
         genres = genres?.toDomainGenreList(),
         homepage = homepage,

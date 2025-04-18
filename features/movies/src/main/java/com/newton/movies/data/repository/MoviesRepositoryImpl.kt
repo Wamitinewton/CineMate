@@ -28,7 +28,7 @@ class MoviesRepositoryImpl @Inject constructor(
             }
         )
 
-    override  fun getListOfMovies(movieCategory: MovieCategory): Flow<PagingData<FilmData>> {
+    override  fun getListOfMovies(movieCategory: MovieCategory, movieId: Int?): Flow<PagingData<FilmData>> {
         return Pager(
             config = PagingConfig(
                 pageSize = 20,
@@ -37,9 +37,15 @@ class MoviesRepositoryImpl @Inject constructor(
             pagingSourceFactory = {
                 GenericPagingSource(
                     apiCall = { page ->
+
+                        val url = if (movieCategory == MovieCategory.SIMILAR && movieId != null) {
+                            movieCategory.endpoint.replace("{movie_id}", movieId.toString())
+                        } else {
+                            movieCategory.endpoint
+                        }
                         moviesApiService.getListOfMovies(
                             page = page,
-                            url = movieCategory.endpoint
+                            url = url
                         )
                     },
                     dataMapper = { response ->

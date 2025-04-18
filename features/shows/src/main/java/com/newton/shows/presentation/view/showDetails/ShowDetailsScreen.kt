@@ -6,6 +6,7 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -63,8 +64,9 @@ fun ShowDetailsScreen(
                 title = {
                     Box(
                         modifier = Modifier
-                            .fillMaxSize(),
-                        contentAlignment = Alignment.CenterStart
+                            .fillMaxSize()
+                            .padding(start = 8.dp),
+                        contentAlignment = Alignment.Center
                     ) {
                         AnimatedVisibility(
                             visible = topBarAlpha.floatValue > 0.3f,
@@ -89,9 +91,8 @@ fun ShowDetailsScreen(
 
                 navigationIcon = {
                     Box(
-                        modifier = Modifier
-                            .fillMaxSize(),
-                        contentAlignment = Alignment.CenterStart
+                        modifier = Modifier.fillMaxHeight(),
+                        contentAlignment = Alignment.Center
                     ) {
                         IconButton(onClick = onBackClick) {
                             Icon(

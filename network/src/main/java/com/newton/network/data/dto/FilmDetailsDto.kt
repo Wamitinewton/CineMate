@@ -6,7 +6,6 @@ import kotlinx.serialization.*
 data class FilmDetailsDto(
     val adult: Boolean,
     val backdrop_path: String?,
-    val belongs_to_collection: String?,
     val budget: Int?,
     val genres: List<GenreDto>?,
     val homepage: String?,

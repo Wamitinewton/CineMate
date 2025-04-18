@@ -8,11 +8,13 @@ import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.*
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.*
 import androidx.compose.ui.graphics.*
 import androidx.compose.ui.text.font.*
 import androidx.compose.ui.unit.*
 import com.newton.core.utils.*
+import java.util.Locale
 
 @Composable
 fun MediaHeroSection(
@@ -66,7 +68,7 @@ fun MediaHeroSection(
                     ) {
                         Box(contentAlignment = Alignment.Center) {
                             Text(
-                                text = String.format(java.util.Locale.US, "%.1f", it),
+                                text = String.format(Locale.US, "%.1f", it),
                                 style = MaterialTheme.typography.bodyMedium.copy(fontWeight = FontWeight.Bold),
                                 color = MaterialTheme.colorScheme.onPrimaryContainer
                             )
@@ -136,6 +138,11 @@ fun MediaHeroSection(
             }
         }
 
+        AnimatedReviewsButton(
+            onClick = {},
+            modifier = Modifier
+                .padding(top = 16.dp, start = 10.dp)
+        )
         Box(
             modifier = Modifier
                 .align(Alignment.TopEnd)

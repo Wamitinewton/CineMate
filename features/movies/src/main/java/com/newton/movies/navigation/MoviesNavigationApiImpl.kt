@@ -37,12 +37,17 @@ class MoviesNavigationApiImpl : MoviesNavigationApi {
             ) { backStackEntry ->
                 val movieId = backStackEntry.arguments?.getInt("id") ?: 0
                 val viewModel = hiltViewModel<MovieDetailsViewModel>()
+                val movieListViewModel = hiltViewModel<MovieListViewModel>()
 
                 MovieDetailsScreen(
-                    viewModel = viewModel,
+                    movieDetailsViewModel = viewModel,
                     movieId = movieId,
                     onBackClick = {
                         navHostController.popBackStack()
+                    },
+                    movieListViewModel = movieListViewModel,
+                    onSimilarMovieClick = { id ->
+                        navHostController.navigate(NavigationRoutes.MovieDetails.createRoute(id))
                     }
                 )
             }
