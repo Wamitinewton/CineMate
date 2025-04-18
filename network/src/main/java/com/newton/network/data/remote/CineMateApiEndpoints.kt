@@ -17,4 +17,5 @@ object CineMateApiEndpoints {
     object People {
         const val PEOPLE_DETAILS = "person/{person_id}"
     }
+
 }

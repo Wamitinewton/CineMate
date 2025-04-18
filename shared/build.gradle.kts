@@ -61,4 +61,5 @@ dependencies {
     //modules
     implementation(project(Modules.CORE))
     implementation(project(Modules.NETWORK))
+    implementation(project(Modules.DOMAIN))
 }

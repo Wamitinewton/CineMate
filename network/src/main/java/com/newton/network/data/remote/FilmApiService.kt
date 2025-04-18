@@ -49,4 +49,10 @@ interface FilmApiService {
         @Path("person_id") id: Int
     ): PeopleDetailsDto
 
+    @GET
+    suspend fun getFilmReviews(
+        @Url url: String,
+        @Query("page") page: Int = 0,
+        ): FilmReviewsDto
+
 }
