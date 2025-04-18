@@ -15,8 +15,9 @@ import kotlinx.coroutines.flow.*
 fun TrendingPeopleSection(
     modifier: Modifier = Modifier,
     trendingPeopleFlow: Flow<PagingData<PeopleData>>,
-    onRetry: () -> Unit
-) {
+    onRetry: () -> Unit,
+    onPeopleDetailsClick: (Int?) -> Unit,
+    ) {
     val peopleItems = trendingPeopleFlow.collectAsLazyPagingItems()
 
     Column(
@@ -32,7 +33,10 @@ fun TrendingPeopleSection(
         TrendingPeopleList(
             modifier = modifier.fillMaxWidth(),
             peopleItems = peopleItems,
-            onRetry = onRetry
+            onRetry = onRetry,
+            onPeopleDetailsClick = { id ->
+                onPeopleDetailsClick(id)
+            }
         )
     }
 }
@@ -42,6 +46,7 @@ fun TrendingPeopleSection(
 fun TrendingPeopleList(
     modifier: Modifier = Modifier,
     peopleItems: LazyPagingItems<PeopleData>,
+    onPeopleDetailsClick: (Int?) -> Unit,
     onRetry: () -> Unit
 ) {
     LazyRow(
@@ -68,13 +73,15 @@ fun TrendingPeopleList(
 
             else -> {
                 items(peopleItems.itemCount) { index ->
-                    val tvShow = peopleItems[index]
-                    if (tvShow != null) {
+                    val trendingPeople = peopleItems[index]
+                    if (trendingPeople != null) {
                         FilmCard(
-                            posterPath = tvShow.profilePath ?: "",
-                            title = tvShow.name ?: "Unknown",
-                            onClick = {},
-                            id = null,
+                            posterPath = trendingPeople.profilePath ?: "",
+                            title = trendingPeople.name ?: "Unknown",
+                            onClick = { id ->
+                                onPeopleDetailsClick(id)
+                            },
+                            id = trendingPeople.id,
                             enabled = true,
                         )
                     }

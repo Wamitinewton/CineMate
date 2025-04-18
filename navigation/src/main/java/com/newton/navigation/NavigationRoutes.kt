@@ -14,4 +14,8 @@ sealed class NavigationRoutes(val routes: String) {
     data object ShowsDetails : NavigationRoutes("showDetails/{id}") {
         fun createRoute(id: Int) = "showDetails/$id"
     }
+
+    data object PeopleDetails : NavigationRoutes("peopleDetails/{id}") {
+        fun createRoute(id: Int) = "peopleDetails/$id"
+    }
 }

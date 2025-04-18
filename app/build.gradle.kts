@@ -132,6 +132,7 @@ dependencies {
     implementation(project(Modules.SHOWS))
     implementation(project(Modules.MOVIES))
     implementation(project(Modules.SEARCH))
+    implementation(project(Modules.PEOPLE))
     implementation(project(Modules.SETTINGS))
     implementation(project(Modules.NAVIGATION))
     implementation(project(Modules.PREFS))

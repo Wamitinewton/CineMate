@@ -14,7 +14,8 @@ import com.newton.trending.presentation.viewModel.*
 fun TrendingScreen(
     viewModel: TrendingViewModel,
     onMovieDetailsClick: (Int) -> Unit,
-    onShowsDetailsClick: (Int) -> Unit
+    onShowsDetailsClick: (Int) -> Unit,
+    onPeopleDetailsClick: (Int) -> Unit
 ) {
 
     Scaffold(
@@ -82,6 +83,9 @@ fun TrendingScreen(
                     modifier = Modifier.fillMaxWidth(),
                     onRetry = {
                         viewModel.refresh()
+                    },
+                    onPeopleDetailsClick = { id ->
+                        onPeopleDetailsClick(id!!)
                     }
                 )
                 Spacer(modifier = Modifier.height(16.dp))

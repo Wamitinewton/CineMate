@@ -25,6 +25,9 @@ class TrendingNavigationApiImpl : TrendingNavigationApi {
                     },
                     onShowsDetailsClick = { id ->
                         navHostController.navigate(NavigationRoutes.ShowsDetails.createRoute(id))
+                    },
+                    onPeopleDetailsClick = { id ->
+                        navHostController.navigate(NavigationRoutes.PeopleDetails.createRoute(id))
                     }
                 )
             }

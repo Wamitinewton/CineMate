@@ -7,6 +7,7 @@ object Modules {
     const val MOVIES = ":features:movies"
     const val SEARCH = ":features:search"
     const val SHOWS = ":features:shows"
+    const val PEOPLE = ":features:people"
     const val TRENDING = ":features:trending"
     const val SETTINGS = ":features:settings"
     const val PREFS = ":prefs"

@@ -38,5 +38,9 @@ fun CineMateNavigation(
             navHostController = navHostController,
             navGraphBuilder = this
         )
+        navigationSubGraphs.peopleNavigationApi.registerNavigationGraph(
+            navHostController = navHostController,
+            navGraphBuilder = this
+        )
     }
 }

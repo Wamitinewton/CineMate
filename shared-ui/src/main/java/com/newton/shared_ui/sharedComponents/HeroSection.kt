@@ -25,7 +25,8 @@ fun MediaHeroSection(
     releaseYear: String? = null,
     duration: Int? = null,
     tagline: String? = null,
-    additionalInfo: @Composable (() -> Unit)? = null
+    additionalInfo: @Composable (() -> Unit)? = null,
+    showReviewCard: Boolean = true
 ) {
     Box(
         modifier = Modifier
@@ -138,11 +139,13 @@ fun MediaHeroSection(
             }
         }
 
-        AnimatedReviewsButton(
-            onClick = {},
-            modifier = Modifier
-                .padding(top = 16.dp, start = 10.dp)
-        )
+       if (showReviewCard) {
+           AnimatedReviewsButton(
+               onClick = {},
+               modifier = Modifier
+                   .padding(top = 16.dp, start = 10.dp)
+           )
+       }
         Box(
             modifier = Modifier
                 .align(Alignment.TopEnd)

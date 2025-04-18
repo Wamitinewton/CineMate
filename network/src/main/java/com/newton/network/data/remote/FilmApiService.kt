@@ -44,4 +44,9 @@ interface FilmApiService {
         @Path("movie_id") id: Int
     ): FilmDetailsDto
 
+    @GET(CineMateApiEndpoints.People.PEOPLE_DETAILS)
+    suspend fun getPeopleDetails(
+        @Path("person_id") id: Int
+    ): PeopleDetailsDto
+
 }
