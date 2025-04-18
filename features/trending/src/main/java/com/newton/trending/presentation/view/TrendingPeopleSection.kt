@@ -73,8 +73,7 @@ fun TrendingPeopleList(
                         FilmCard(
                             posterPath = tvShow.profilePath ?: "",
                             title = tvShow.name ?: "Unknown",
-                            onMovieClick = {},
-                            isMovie = false,
+                            onClick = {},
                             id = null,
                             enabled = true,
                         )

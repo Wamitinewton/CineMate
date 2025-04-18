@@ -2,6 +2,8 @@ package com.newton.trending.presentation.viewModel
 
 import androidx.lifecycle.*
 import androidx.paging.*
+import com.newton.core.enums.MovieCategory
+import com.newton.core.enums.ShowCategory
 import com.newton.domain.models.FilmData
 import com.newton.domain.models.PeopleData
 import com.newton.domain.repository.TrendingRepository
@@ -34,7 +36,7 @@ class TrendingViewModel @Inject constructor(
     @OptIn(ExperimentalCoroutinesApi::class)
     val trendingShows: Flow<PagingData<FilmData>> = refreshTrigger
         .flatMapLatest {
-            trendingRepository.getTrendingShows(allowAdult = allowAdultContent)
+            trendingRepository.getTrendingShows(allowAdult = allowAdultContent, ShowCategory.TRENDING)
         }
         .cachedIn(viewModelScope)
 
@@ -48,7 +50,7 @@ class TrendingViewModel @Inject constructor(
     @OptIn(ExperimentalCoroutinesApi::class)
     val trendingMovies: Flow<PagingData<FilmData>> = refreshTrigger
         .flatMapLatest {
-            trendingRepository.getTrendingMovies()
+            trendingRepository.getTrendingMovies(MovieCategory.TRENDING)
         }
         .cachedIn(viewModelScope)
 

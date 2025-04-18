@@ -42,7 +42,7 @@ fun BottomNavigationBar(navController: NavHostController, currentDestination: Na
                 bottomNavigationDestinations.forEach { destination ->
                     val selected = currentDestination?.hierarchy?.any {
                         it.route == destination.route
-                    } ?: false
+                    } == true
                     BottomNavItem(
                         isSelected = selected,
                         destination = destination,

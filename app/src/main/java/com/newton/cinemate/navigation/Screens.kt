@@ -23,13 +23,19 @@ sealed class Screens(
         NavigationSubgraphRoutes.Movies.route,
         Icons.Filled.Movie,
         Icons.Outlined.Movie,
-        "Trending"
+        "Movies"
+    )
+
+    data object Shows: Screens(
+        NavigationSubgraphRoutes.Shows.route,
+        Icons.Filled.Tv,
+        Icons.Outlined.Tv,
+        "Shows"
     )
 }
 
 var bottomNavigationDestinations = listOf(
     Screens.Home,
-    Screens.Home,
-    Screens.Home,
-    Screens.Movies
+    Screens.Movies,
+    Screens.Shows
 )

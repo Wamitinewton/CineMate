@@ -20,7 +20,7 @@ fun RootScreen(navigationSubGraphs: NavigationSubGraphs) {
     val context = LocalContext.current
 
     val isShowBottomBar = when (currentDestination?.route) {
-        NavigationRoutes.HomeScreenRoute.routes, NavigationRoutes.MoviesRoute.routes -> true
+        NavigationRoutes.HomeScreenRoute.routes, NavigationRoutes.MoviesRoute.routes, NavigationRoutes.Shows.routes -> true
         else -> false
     }
 

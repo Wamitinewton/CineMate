@@ -3,8 +3,8 @@ package com.newton.movies.navigation
 import androidx.hilt.navigation.compose.*
 import androidx.navigation.*
 import androidx.navigation.compose.*
-import com.newton.movies.presentation.view.*
 import com.newton.movies.presentation.view.movieDetails.*
+import com.newton.movies.presentation.view.movieLists.MoviesScreen
 import com.newton.movies.presentation.viewModel.*
 import com.newton.navigation.*
 
@@ -18,7 +18,13 @@ class MoviesNavigationApiImpl : MoviesNavigationApi {
             startDestination = NavigationRoutes.MoviesRoute.routes
         ) {
             composable(route = NavigationRoutes.MoviesRoute.routes) {
-                MoviesScreen()
+                val movieListViewModel = hiltViewModel<MovieListViewModel>()
+                MoviesScreen(
+                    viewModel = movieListViewModel,
+                    onMovieDetailsClick = { id ->
+                        navHostController.navigate(NavigationRoutes.MovieDetails.createRoute(id))
+                    }
+                )
             }
 
             composable(

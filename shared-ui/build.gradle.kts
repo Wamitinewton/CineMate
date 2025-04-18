@@ -54,9 +54,14 @@ dependencies {
     //icons
     implementation(Dependencies.Material.EXTENDED_ICONS)
 
+    //paging
+    implementation(Dependencies.Paging.compose)
+    implementation(Dependencies.Paging.runtime)
+
     //coil
     implementation(Dependencies.Coil.network)
     implementation(Dependencies.Coil.compose)
 
     implementation(project(Modules.CORE))
+    implementation(project(Modules.DOMAIN))
 }

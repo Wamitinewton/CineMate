@@ -29,14 +29,13 @@ fun TrendingTvShowsSection(
 
         Spacer(modifier = Modifier.height(12.dp))
 
-        TrendingFilmList(
+        FilmListView(
             filmItems = tvShowsItems,
             modifier = Modifier.fillMaxWidth(),
             onRetry = onRetry,
-            onShowsClick = { id ->
+            onFilmClick = { id ->
                 onShowsClick(id)
             },
-            isMovie = false,
             enabled = true
         )
     }

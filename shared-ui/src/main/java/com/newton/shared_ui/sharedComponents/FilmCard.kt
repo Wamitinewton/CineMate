@@ -12,9 +12,7 @@ import androidx.compose.ui.unit.*
 fun FilmCard(
     posterPath: String,
     title: String,
-    onMovieClick: (Int?) -> Unit = {},
-    onShowsClick: (Int?) -> Unit = {},
-    isMovie: Boolean,
+    onClick: (Int?) -> Unit = {},
     id: Int? = null,
     enabled: Boolean
 ) {
@@ -24,7 +22,7 @@ fun FilmCard(
     ) {
         Card(
             enabled = enabled,
-            onClick = { if (isMovie)onMovieClick(id) else onShowsClick(id) },
+            onClick = { onClick(id) },
             modifier = Modifier
                 .height(225.dp)
                 .fillMaxWidth()

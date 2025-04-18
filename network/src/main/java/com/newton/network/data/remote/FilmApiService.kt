@@ -5,8 +5,9 @@ import retrofit2.http.*
 
 interface FilmApiService {
 
-    @GET(CineMateApiEndpoints.Trending.TV_TRENDING)
-    suspend fun getTrendingShows(
+    @GET
+    suspend fun getListOfShows(
+        @Url url: String,
         @Query("page") page: Int = 0,
         @Query("language") language: String = "en",
         @Query("include_adult") includeAdult: Boolean = true,
@@ -25,8 +26,9 @@ interface FilmApiService {
         @Query("include_adult") includeAdult: Boolean = true,
     ): PagingResponseDto<List<FilmResponseDto>>
 
-    @GET(CineMateApiEndpoints.Trending.MOVIES_TRENDING)
-    suspend fun getTrendingMovies(
+    @GET
+    suspend fun getListOfMovies(
+        @Url url: String,
         @Query("page") page: Int = 0,
         @Query("language") language: String = "en",
         @Query("include_adult") includeAdult: Boolean = true,

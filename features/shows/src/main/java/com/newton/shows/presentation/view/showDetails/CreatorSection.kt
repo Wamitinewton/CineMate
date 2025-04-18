@@ -2,6 +2,7 @@ package com.newton.shows.presentation.view.showDetails
 
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.*
 import androidx.compose.foundation.shape.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -29,11 +30,12 @@ fun CreatorsSection(createdBy: List<CreatedBy>) {
 
         Spacer(modifier = Modifier.height(8.dp))
 
-        Row(
+        LazyRow(
             modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.spacedBy(12.dp)
+            horizontalArrangement = Arrangement.spacedBy(12.dp),
+            contentPadding = PaddingValues(end = 16.dp)
         ) {
-            createdBy.filter { !it.name.isNullOrBlank() }.forEach { creator ->
+            items(createdBy.filter { !it.name.isNullOrBlank() }) { creator ->
                 CreatorItem(creator = creator)
             }
         }
