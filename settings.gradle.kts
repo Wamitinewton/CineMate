@@ -20,7 +20,7 @@ dependencyResolutionManagement {
 }
 
 rootProject.name = "CineMate"
-include(":app")
+include(":citeMate")
 include(":shared-ui")
 include(":core")
 include(":network")
