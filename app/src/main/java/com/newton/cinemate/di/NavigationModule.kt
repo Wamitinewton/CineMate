@@ -4,6 +4,7 @@ import com.newton.auth.navigation.*
 import com.newton.cinemate.navigation.*
 import com.newton.movies.navigation.*
 import com.newton.people.navigation.PeopleNavigationApi
+import com.newton.reviews.navigation.ReviewsNavigationApi
 import com.newton.search.navigation.SearchNavigationApi
 import com.newton.shows.navigation.ShowsNavigationApi
 import com.newton.trending.navigation.*
@@ -22,7 +23,8 @@ object NavigationModule {
         moviesNavigationApi: MoviesNavigationApi,
         showsNavigationApi: ShowsNavigationApi,
         searchNavigationApi: SearchNavigationApi,
-        peopleNavigationApi: PeopleNavigationApi
+        peopleNavigationApi: PeopleNavigationApi,
+        reviewsNavigationApi: ReviewsNavigationApi
     ): NavigationSubGraphs {
         return NavigationSubGraphs(
             authNavigationApi,
@@ -30,7 +32,8 @@ object NavigationModule {
             moviesNavigationApi,
             showsNavigationApi = showsNavigationApi,
             searchNavigationApi = searchNavigationApi,
-            peopleNavigationApi = peopleNavigationApi
+            peopleNavigationApi = peopleNavigationApi,
+            reviewsNavigationApi = reviewsNavigationApi
         )
     }
 }

@@ -49,7 +49,8 @@ fun ShowDetailsScreen(
     showsListViewModel: ShowsListViewModel,
     seriesId: Int,
     onBackClick: () -> Unit,
-    onSimilarShowClick: (Int) -> Unit
+    onSimilarShowClick: (Int) -> Unit,
+    onReviewClicked: (Int, Boolean) -> Unit
 ) {
     LaunchedEffect(seriesId) {
         viewModel.onEvent(ShowsDetailsEvents.LoadDetails(seriesId))
@@ -176,6 +177,9 @@ fun ShowDetailsScreen(
                         filmItems = similarShowsFlow,
                         onSimilarShowClick = { id ->
                             onSimilarShowClick(id!!)
+                        },
+                        onReviewClicked = { id, _ ->
+                            onReviewClicked(id!!, false)
                         }
                     )
                 }

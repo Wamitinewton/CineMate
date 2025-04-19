@@ -49,6 +49,9 @@ class ShowsNavigationApiImpl: ShowsNavigationApi {
                     showsListViewModel = showsListViewModel,
                     onSimilarShowClick = { id ->
                         navHostController.navigate(NavigationRoutes.ShowsDetails.createRoute(id))
+                    },
+                    onReviewClicked = { id, isMovie ->
+                        navHostController.navigate(NavigationRoutes.FilmReviews.createRoute(id, isMovie))
                     }
                 )
             }

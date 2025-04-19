@@ -20,7 +20,10 @@ fun PersonDetailsContent(personDetails: PeopleDetails, scrollState: ScrollState)
             backdropPath = personDetails.profilePath,
             posterPath = personDetails.profilePath,
             title = personDetails.name,
-            showReviewCard = false
+            showReviewCard = false,
+            onReviewClick = {id, ismovie ->
+
+            }
         )
 
         Spacer(modifier = Modifier.height(16.dp))

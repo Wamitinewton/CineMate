@@ -26,7 +26,10 @@ fun MediaHeroSection(
     duration: Int? = null,
     tagline: String? = null,
     additionalInfo: @Composable (() -> Unit)? = null,
-    showReviewCard: Boolean = true
+    showReviewCard: Boolean = true,
+    onReviewClick: (Int?, Boolean) -> Unit,
+    isMovie: Boolean = true,
+    showId: Int? = null
 ) {
     Box(
         modifier = Modifier
@@ -141,7 +144,9 @@ fun MediaHeroSection(
 
        if (showReviewCard) {
            AnimatedReviewsButton(
-               onClick = {},
+               onClick = {
+                   onReviewClick(showId, isMovie)
+               },
                modifier = Modifier
                    .padding(top = 16.dp, start = 10.dp)
            )

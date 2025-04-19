@@ -48,6 +48,9 @@ class MoviesNavigationApiImpl : MoviesNavigationApi {
                     movieListViewModel = movieListViewModel,
                     onSimilarMovieClick = { id ->
                         navHostController.navigate(NavigationRoutes.MovieDetails.createRoute(id))
+                    },
+                    onReviewsClicked = { id, isMovie ->
+                        navHostController.navigate(NavigationRoutes.FilmReviews.createRoute(id, isMovie))
                     }
                 )
             }

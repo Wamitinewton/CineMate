@@ -1,4 +1,4 @@
-package com.newton.shared.repository
+package com.newton.reviews.data
 
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
@@ -17,7 +17,7 @@ class ReviewsRepositoryImpl @Inject constructor(
 ): ReviewsRepository {
     override fun getReviewsList(
         reviewsCategory: ReviewsCategory,
-        id: Int
+        id: Int,
     ): Flow<PagingData<ReviewsData>> {
         return Pager(
             config = PagingConfig(

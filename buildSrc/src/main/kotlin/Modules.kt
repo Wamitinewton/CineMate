@@ -10,6 +10,7 @@ object Modules {
     const val PEOPLE = ":features:people"
     const val TRENDING = ":features:trending"
     const val SETTINGS = ":features:settings"
+    const val REVIEWS = ":features:reviews"
     const val PREFS = ":prefs"
     const val SHARED = ":shared"
     const val DOMAIN = ":domain"

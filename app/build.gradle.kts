@@ -122,7 +122,6 @@ dependencies {
     implementation(libs.androidx.credentials.play.services.auth)
     implementation(libs.googleid)
 
-
     // modules
     implementation(project(Modules.SHARED_UI))
     implementation(project(Modules.CORE))
@@ -135,5 +134,6 @@ dependencies {
     implementation(project(Modules.PEOPLE))
     implementation(project(Modules.SETTINGS))
     implementation(project(Modules.NAVIGATION))
+    implementation(project(Modules.REVIEWS))
     implementation(project(Modules.PREFS))
 }

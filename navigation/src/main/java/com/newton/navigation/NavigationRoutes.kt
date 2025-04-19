@@ -18,4 +18,8 @@ sealed class NavigationRoutes(val routes: String) {
     data object PeopleDetails : NavigationRoutes("peopleDetails/{id}") {
         fun createRoute(id: Int) = "peopleDetails/$id"
     }
+
+    data object FilmReviews : NavigationRoutes("filmReviews/{id}/{isMovie}") {
+        fun createRoute(id: Int, isMovie: Boolean) = "filmReviews/$id/$isMovie"
+    }
 }

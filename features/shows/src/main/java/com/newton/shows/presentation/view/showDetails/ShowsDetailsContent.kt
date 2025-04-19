@@ -2,7 +2,6 @@ package com.newton.shows.presentation.view.showDetails
 
 import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -11,7 +10,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.*
 import androidx.paging.PagingData
 import com.newton.domain.models.*
-import com.newton.shared_ui.sharedComponents.FilmListView
 import com.newton.shared_ui.sharedComponents.MediaHeroSection
 import kotlinx.coroutines.flow.Flow
 
@@ -22,7 +20,8 @@ fun ShowsDetailsContent(
     filmItems: Flow<PagingData<FilmData>>,
     scrollState: ScrollState,
     onSimilarShowClick: (Int?) -> Unit,
-    ) {
+    onReviewClicked: (Int?, Boolean) -> Unit
+) {
     scrollState.value > 0
 
             Column(
@@ -34,6 +33,10 @@ fun ShowsDetailsContent(
                     backdropPath = filmDetails.backdropPath,
                     posterPath = filmDetails.posterPath,
                     title = filmDetails.name,
+                    onReviewClick = { id, isMovie ->
+                        onReviewClicked(id, isMovie)
+                    },
+                    showId = filmDetails.id,
                 )
 
                 ShowInfoSection(filmDetails = filmDetails)

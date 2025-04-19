@@ -28,6 +28,7 @@ fun MovieDetailsScreen(
     movieId: Int,
     onBackClick: () -> Unit,
     onSimilarMovieClick: (Int) -> Unit,
+    onReviewsClicked: (Int, Boolean) -> Unit
 ) {
     LaunchedEffect(movieId) {
         movieDetailsViewModel.onEvent(MovieDetailsEvents.LoadDetails(movieId))
@@ -162,6 +163,9 @@ fun MovieDetailsScreen(
                         similarMovies = similarMoviesFlow,
                         onSimilarMovieClick = { id ->
                             onSimilarMovieClick(id!!)
+                        },
+                        onReviewClicked = { id, _ ->
+                            onReviewsClicked(id!!, true)
                         }
                     )
                 }
