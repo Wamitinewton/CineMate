@@ -44,4 +44,6 @@ dependencies {
     //Navigation
     implementation(Dependencies.Hilt.NAVIGATION)
     implementation(Dependencies.Navigation.COMPOSE)
+
+    implementation(project(Modules.CORE))
 }

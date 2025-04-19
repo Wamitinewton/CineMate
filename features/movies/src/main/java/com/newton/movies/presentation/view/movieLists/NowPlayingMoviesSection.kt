@@ -29,7 +29,8 @@ fun NowPlayingMoviesSection(
     ) {
         CategorySectionHeader(
             title = "Now Playing",
-            modifier = Modifier.padding(horizontal = 15.dp)
+            modifier = Modifier.padding(horizontal = 15.dp),
+            showSeeAllButton = false
         )
 
         Spacer(modifier = Modifier.height(12.dp))

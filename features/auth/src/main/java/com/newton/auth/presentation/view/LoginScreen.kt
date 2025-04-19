@@ -101,33 +101,18 @@ fun OnboardingScreen(
 
                 AnimatedVisibility(
                     visible = visible,
-                    enter = fadeIn(tween(1500, delayMillis = 500))
+                    enter = fadeIn(tween(1000, delayMillis = 200))
                 ) {
                     CinematicOnboardingText()
                 }
 
-                AnimatedVisibility(
-                    visible = visible,
-                    enter = fadeIn(tween(1500, delayMillis = 1000))
-                ) {
-                    GradientButton(
-                        buttonText = "Login",
-                        onClick = {
-//                            viewModel.onEvent(AuthEvent.OnLoginClick(context.getString(R.string.web_client_id)))
-                            /**
-                             * Some issues on google auth....fixing..
-                             */
-                            onContinueWithoutAccountClick()
-                        }
-                    )
-                }
                 Spacer(modifier = Modifier.height(40.dp))
                 androidx.compose.animation.AnimatedVisibility(
                     visible = visible,
-                    enter = fadeIn(tween(1500, delayMillis = 1000))
+                    enter = fadeIn(tween(1000, delayMillis = 400))
                 ) {
                     CustomButton(
-                        text = "Continue with no account",
+                        text = "Continue",
                         onClick = { onContinueWithoutAccountClick() },
                         modifier = Modifier.fillMaxWidth(),
                         variant = ButtonVariant.FILLED

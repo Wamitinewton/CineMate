@@ -29,7 +29,8 @@ fun OnTheAirShowsSection(
     ) {
         CategorySectionHeader(
             title = "On The Air",
-            modifier = Modifier.padding(horizontal = 15.dp)
+            modifier = Modifier.padding(horizontal = 15.dp),
+            showSeeAllButton = false
         )
 
         Spacer(modifier = Modifier.height(12.dp))

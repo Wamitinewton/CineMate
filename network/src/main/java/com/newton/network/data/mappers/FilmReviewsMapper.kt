@@ -1,5 +1,6 @@
 package com.newton.network.data.mappers
 
+import com.newton.core.utils.ImageBaseUrl
 import com.newton.domain.models.AuthorDetails
 import com.newton.domain.models.ReviewsData
 import com.newton.network.data.dto.AuthorDetailsDto
@@ -19,7 +20,7 @@ fun ReviewsDataDto.toReviewDomain(): ReviewsData {
 
 fun AuthorDetailsDto.toAuthorDetails(): AuthorDetails {
     return AuthorDetails(
-        avatarPath = avatar_path,
+        avatarPath = avatar_path?.let { "${ImageBaseUrl.IMAGE_BASE_URL}$it" },
         name = name,
         rating = rating,
         username = username

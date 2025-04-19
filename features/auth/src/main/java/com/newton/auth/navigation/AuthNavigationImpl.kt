@@ -5,6 +5,7 @@ import androidx.navigation.*
 import androidx.navigation.compose.*
 import com.newton.auth.presentation.view.*
 import com.newton.auth.presentation.viewModel.*
+import com.newton.core.enums.TransitionType
 import com.newton.navigation.*
 import com.newton.prefs.*
 import javax.inject.*
@@ -12,6 +13,7 @@ import javax.inject.*
 class AuthNavigationImpl @Inject constructor(
     private val prefsRepository: PrefsRepository
 ) : AuthNavigationApi {
+    private val navigationTransitions = NavigationTransitions()
 
     override fun registerNavigationGraph(
         navGraphBuilder: NavGraphBuilder,
@@ -21,7 +23,12 @@ class AuthNavigationImpl @Inject constructor(
             route = NavigationSubgraphRoutes.Auth.route,
             startDestination = getStartDestination()
         ) {
-            composable(route = NavigationRoutes.AuthScreenRoute.routes) {
+            composable(
+                enterTransition = navigationTransitions.getEnterTransition(TransitionType.FADE, 300),
+                exitTransition = navigationTransitions.getExitTransition(TransitionType.FADE, 300),
+                popEnterTransition = navigationTransitions.getPopEnterTransition(TransitionType.FADE, 300),
+                popExitTransition = navigationTransitions.getPopExitTransition(TransitionType.FADE, 300),
+                route = NavigationRoutes.AuthScreenRoute.routes) {
                 val authViewModel = hiltViewModel<AuthViewModel>()
                 OnboardingScreen(
                     onAuthSuccess = {
@@ -43,7 +50,12 @@ class AuthNavigationImpl @Inject constructor(
                 )
             }
 
-            composable(route = NavigationRoutes.WelcomeScreenRoute.routes) {
+            composable(
+                enterTransition = navigationTransitions.getEnterTransition(TransitionType.ZOOM, 300),
+                exitTransition = navigationTransitions.getExitTransition(TransitionType.ZOOM, 300),
+                popEnterTransition = navigationTransitions.getPopEnterTransition(TransitionType.ZOOM, 300),
+                popExitTransition = navigationTransitions.getPopExitTransition(TransitionType.ZOOM, 300),
+                route = NavigationRoutes.WelcomeScreenRoute.routes) {
                 val welcomeViewModel = hiltViewModel<WelcomeViewModel>()
                 WelcomeScreen(
                     navigateToHome = {
