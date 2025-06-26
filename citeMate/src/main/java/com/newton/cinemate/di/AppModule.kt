@@ -1,7 +1,7 @@
 package com.newton.cinemate.di
 
 import android.content.*
-import androidx.credentials.*
+import com.google.android.gms.auth.api.identity.*
 import com.google.firebase.*
 import com.google.firebase.auth.*
 import com.google.firebase.firestore.*
@@ -22,7 +22,11 @@ import javax.inject.*
 object AppModule {
 
     private val loggingInterceptor = HttpLoggingInterceptor().apply {
-        level = HttpLoggingInterceptor.Level.BODY
+        level = if (BuildConfig.DEBUG) {
+            HttpLoggingInterceptor.Level.BODY
+        } else {
+            HttpLoggingInterceptor.Level.NONE
+        }
     }
 
     private const val API_KEY = BuildConfig.TMDB_API
@@ -60,10 +64,9 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideCredentialManager(
+    fun provideOneTapClient(
         @ApplicationContext context: Context
-    ): CredentialManager {
-        return CredentialManager.create(context)
+    ): SignInClient {
+        return Identity.getSignInClient(context)
     }
-
 }

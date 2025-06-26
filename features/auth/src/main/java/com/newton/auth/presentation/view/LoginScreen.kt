@@ -1,5 +1,10 @@
 package com.newton.auth.presentation.view
 
+import android.app.Activity
+import android.widget.Toast
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.IntentSenderRequest
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.animation.*
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.*
@@ -12,12 +17,10 @@ import androidx.compose.ui.*
 import androidx.compose.ui.platform.*
 import androidx.compose.ui.unit.*
 import androidx.lifecycle.compose.*
-import com.newton.auth.presentation.event.*
 import com.newton.auth.presentation.viewModel.*
 import com.newton.shared_ui.sharedComponents.*
 import com.newton.shared_ui.theme.*
-import kotlinx.coroutines.flow.*
-import timber.log.Timber
+import kotlinx.coroutines.*
 
 @Composable
 fun OnboardingScreen(
@@ -27,36 +30,27 @@ fun OnboardingScreen(
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
     val context = LocalContext.current
-    val snackbarHostState = remember { SnackbarHostState() }
+
+    // Use rememberCoroutineScope instead of lifecycleScope
+    val coroutineScope = rememberCoroutineScope()
 
     var visible by remember { mutableStateOf(false) }
 
-    LaunchedEffect(key1 = Unit) {
-        visible = true
-    }
-
-    LaunchedEffect(Unit) {
-        viewModel.authEvents.collectLatest { event ->
-            when (event) {
-                is AuthUiEvent.NavigateToHome -> {
-                    onAuthSuccess()
-                }
-                is AuthUiEvent.ShowError -> {
-                    snackbarHostState.showSnackbar(event.message)
-                    Timber.e(event.message)
-                }
-                else -> {
+    val launcher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.StartIntentSenderForResult(),
+        onResult = { result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                coroutineScope.launch {
+                    result.data?.let { intent ->
+                        viewModel.handleSignInIntent(intent)
+                    }
                 }
             }
         }
-    }
+    )
 
-    LaunchedEffect(state.error) {
-        state.error?.let { error ->
-            snackbarHostState.showSnackbar(error)
-            Timber.e(error)
-            viewModel.onEvent(AuthEvent.DismissError)
-        }
+    LaunchedEffect(key1 = Unit) {
+        visible = true
     }
 
     LaunchedEffect(state.isAuthenticated) {
@@ -65,9 +59,16 @@ fun OnboardingScreen(
         }
     }
 
+    // Handle errors
+    LaunchedEffect(state.error) {
+        state.error?.let { error ->
+            Toast.makeText(context, error, Toast.LENGTH_LONG).show()
+            viewModel.clearError()
+        }
+    }
+
     Scaffold(
-        modifier = Modifier.fillMaxSize(),
-        snackbarHost = { SnackbarHost(snackbarHostState) }
+        modifier = Modifier.fillMaxSize()
     ) { paddingValues ->
         Box(
             modifier = Modifier
@@ -115,7 +116,14 @@ fun OnboardingScreen(
                     CustomButton(
                         text = if (state.isLoading) "Signing in..." else "Continue with Google",
                         onClick = {
-                            viewModel.onEvent(AuthEvent.OnGoogleSignInClick)
+                            coroutineScope.launch {
+                                val signInIntentSender = viewModel.signIn()
+                                signInIntentSender?.let {
+                                    launcher.launch(
+                                        IntentSenderRequest.Builder(signInIntentSender).build()
+                                    )
+                                }
+                            }
                         },
                         modifier = Modifier.fillMaxWidth(),
                         variant = ButtonVariant.FILLED,

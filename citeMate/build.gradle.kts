@@ -81,6 +81,10 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
+    implementation(libs.firebase.auth)
+    implementation(libs.androidx.credentials)
+    implementation(libs.androidx.credentials.play.services.auth)
+    implementation(libs.googleid)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -116,12 +120,10 @@ dependencies {
     implementation(Dependencies.Material.EXTENDED_ICONS)
 
     implementation(platform(libs.google.firebase.bom))
-    implementation(libs.firebase.auth)
     implementation(libs.firebase.firestore)
+    implementation("com.google.firebase:firebase-auth-ktx:23.2.1")
+    implementation("com.google.android.gms:play-services-auth:21.3.0")
 
-    implementation(libs.androidx.credentials)
-    implementation(libs.androidx.credentials.play.services.auth)
-    implementation(libs.googleid)
 
     // modules
     implementation(project(Modules.SHARED_UI))

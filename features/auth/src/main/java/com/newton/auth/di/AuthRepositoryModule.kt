@@ -23,13 +23,4 @@ object AuthRepositoryModule {
         return AuthRepositoryImpl(firebaseAuth, firestore)
     }
 
-    @Provides
-    @Singleton
-    fun provideCredentialsManager(
-        firebaseAuth: FirebaseAuth
-    ): GoogleClientManager {
-        return GoogleClientManager(
-            firebaseAuth = firebaseAuth
-        )
-    }
 }
