@@ -1,33 +1,37 @@
 {
   "project_info": {
-    "project_number": "491361563845",
-    "project_id": "android-demo-d898d",
-    "storage_bucket": "android-demo-d898d.firebasestorage.app"
+    "project_number": "989952666104",
+    "project_id": "authentication-1a0c4",
+    "storage_bucket": "authentication-1a0c4.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:491361563845:android:c9e76621c371de15422cac",
+        "mobilesdk_app_id": "1:989952666104:android:c95e0bf6fe70b443dece0d",
         "android_client_info": {
           "package_name": "com.newton.cinemate"
         }
       },
       "oauth_client": [
         {
-          "client_id": "491361563845-erlek35pib9es0ia4c0pimh123s48uuc.apps.googleusercontent.com",
-          "client_type": 3
+          "client_id": "989952666104-a3ljc9s0jboib1opse28k0es1ggbtn4m.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.newton.cinemate",
+            "certificate_hash": "7c703c2e16ab5fd9130c6ef290a61bdd53d518d1"
+          }
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAbS9lqTVVI2P2TvReKdXDUz0eDGqNiwng"
+          "current_key": "AIzaSyApkzwxfqWz8rnEzQw96920xT8qRXzKdUM"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "491361563845-erlek35pib9es0ia4c0pimh123s48uuc.apps.googleusercontent.com",
+              "client_id": "989952666104-4gb7rdtrb0417k7p3rd60fphmakq6f53.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

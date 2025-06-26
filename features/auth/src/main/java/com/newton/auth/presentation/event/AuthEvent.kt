@@ -1,8 +1,5 @@
 package com.newton.auth.presentation.event
 
-import androidx.credentials.*
-
-
 /**
  * Events that can be triggered from the UI
  */
@@ -10,17 +7,17 @@ sealed class AuthEvent {
     /**
      * Dismiss current error
      */
-    data object DismissError : AuthEvent()
+    object DismissError : AuthEvent()
 
     /**
-     * User clicked login button
+     * User clicked Google sign-in button
      */
-    data class OnLoginClick(val webClientId: String) : AuthEvent()
+    object OnGoogleSignInClick : AuthEvent()
 
     /**
-     * Sign in with Google ID token
+     * Sign out user
      */
-    data class SignInWithGoogle(val idToken: String) : AuthEvent()
+    object SignOut : AuthEvent()
 }
 
 /**
@@ -28,7 +25,12 @@ sealed class AuthEvent {
  */
 sealed class AuthUiEvent {
     /**
-     * Launch Credential Manager with the provided request
+     * Show error message
      */
-    data class LaunchCredentialManager(val request: GetCredentialRequest) : AuthUiEvent()
+    data class ShowError(val message: String) : AuthUiEvent()
+
+    /**
+     * Navigation events
+     */
+    object NavigateToHome : AuthUiEvent()
 }

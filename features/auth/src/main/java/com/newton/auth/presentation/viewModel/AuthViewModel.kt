@@ -1,26 +1,33 @@
 package com.newton.auth.presentation.viewModel
 
-import androidx.credentials.*
-import androidx.credentials.exceptions.*
-import androidx.lifecycle.*
-import com.newton.auth.presentation.event.*
-import com.newton.auth.presentation.manager.*
-import com.newton.auth.presentation.state.*
-import com.newton.core.enums.*
+import android.content.Context
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.newton.auth.presentation.event.AuthEvent
+import com.newton.auth.presentation.event.AuthUiEvent
+import com.newton.auth.presentation.manager.GoogleClientManager
+import com.newton.auth.presentation.manager.GoogleSignInResult
+import com.newton.auth.presentation.state.AuthUiState
+import com.newton.domain.models.User
 import com.newton.domain.repository.AuthRepository
-import dagger.hilt.android.lifecycle.*
-import kotlinx.coroutines.*
-import kotlinx.coroutines.flow.*
-import timber.log.*
-import javax.inject.*
+import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.android.qualifiers.ApplicationContext
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
+import timber.log.Timber
+import javax.inject.Inject
 
-/**
- * ViewModel responsible for managing authentication state and operations
- */
 @HiltViewModel
 class AuthViewModel @Inject constructor(
+    @ApplicationContext private val context: Context,
     private val authRepository: AuthRepository,
-    private val googleClientManager: GoogleClientManager
+    private val googleSignInManager: GoogleClientManager
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(AuthUiState())
@@ -30,31 +37,14 @@ class AuthViewModel @Inject constructor(
     val authEvents: SharedFlow<AuthUiEvent> = _authEvents.asSharedFlow()
 
     init {
+        initializeGoogleSignIn()
         checkAuthState()
     }
 
-    /**
-     * Handle UI events
-     */
-    fun onEvent(event: AuthEvent) {
-        when (event) {
-            is AuthEvent.DismissError -> {
-                _state.update { it.copy(error = null, errorType = null) }
-            }
-
-            is AuthEvent.OnLoginClick -> {
-                initiateGoogleSignIn(event.webClientId)
-            }
-
-            is AuthEvent.SignInWithGoogle -> {
-                signInWithGoogle(event.idToken)
-            }
-        }
+    private fun initializeGoogleSignIn() {
+        googleSignInManager.initializeGoogleSignIn(context)
     }
 
-    /**
-     * Check initial authentication state
-     */
     private fun checkAuthState() {
         val isAuthenticated = authRepository.isUserAuthenticated()
         val currentUser = authRepository.getCurrentUser()
@@ -64,111 +54,122 @@ class AuthViewModel @Inject constructor(
                 user = currentUser
             )
         }
+        Timber.d("Auth state checked - Authenticated: $isAuthenticated")
     }
 
-    /**
-     * Initiate Google Sign-In flow
-     */
-    private fun initiateGoogleSignIn(webClientId: String) {
+    fun onEvent(event: AuthEvent) {
+        when (event) {
+            is AuthEvent.DismissError -> {
+                _state.update { it.copy(error = null) }
+            }
+
+            is AuthEvent.OnGoogleSignInClick -> {
+                performGoogleSignIn()
+            }
+
+            is AuthEvent.SignOut -> {
+                signOut()
+            }
+
+            else -> {
+            }
+        }
+    }
+
+    private fun performGoogleSignIn() {
         viewModelScope.launch {
             try {
-                _state.update { it.copy(isLoading = true) }
+                _state.update { it.copy(isLoading = true, error = null) }
 
-                val request = googleClientManager.createGoogleSignInRequest(webClientId)
-                Timber.d("Initiating Google Sign-In")
+                googleSignInManager.performGoogleSignIn(context).collect { result ->
+                    when (result) {
+                        is GoogleSignInResult.Loading -> {
+                            _state.update { it.copy(isLoading = true, error = null) }
+                        }
 
-                _authEvents.emit(AuthUiEvent.LaunchCredentialManager(request))
+                        is GoogleSignInResult.Success -> {
+                            val user = result.user
+                            if (user != null) {
+                                // Save user data to Firestore
+                                val domainUser = User(
+                                    uid = user.uid,
+                                    email = user.email,
+                                    displayName = user.displayName,
+                                    photoUrl = user.photoUrl?.toString()
+                                )
+
+                                try {
+                                    authRepository.saveUserData(domainUser)
+                                    _state.update {
+                                        it.copy(
+                                            isLoading = false,
+                                            isAuthenticated = true,
+                                            user = domainUser,
+                                            error = null
+                                        )
+                                    }
+                                    _authEvents.emit(AuthUiEvent.NavigateToHome)
+                                } catch (e: Exception) {
+                                    Timber.e(e, "Failed to save user data")
+                                    _state.update {
+                                        it.copy(
+                                            isLoading = false,
+                                            error = "Failed to save user data: ${e.message}"
+                                        )
+                                    }
+                                }
+                            } else {
+                                _state.update {
+                                    it.copy(
+                                        isLoading = false,
+                                        error = "Sign-in successful but no user data received"
+                                    )
+                                }
+                            }
+                        }
+
+                        is GoogleSignInResult.Error -> {
+                            Timber.e("Google Sign-In failed: ${result.message}")
+                            _state.update {
+                                it.copy(
+                                    isLoading = false,
+                                    error = result.message
+                                )
+                            }
+                        }
+                    }
+                }
             } catch (e: Exception) {
-                Timber.e(e, "Failed to begin sign in")
-                handleError("Failed to begin sign in", e)
+                Timber.e(e, "Failed to initiate Google Sign-In")
+                _state.update {
+                    it.copy(
+                        isLoading = false,
+                        error = "Failed to start sign-in: ${e.message}"
+                    )
+                }
             }
         }
     }
 
-    /**
-     * Process the credential result from Google Sign-In
-     */
-    fun handleCredentialResult(response: GetCredentialResponse) {
+    private fun signOut() {
         viewModelScope.launch {
-            googleClientManager.processCredentialResponse(response).collect { result ->
+            googleSignInManager.signOut().collect { result ->
                 when (result) {
-                    is GoogleSignInResult.Loading -> {
-                        _state.update { it.copy(isLoading = true) }
-                    }
-
                     is GoogleSignInResult.Success -> {
-                        Timber.d("Successfully got Google credential, signing in with token")
-                        signInWithGoogle(result.idToken)
+                        _state.update {
+                            it.copy(
+                                isAuthenticated = false,
+                                user = null,
+                                error = null
+                            )
+                        }
                     }
-
                     is GoogleSignInResult.Error -> {
-                        handleError(result.message, result.exception)
+                        _state.update { it.copy(error = result.message) }
                     }
+                    else -> {}
                 }
             }
-        }
-    }
-
-    /**
-     * Handle credential error
-     */
-    fun handleCredentialError(exception: GetCredentialException) {
-        viewModelScope.launch {
-            googleClientManager.handleCredentialError(exception).collect { result ->
-                if (result is GoogleSignInResult.Error) {
-                    handleError(result.message, result.exception)
-                }
-            }
-        }
-    }
-
-    /**
-     * Sign in with Google ID token
-     */
-    private fun signInWithGoogle(idToken: String) {
-        viewModelScope.launch {
-            Timber.d("Signing in with Google token")
-            authRepository.signInWithGoogle(idToken).collect { result ->
-                result.handle(
-                    onLoading = { isLoading ->
-                        _state.update { it.copy(isLoading = isLoading) }
-                    },
-                    onSuccess = { user ->
-                        _state.update {
-                            it.copy(
-                                user = user,
-                                isAuthenticated = true,
-                                error = null,
-                                errorType = null,
-                                isLoading = false
-                            )
-                        }
-                    },
-                    onError = { message, errorType, _ ->
-                        _state.update {
-                            it.copy(
-                                isLoading = false,
-                                errorType = errorType,
-                                error = message
-                            )
-                        }
-                    }
-                )
-            }
-        }
-    }
-
-    /**
-     * Handle authentication errors
-     */
-    private fun handleError(message: String, exception: Exception? = null) {
-        Timber.e(exception, "Auth error: $message")
-        _state.update {
-            it.copy(
-                isLoading = false,
-                error = exception?.localizedMessage ?: message,
-                errorType = ErrorType.AUTHENTICATION
-            )
         }
     }
 }
