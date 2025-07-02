@@ -14,7 +14,7 @@ interface TmdbAuthRepository {
 
     suspend fun deleteSession(sessionId: String): Flow<Resource<Unit>>
 
-    fun getCurrentUser(): TmdbUser?
+    suspend fun getCurrentUser(): TmdbUser?
 
     fun getCurrentSessionId(): String?
 

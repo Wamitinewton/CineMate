@@ -49,7 +49,7 @@ class TmdbAuthRepositoryImpl @Inject constructor(
             }
         )
 
-    override fun getCurrentUser(): TmdbUser? {
+    override suspend fun getCurrentUser(): TmdbUser? {
         return localDataSource.getCurrentUser()
     }
 

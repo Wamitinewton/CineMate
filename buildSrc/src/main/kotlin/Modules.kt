@@ -14,4 +14,5 @@ object Modules {
     const val PREFS = ":prefs"
     const val SHARED = ":shared"
     const val DOMAIN = ":domain"
+    const val DATABASE = ":database"
 }
