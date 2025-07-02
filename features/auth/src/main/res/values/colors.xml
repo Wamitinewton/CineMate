@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="tmdb_primary">#01B4E4</color>
+    <color name="tmdb_primary_dark">#0099CC</color>
+    <color name="tmdb_secondary">#90CEA1</color>
+</resources>

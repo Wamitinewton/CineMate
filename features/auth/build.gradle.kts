@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.kotlin.compose)
     id("com.google.devtools.ksp")
     id("dagger.hilt.android.plugin")
+    id("kotlinx-serialization")
 }
 
 android {
@@ -64,6 +65,12 @@ dependencies {
     //coil
     implementation(Dependencies.Coil.network)
     implementation(Dependencies.Coil.compose)
+
+    implementation(Dependencies.Kotlinx.serialization)
+
+    implementation("androidx.browser:browser:1.8.0")
+
+
 
 
     //timber

@@ -45,7 +45,7 @@ fun CinematicOnboardingText() {
         modifier = Modifier.padding(vertical = 32.dp)
     ) {
         Text(
-            text = "CineVerse",
+            text = "CineMate",
             style = MaterialTheme.typography.headlineLarge.copy(
                 fontWeight = FontWeight.ExtraBold,
                 fontSize = 38.sp,

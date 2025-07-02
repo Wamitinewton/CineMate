@@ -29,7 +29,7 @@ class AuthNavigationImpl @Inject constructor(
                 popEnterTransition = navigationTransitions.getPopEnterTransition(TransitionType.FADE, 300),
                 popExitTransition = navigationTransitions.getPopExitTransition(TransitionType.FADE, 300),
                 route = NavigationRoutes.AuthScreenRoute.routes) {
-                val authViewModel = hiltViewModel<AuthViewModel>()
+                val authViewModel = hiltViewModel<TmdbAuthViewModel>()
                 OnboardingScreen(
                     onAuthSuccess = {
                         prefsRepository.setUserOnboardingStatus(true)

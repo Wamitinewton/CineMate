@@ -16,4 +16,10 @@ object ApiServiceModule {
     fun provideTrendingApiService(retrofit: Retrofit): FilmApiService {
         return retrofit.create(FilmApiService::class.java)
     }
+
+    @Provides
+    @Singleton
+    fun provideTmdbAuthApi(retrofit: Retrofit): TmdbAuthApiService {
+        return retrofit.create(TmdbAuthApiService::class.java)
+    }
 }

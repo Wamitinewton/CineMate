@@ -3,7 +3,6 @@ package com.newton.auth.presentation.view
 import android.app.Activity
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
-import androidx.activity.result.IntentSenderRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.animation.*
 import androidx.compose.animation.core.*
@@ -15,9 +14,11 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.*
 import androidx.compose.ui.platform.*
+import androidx.compose.ui.text.font.*
 import androidx.compose.ui.unit.*
 import androidx.lifecycle.compose.*
-import com.newton.auth.presentation.viewModel.*
+import com.newton.auth.presentation.activity.TmdbAuthActivity
+import com.newton.auth.presentation.viewModel.TmdbAuthViewModel
 import com.newton.shared_ui.sharedComponents.*
 import com.newton.shared_ui.theme.*
 import kotlinx.coroutines.*
@@ -26,28 +27,32 @@ import kotlinx.coroutines.*
 fun OnboardingScreen(
     onAuthSuccess: () -> Unit,
     onContinueWithoutAccountClick: () -> Unit,
-    viewModel: AuthViewModel,
+    viewModel: TmdbAuthViewModel,
 ) {
-    val state by viewModel.state.collectAsStateWithLifecycle()
+    val state by viewModel.authState.collectAsStateWithLifecycle()
     val context = LocalContext.current
-
-    // Use rememberCoroutineScope instead of lifecycleScope
-    val coroutineScope = rememberCoroutineScope()
 
     var visible by remember { mutableStateOf(false) }
 
     val launcher = rememberLauncherForActivityResult(
-        contract = ActivityResultContracts.StartIntentSenderForResult(),
-        onResult = { result ->
-            if (result.resultCode == Activity.RESULT_OK) {
-                coroutineScope.launch {
-                    result.data?.let { intent ->
-                        viewModel.handleSignInIntent(intent)
-                    }
+        contract = ActivityResultContracts.StartActivityForResult()
+    ) { result ->
+        when (result.resultCode) {
+            Activity.RESULT_OK -> {
+                val success = result.data?.getBooleanExtra("auth_success", false) ?: false
+                if (success) {
+                    onAuthSuccess()
+                } else {
+                    val error = result.data?.getStringExtra("auth_error") ?: "Authentication failed"
+                    Toast.makeText(context, error, Toast.LENGTH_LONG).show()
                 }
             }
+            Activity.RESULT_CANCELED -> {
+                val error = result.data?.getStringExtra("auth_error") ?: "Authentication cancelled"
+                Toast.makeText(context, error, Toast.LENGTH_SHORT).show()
+            }
         }
-    )
+    }
 
     LaunchedEffect(key1 = Unit) {
         visible = true
@@ -99,7 +104,6 @@ fun OnboardingScreen(
 
                 Spacer(modifier = Modifier.height(48.dp))
 
-                // App Title and Description
                 AnimatedVisibility(
                     visible = visible,
                     enter = fadeIn(tween(1000, delayMillis = 200))
@@ -114,16 +118,10 @@ fun OnboardingScreen(
                     enter = fadeIn(tween(1000, delayMillis = 300))
                 ) {
                     CustomButton(
-                        text = if (state.isLoading) "Signing in..." else "Continue with Google",
+                        text = if (state.isLoading) "Connecting to TMDB..." else "Sign in with TMDB",
                         onClick = {
-                            coroutineScope.launch {
-                                val signInIntentSender = viewModel.signIn()
-                                signInIntentSender?.let {
-                                    launcher.launch(
-                                        IntentSenderRequest.Builder(signInIntentSender).build()
-                                    )
-                                }
-                            }
+                            val intent = android.content.Intent(context, TmdbAuthActivity::class.java)
+                            launcher.launch(intent)
                         },
                         modifier = Modifier.fillMaxWidth(),
                         variant = ButtonVariant.FILLED,

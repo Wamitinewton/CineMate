@@ -33,12 +33,8 @@ android {
         val tmdbApi = properties.getProperty("TMDB_API")
             ?: throw GradleException("TMDB_API not found in keys.properties")
 
-        val webClientId = properties.getProperty("WEB_CLIENT_ID")
-            ?: throw GradleException("WEB_CLIENT_ID not found in keys.properties")
-
 
         buildConfigField("String", "TMDB_API", "\"$tmdbApi\"")
-        buildConfigField("String", "WEB_CLIENT_ID", "\"$webClientId\"")
         applicationId = "com.newton.cinemate"
         minSdk = 24
         targetSdk = 35
@@ -127,6 +123,7 @@ dependencies {
 
     // modules
     implementation(project(Modules.SHARED_UI))
+    implementation(project(Modules.DOMAIN))
     implementation(project(Modules.CORE))
     implementation(project(Modules.NETWORK))
     implementation(project(Modules.AUTH))
