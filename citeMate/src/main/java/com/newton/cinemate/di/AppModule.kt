@@ -1,21 +1,16 @@
 package com.newton.cinemate.di
 
-import android.content.*
-import com.google.android.gms.auth.api.identity.*
-import com.google.firebase.*
-import com.google.firebase.auth.*
-import com.google.firebase.firestore.*
 import com.newton.cinemate.BuildConfig
-import com.newton.network.data.interceptor.*
-import dagger.*
-import dagger.hilt.*
-import dagger.hilt.android.qualifiers.*
-import dagger.hilt.components.*
-import okhttp3.*
-import okhttp3.logging.*
-import retrofit2.*
-import retrofit2.converter.gson.*
-import javax.inject.*
+import com.newton.network.data.interceptor.RequestInterceptor
+import dagger.Module
+import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.components.SingletonComponent
+import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
+import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -50,23 +45,4 @@ object AppModule {
             .build()
     }
 
-    @Provides
-    @Singleton
-    fun provideFirebaseAuth(): FirebaseAuth {
-        return Firebase.auth
-    }
-
-    @Provides
-    @Singleton
-    fun provideFirebaseFireStore(): FirebaseFirestore {
-        return Firebase.firestore
-    }
-
-    @Provides
-    @Singleton
-    fun provideOneTapClient(
-        @ApplicationContext context: Context
-    ): SignInClient {
-        return Identity.getSignInClient(context)
-    }
 }

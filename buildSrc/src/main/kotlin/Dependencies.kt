@@ -27,6 +27,8 @@ object Dependencies {
         const val EXTENDED_ICONS = "androidx.compose.material:material-icons-extended:1.7.7"
     }
 
+    const val CUSTOM_TABS = "androidx.browser:browser:1.8.0"
+
     object Work {
         const val RUNTIME = "androidx.work:work-runtime-ktx:${Versions.workRuntimeKtx}"
         const val HILT_WORKER = "androidx.hilt:hilt-work:${Versions.hiltNavigationCompose}"

@@ -2,9 +2,14 @@ package com.newton.auth.presentation.manager
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
-import android.net.Uri
-import androidx.browser.customtabs.*
+import androidx.browser.customtabs.CustomTabColorSchemeParams
+import androidx.browser.customtabs.CustomTabsClient
+import androidx.browser.customtabs.CustomTabsIntent
+import androidx.browser.customtabs.CustomTabsServiceConnection
+import androidx.browser.customtabs.CustomTabsSession
 import androidx.core.content.ContextCompat
+import androidx.core.graphics.createBitmap
+import androidx.core.net.toUri
 import com.newton.auth.R
 import com.newton.core.utils.TmdbConstants
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -12,8 +17,6 @@ import kotlinx.coroutines.CancellationException
 import timber.log.Timber
 import javax.inject.Inject
 import javax.inject.Singleton
-import androidx.core.net.toUri
-import androidx.core.graphics.createBitmap
 
 @Singleton
 class TmdbCustomTabsManager @Inject constructor(
@@ -80,6 +83,18 @@ class TmdbCustomTabsManager @Inject constructor(
     }
 
     private fun createCustomTabsIntent(url: String): Intent {
+        val lightColorScheme = CustomTabColorSchemeParams.Builder()
+            .setToolbarColor(ContextCompat.getColor(context, R.color.tmdb_primary))
+            .setSecondaryToolbarColor(ContextCompat.getColor(context, R.color.tmdb_primary_dark))
+            .setNavigationBarColor(ContextCompat.getColor(context, R.color.tmdb_primary_dark))
+            .build()
+
+        val darkColorScheme = CustomTabColorSchemeParams.Builder()
+            .setToolbarColor(ContextCompat.getColor(context, R.color.tmdb_primary))
+            .setSecondaryToolbarColor(ContextCompat.getColor(context, R.color.tmdb_primary_dark))
+            .setNavigationBarColor(ContextCompat.getColor(context, R.color.tmdb_primary_dark))
+            .build()
+
         val builder = CustomTabsIntent.Builder(customTabsSession)
             .setShowTitle(true)
             .setShareState(CustomTabsIntent.SHARE_STATE_OFF)
@@ -93,9 +108,9 @@ class TmdbCustomTabsManager @Inject constructor(
                 R.anim.slide_in_left,
                 R.anim.slide_out_right
             )
-            .setToolbarColor(ContextCompat.getColor(context, R.color.tmdb_primary))
-            .setSecondaryToolbarColor(ContextCompat.getColor(context, R.color.tmdb_primary_dark))
-            .setNavigationBarColor(ContextCompat.getColor(context, R.color.tmdb_primary_dark))
+            .setDefaultColorSchemeParams(lightColorScheme)
+            .setColorSchemeParams(CustomTabsIntent.COLOR_SCHEME_LIGHT, lightColorScheme)
+            .setColorSchemeParams(CustomTabsIntent.COLOR_SCHEME_DARK, darkColorScheme)
             .setCloseButtonIcon(
                 ContextCompat.getDrawable(context, R.drawable.baseline_arrow_back_24)!!.apply {
                     setTint(Color.WHITE)

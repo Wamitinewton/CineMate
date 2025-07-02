@@ -62,29 +62,15 @@ dependencies {
     implementation(Dependencies.Hilt.ANDROID)
     ksp(Dependencies.Hilt.COMPILER)
 
-    //coil
     implementation(Dependencies.Coil.network)
     implementation(Dependencies.Coil.compose)
 
     implementation(Dependencies.Kotlinx.serialization)
 
-    implementation("androidx.browser:browser:1.8.0")
+    implementation(Dependencies.CUSTOM_TABS)
 
-
-
-
-    //timber
     implementation(Dependencies.Logging.TIMBER)
-
-
-    //extended icons
     implementation(Dependencies.Material.EXTENDED_ICONS)
-
-    implementation("com.google.firebase:firebase-auth-ktx:23.2.1")
-    implementation("com.google.android.gms:play-services-auth:21.3.0")
-    implementation(platform(libs.google.firebase.bom))
-    implementation(libs.firebase.firestore)
-
 
     //modules
     implementation(project(Modules.NAVIGATION))
