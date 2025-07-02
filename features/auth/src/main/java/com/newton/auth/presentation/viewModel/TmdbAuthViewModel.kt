@@ -4,11 +4,13 @@ import android.content.Intent
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.newton.auth.presentation.manager.TmdbCustomTabsManager
-import com.newton.core.enums.ErrorType
-import com.newton.domain.models.*
+import com.newton.domain.models.TmdbAuthState
 import com.newton.domain.repository.TmdbAuthRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
@@ -25,10 +27,12 @@ class TmdbAuthViewModel @Inject constructor(
     private var currentRequestToken: String? = null
 
     init {
-        checkAuthState()
+        viewModelScope.launch {
+            checkAuthState()
+        }
     }
 
-    private fun checkAuthState() {
+    private suspend fun checkAuthState() {
         val user = tmdbAuthRepository.getCurrentUser()
         val sessionId = tmdbAuthRepository.getCurrentSessionId()
 
@@ -181,7 +185,6 @@ class TmdbAuthViewModel @Inject constructor(
                         },
                         onError = { error, _, _ ->
                             Timber.w("Failed to delete session on server: $error")
-                            // Still clear local data even if server deletion fails
                             clearUserData()
                         }
                     )
